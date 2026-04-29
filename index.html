@@ -20,7 +20,7 @@
 
   <style>
     /* ===== GHL OVERRIDE (kept for future GHL paste) ===== */
-    html, body { background-color: #050505 !important; color: #E8E2D5 !important; }
+    html, body { background-color: #050402 !important; color: #E8E2D5 !important; }
 
     /* ===== RESET ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,15 +31,17 @@
 
     /* ===== TOKENS ===== */
     :root {
-      --black: #050505;
-      --black-2: #0B0B0B;
+      --black: #050402;
+      --black-2: #0A0805;
       --walnut: #1F1813;
       --walnut-2: #2A1F18;
       --bone: #E8E2D5;
-      --bone-dim: #B8B0A0;
+      --bone-warm: #F0E5D0;
+      --bone-dim: #BFB8A6;
       --amber: #E8A547;
       --amber-dim: #A77432;
       --cyan: #4FB8E8;
+      --beam: rgba(255, 198, 122, 0.12);
       --line: rgba(232, 226, 213, 0.12);
       --line-strong: rgba(232, 226, 213, 0.32);
 
@@ -51,6 +53,59 @@
       --pad: clamp(20px, 4vw, 64px);
       --letterbox: 0vh;
     }
+
+    /* ===== THEATER ROOM BACKDROP — fixed, persistent on every section ===== */
+    .theater-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        /* projector beam from upper-left throwing onto the screen wall */
+        radial-gradient(ellipse 90vw 70vh at 28% -8vh, rgba(255, 196, 120, 0.13) 0%, rgba(255, 196, 120, 0.06) 26%, transparent 56%),
+        /* faint screen glow at top of viewport */
+        radial-gradient(ellipse 65vw 38vh at 50% 4vh, rgba(232, 226, 213, 0.06) 0%, rgba(232, 226, 213, 0.02) 35%, transparent 65%),
+        /* ambient warm wash, upper third */
+        radial-gradient(ellipse 100vw 55vh at 55% 10vh, rgba(232, 165, 71, 0.04) 0%, transparent 60%),
+        /* deep room base — three-stop gradient that gets darker as you go down */
+        linear-gradient(180deg, #0A0703 0%, #060402 35%, #030200 70%, #020100 100%);
+    }
+    .theater-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 120vw 100vh at 50% 50%, transparent 35%, rgba(0,0,0,0.35) 80%, rgba(0,0,0,0.65) 100%);
+    }
+    .theater-beam {
+      position: fixed;
+      top: -8vh;
+      left: 18vw;
+      width: 64vw;
+      height: 110vh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(178deg, rgba(255, 200, 130, 0.06) 0%, rgba(255, 200, 130, 0.018) 35%, transparent 65%);
+      transform: skewX(-8deg);
+      filter: blur(28px);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+
+    /* hide screening-room backdrop where we want pure void */
+    body.no-theater .theater-bg,
+    body.no-theater .theater-vignette,
+    body.no-theater .theater-beam { display: none; }
+
+    /* ensure all real content sits above the theater */
+    main, footer, .nav, .calibration, .feature-card, .mdock, .grain { position: relative; z-index: 5; }
+    .calibration { z-index: 9500; }
+    .feature-card { z-index: 8600; }
+    .nav { z-index: 7000; }
+    .mdock { z-index: 8700; }
+    .grain { z-index: 9000; }
+    .letterbox { z-index: 8500; }
+    .cursor-light { z-index: 100; }
 
     /* ===== BASE TYPOGRAPHY ===== */
     body {
@@ -163,7 +218,7 @@
       align-items: baseline;
       gap: 10px;
     }
-    .nav-mark .ampersand { font-style: italic; font-weight: 500; color: var(--amber); }
+    .nav-mark .ampersand { font-style: italic; font-weight: 500; color: var(--bone-warm); }
     .nav-mark .mono-id { font-family: var(--mono); font-size: 9px; color: var(--bone-dim); letter-spacing: 0.18em; }
     .nav-links {
       display: flex;
@@ -270,6 +325,22 @@
       margin: 0 auto;
       position: relative;
     }
+    /* per-section ambient warmth — soft tungsten wash from upper-left */
+    section::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -15%;
+      width: 70%;
+      height: 60%;
+      background: radial-gradient(ellipse at 30% 30%, rgba(255, 196, 120, 0.045) 0%, rgba(255, 196, 120, 0.018) 30%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(20px);
+    }
+    section > * { position: relative; z-index: 1; }
+    /* hide ambient on full-bleed sections */
+    .area::before, .hero::before { display: none; }
     .section-mark {
       font-family: var(--mono);
       font-size: 10px;
@@ -332,8 +403,29 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      transform: scale(1.05);
-      filter: contrast(1.1) saturate(0.85);
+      transform: scale(1.04);
+      filter: contrast(1.1) saturate(0.92) brightness(0.95);
+    }
+    /* projector beam light cone striking the screen — sits over the video */
+    .hero-beam {
+      position: absolute;
+      top: -10%;
+      right: -8%;
+      width: 80%;
+      height: 130%;
+      background: linear-gradient(195deg, rgba(255, 200, 130, 0.16) 0%, rgba(255, 200, 130, 0.06) 25%, transparent 55%);
+      transform: skewX(-14deg);
+      filter: blur(36px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      animation: beamFlicker 7s ease-in-out infinite;
+    }
+    @keyframes beamFlicker {
+      0%, 100% { opacity: 0.85; }
+      30% { opacity: 0.95; }
+      55% { opacity: 0.78; }
+      70% { opacity: 0.92; }
     }
     .hero-content {
       position: relative;
@@ -363,16 +455,17 @@
       margin-bottom: 32px;
     }
     .hero h1 .em {
-      color: var(--amber);
+      color: var(--bone-warm);
       font-style: italic;
       font-weight: 400;
+      text-shadow: 0 0 40px rgba(232, 226, 213, 0.3);
     }
     .hero-sub {
       max-width: 52ch;
       font-size: clamp(16px, 1.4vw, 19px);
       line-height: 1.55;
       color: var(--bone);
-      font-weight: 300;
+      font-weight: 400;
       margin-bottom: 40px;
     }
     .hero-cta-row {
@@ -458,7 +551,7 @@
       font-size: clamp(18px, 1.6vw, 22px);
       line-height: 1.55;
       color: var(--bone);
-      font-weight: 300;
+      font-weight: 400;
     }
     .manifesto-right p + p { margin-top: 1.2em; }
     .manifesto-right em {
@@ -522,7 +615,7 @@
       font-size: 15px;
       line-height: 1.6;
       color: var(--bone-dim);
-      font-weight: 300;
+      font-weight: 400;
     }
     .ref-step .spec {
       margin-top: 22px;
@@ -552,7 +645,9 @@
     .cap {
       grid-column: span 6;
       aspect-ratio: 16 / 9;
-      background: var(--walnut);
+      background: linear-gradient(155deg, rgba(31, 24, 19, 0.72) 0%, rgba(15, 11, 8, 0.55) 100%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       padding: 36px;
       position: relative;
       display: flex;
@@ -560,9 +655,9 @@
       justify-content: space-between;
       overflow: hidden;
       border: 1px solid var(--line);
-      transition: border-color 0.4s ease, background 0.4s ease;
+      transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
     }
-    .cap:hover { border-color: rgba(232,165,71,0.4); background: var(--walnut-2); }
+    .cap:hover { border-color: rgba(232,165,71,0.45); background: linear-gradient(155deg, rgba(42, 31, 24, 0.85) 0%, rgba(20, 14, 9, 0.65) 100%); transform: translateY(-2px); }
     .cap--lg {
       grid-column: span 8;
       aspect-ratio: 21 / 9;
@@ -589,12 +684,12 @@
       color: var(--bone);
       letter-spacing: -0.01em;
     }
-    .cap-title em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .cap-title em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .cap-desc {
       font-size: 14px;
       color: var(--bone-dim);
       max-width: 28ch;
-      font-weight: 300;
+      font-weight: 400;
     }
     .cap-meta {
       font-family: var(--mono);
@@ -624,15 +719,17 @@
     }
     .cert-head h2 {
       font-size: clamp(48px, 8vw, 120px);
-      max-width: 12ch;
+      max-width: 14ch;
+      color: var(--bone);
     }
-    .cert-head h2 em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .cert-head h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .cert-head p {
-      font-size: clamp(15px, 1.2vw, 18px);
-      color: var(--bone-dim);
-      max-width: 42ch;
-      font-weight: 300;
-      line-height: 1.55;
+      font-size: clamp(16px, 1.25vw, 19px);
+      color: var(--bone);
+      max-width: 44ch;
+      font-weight: 400;
+      line-height: 1.6;
+      opacity: 0.85;
     }
     .cert-row {
       display: grid;
@@ -663,7 +760,7 @@
       color: var(--bone);
       letter-spacing: -0.04em;
     }
-    .cert-monogram em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .cert-monogram em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .cert-name {
       font-family: var(--mono);
       font-size: 11px;
@@ -672,10 +769,11 @@
       text-transform: uppercase;
     }
     .cert-desc {
-      font-size: 14px;
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.6;
       color: var(--bone);
-      font-weight: 300;
+      font-weight: 400;
+      opacity: 0.85;
     }
     .cert-foot {
       margin-top: 48px;
@@ -713,11 +811,11 @@
       font-size: clamp(16px, 1.3vw, 19px);
       line-height: 1.6;
       color: var(--bone);
-      font-weight: 300;
+      font-weight: 400;
       max-width: 48ch;
     }
     .people-bio + .people-bio { margin-top: 1.2em; }
-    .people-bio em { font-family: var(--display); font-style: italic; color: var(--amber); }
+    .people-bio em { font-family: var(--display); font-style: italic; color: var(--bone-warm); text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
 
     .pull-quote {
       border-left: 1px solid var(--amber);
@@ -826,16 +924,18 @@
       padding-top: 14px;
       text-transform: uppercase;
     }
-    .review-attr strong { color: var(--amber); font-weight: 500; }
+    .review-attr strong { color: var(--bone-warm); font-weight: 500; letter-spacing: 0.18em; }
 
     /* ===== PROJECT LEDGER ===== */
     .ledger {
       padding-top: clamp(100px, 14vh, 180px);
       padding-bottom: clamp(100px, 14vh, 180px);
       max-width: none;
-      background: var(--black-2);
+      background: rgba(10, 8, 5, 0.55);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
     }
     .ledger-inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad); }
     .ledger-head {
@@ -853,7 +953,7 @@
       font-size: clamp(15px, 1.2vw, 18px);
       color: var(--bone-dim);
       max-width: 42ch;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.55;
     }
     .ledger-table {
@@ -921,7 +1021,7 @@
       color: var(--bone-dim);
       max-width: 42ch;
       font-size: clamp(15px, 1.2vw, 18px);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.55;
     }
     .marquee {
@@ -992,7 +1092,7 @@
       color: var(--bone-dim);
       font-weight: 400;
     }
-    .phone-sub em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .phone-sub em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .tone-btn {
       display: inline-flex;
       align-items: center;
@@ -1031,12 +1131,12 @@
       max-width: 12ch;
       margin-bottom: 32px;
     }
-    .booking h2 em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .booking h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .booking-intro {
       font-size: clamp(16px, 1.3vw, 19px);
       line-height: 1.55;
       color: var(--bone);
-      font-weight: 300;
+      font-weight: 400;
       max-width: 44ch;
       margin-bottom: 32px;
     }
@@ -1051,7 +1151,9 @@
       max-width: 36ch;
     }
     .form {
-      background: var(--walnut);
+      background: linear-gradient(165deg, rgba(31, 24, 19, 0.78) 0%, rgba(11, 8, 5, 0.6) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 40px;
       border: 1px solid var(--line);
       display: grid;
@@ -1141,7 +1243,7 @@
       letter-spacing: -0.01em;
       margin-bottom: 16px;
     }
-    .foot-mark .ampersand { color: var(--amber); font-style: italic; font-weight: 500; }
+    .foot-mark .ampersand { color: var(--bone-warm); font-style: italic; font-weight: 500; }
     footer ul { list-style: none; }
     footer li { line-height: 2.2; text-transform: uppercase; letter-spacing: 0.14em; }
     footer h5 { font-size: 10px; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; margin-bottom: 14px; font-weight: 500; }
@@ -1279,7 +1381,7 @@
       max-width: 14ch;
       margin-top: 16px;
     }
-    .mref-head h2 em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .mref-head h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .mref-track {
       display: flex;
       gap: 16px;
@@ -1320,12 +1422,12 @@
       font-size: clamp(28px, 6.5vw, 38px);
       line-height: 0.95;
     }
-    .mref-card h3 em { color: var(--amber); font-style: italic; font-weight: 500; }
+    .mref-card h3 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
     .mref-card p {
       font-size: 14px;
       line-height: 1.55;
       color: var(--bone-dim);
-      font-weight: 300;
+      font-weight: 400;
     }
     .mref-card .spec {
       font-family: var(--mono);
@@ -1581,6 +1683,9 @@
   </style>
 </head>
 <body>
+  <div class="theater-bg" aria-hidden="true"></div>
+  <div class="theater-beam" aria-hidden="true"></div>
+  <div class="theater-vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="letterbox letterbox--top" aria-hidden="true"></div>
   <div class="letterbox letterbox--bot" aria-hidden="true"></div>
@@ -1624,7 +1729,13 @@
     <!-- ===== 1. HERO ===== -->
     <section class="hero" id="hero">
       <div class="hero-image-wrap">
-        <img class="hero-image" src="https://images.pexels.com/photos/13348768/pexels-photo-13348768.jpeg?auto=compress&cs=tinysrgb&w=2000" alt="Dark luxury home cinema room with screen and audio system" loading="eager" decoding="async" />
+        <video class="hero-image" id="heroVideo"
+               poster="https://images.pexels.com/photos/13348768/pexels-photo-13348768.jpeg?auto=compress&cs=tinysrgb&w=1600"
+               autoplay muted loop playsinline preload="metadata"
+               aria-label="Cinematic film loop playing">
+          <source src="https://videos.pexels.com/video-files/31391872/13394660_3840_2160_24fps.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-beam" aria-hidden="true"></div>
         <span class="hero-tag"><span class="dot"></span>NOW SHOWING · CAL.0014 / UPL</span>
       </div>
       <div class="hero-content">
