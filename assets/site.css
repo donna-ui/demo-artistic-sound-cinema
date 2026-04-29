@@ -1467,8 +1467,8 @@
       margin-top: 16px;
     }
     .cal-prompt em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
-    body.touch .cal-tap, body.touch .cal-prompt { display: block; }
-    body.touch .cal-readout { min-height: 0; }
+    /* Tap-to-calibrate retired — calibration auto-runs with countdown */
+    .cal-tap, .cal-prompt { display: none !important; }
 
     /* ===== MOBILE BOTTOM DOCK ===== */
     .mdock {
