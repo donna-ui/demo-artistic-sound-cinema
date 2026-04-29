@@ -777,8 +777,8 @@
     .ref-step .spec span { color: var(--bone-dim); }
 
     /* SVG layer visibility */
-    .svg-layer { opacity: 0; transition: opacity 0.6s ease; }
-    .svg-layer.on { opacity: 1; }
+    /* All layers visible from the start — text steps still cycle on scroll */
+    .svg-layer { opacity: 1; }
 
     /* ===== CAPABILITIES (aspect ratio reveal cards) ===== */
     .capabilities {
