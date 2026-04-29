@@ -2618,6 +2618,8 @@
         if (document.body.classList.contains('touch') && navigator.vibrate) {
           setTimeout(() => navigator.vibrate([12, 80, 12]), 720);
         }
+        // hero video starts AFTER calibration sequence completes
+        if (window.__startHeroVideo) setTimeout(window.__startHeroVideo, 280);
       }
 
       // Touch: wait for tap-to-calibrate before running sequence
@@ -2636,7 +2638,7 @@
     })();
 
     // ============================================================
-    // HERO VIDEO — lazy-load after page paint to keep LCP fast
+    // HERO VIDEO — starts AFTER calibration sequence; plays at 0.4× speed
     // ============================================================
     (function () {
       const v = document.getElementById('heroVideo');
@@ -2644,18 +2646,22 @@
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
 
-      function start() {
+      const RATE = 0.4; // way slow — meditative dolly
+
+      window.__startHeroVideo = function () {
         const src = v.querySelector('source[data-src]');
-        if (!src) return;
+        if (!src || src.src) return;
         src.src = src.dataset.src;
         v.load();
-        v.play().catch(() => {});
-      }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(start, { timeout: 1800 });
-      } else {
-        setTimeout(start, 1200);
-      }
+        v.playbackRate = RATE;
+        const p = v.play();
+        if (p && typeof p.then === 'function') {
+          p.then(() => { v.playbackRate = RATE; }).catch(() => {});
+        }
+        // some browsers reset rate after metadata loads
+        v.addEventListener('loadeddata', () => { v.playbackRate = RATE; }, { once: true });
+        v.addEventListener('playing', () => { v.playbackRate = RATE; }, { once: true });
+      };
     })();
 
     // ============================================================
