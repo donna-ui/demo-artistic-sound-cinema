@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Studio — Artistic Sound &amp; Cinema</title>
+  <meta name="description" content="Jeff Siegel and Frank. Same studio, same two people, since 2008. CEDIA · THX · HAA · ISF certified. Upland, California." />
+  <meta name="theme-color" content="#050402" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site.css" />
+
+  <style>
+    .sub-hero {
+      max-width: none;
+      padding: clamp(120px, 18vh, 200px) var(--pad) clamp(80px, 12vh, 140px);
+      text-align: center;
+    }
+    .sub-hero .eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-bottom: 36px;
+    }
+    .sub-hero .eyebrow::before { content: '— '; color: var(--bone-warm); }
+    .sub-hero h1 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(56px, 9vw, 144px);
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      color: var(--bone);
+      max-width: 14ch;
+      margin: 0 auto 40px;
+    }
+    .sub-hero h1 em {
+      color: var(--bone-warm);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.06em;
+      letter-spacing: -0.025em;
+      text-shadow: 0 0 48px rgba(232, 226, 213, 0.28);
+    }
+
+    /* Bio block */
+    .bio {
+      max-width: 64ch;
+      margin: 0 auto;
+      padding: clamp(80px, 12vh, 140px) var(--pad);
+      text-align: left;
+    }
+    .bio p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(20px, 1.7vw, 26px);
+      line-height: 1.55;
+      color: var(--bone);
+      margin-bottom: 1.4em;
+      font-weight: 400;
+    }
+    .bio p em {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--bone-warm);
+    }
+    .bio-pull {
+      margin: clamp(80px, 12vh, 140px) auto;
+      max-width: 32ch;
+      text-align: center;
+      padding: 0 var(--pad);
+    }
+    .bio-pull p {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 76px);
+      line-height: 1.1;
+      color: var(--bone);
+      letter-spacing: -0.015em;
+    }
+    .bio-pull p em {
+      color: var(--bone-warm);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.06em;
+    }
+
+    /* Cert detail */
+    .cert-detail-wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: clamp(120px, 18vh, 200px) var(--pad);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .cert-detail-head {
+      text-align: center;
+      margin-bottom: clamp(80px, 12vh, 120px);
+    }
+    .cert-detail-head .eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-bottom: 20px;
+    }
+    .cert-detail-head .eyebrow::before { content: '— '; color: var(--bone-warm); }
+    .cert-detail-head h2 {
+      font-family: var(--display);
+      font-size: clamp(48px, 7vw, 120px);
+      line-height: 1.05;
+      color: var(--bone);
+      max-width: 18ch;
+      margin: 0 auto 24px;
+    }
+    .cert-detail-head h2 em {
+      color: var(--bone-warm);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.06em;
+    }
+    .cert-detail-head p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(18px, 1.5vw, 22px);
+      color: var(--bone-dim);
+      max-width: 52ch;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .cert-detail {
+      padding: clamp(48px, 8vh, 80px) 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+    }
+    .cert-detail:first-of-type { border-top: 1px solid var(--line); }
+    .cert-detail .mono-mark {
+      font-family: var(--display);
+      font-size: clamp(48px, 7vw, 120px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--bone);
+    }
+    .cert-detail .name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(16px, 1.3vw, 18px);
+      color: var(--bone-dim);
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .cert-detail .desc {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(18px, 1.5vw, 22px);
+      color: var(--bone);
+      line-height: 1.55;
+    }
+    .cert-detail .desc em {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--bone-warm);
+    }
+
+    /* House rules */
+    .rules {
+      max-width: 56ch;
+      margin: 0 auto;
+      padding: clamp(120px, 18vh, 200px) var(--pad);
+      text-align: center;
+    }
+    .rules .eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-bottom: 56px;
+    }
+    .rules .eyebrow::before { content: '— '; color: var(--bone-warm); }
+    .rules ol { list-style: none; padding: 0; margin: 0; counter-reset: rule; }
+    .rules li {
+      counter-increment: rule;
+      font-family: var(--display);
+      font-size: clamp(28px, 3.5vw, 48px);
+      color: var(--bone);
+      line-height: 1.25;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      letter-spacing: -0.005em;
+    }
+    .rules li:first-child { border-top: 1px solid var(--line); }
+    .rules li::before {
+      content: counter(rule, decimal-leading-zero);
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--bone-warm);
+      letter-spacing: 0.18em;
+      margin-bottom: 10px;
+    }
+
+    /* Footer minimal */
+    .h2-foot {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 56px var(--pad) 32px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+    }
+    .h2-foot a { color: var(--bone-dim); transition: color 0.25s ease; }
+    .h2-foot a:hover { color: var(--bone-warm); }
+    .h2-foot .drumbeat {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--bone-warm);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* Subpage nav (matches /work) */
+    .h2-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 7000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px var(--pad);
+      background: rgba(5,4,2,0.78);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom: 1px solid var(--line);
+    }
+    .h2-nav-mark { font-family: var(--display); font-size: 15px; letter-spacing: 0.06em; color: var(--bone); line-height: 1.2; }
+    .h2-nav-mark .ampersand { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: var(--bone-warm); }
+    .h2-nav-links { display: flex; gap: clamp(20px, 3vw, 40px); }
+    .h2-nav-link { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bone-dim); transition: color 0.2s ease; }
+    .h2-nav-link.is-current { color: var(--bone); }
+    .h2-nav-link:hover { color: var(--bone-warm); }
+
+    @media (max-width: 720px) {
+      .cert-detail { grid-template-columns: 1fr; gap: 16px; }
+      .h2-nav-links { gap: 14px; }
+      .h2-nav-link { font-size: 9.5px; letter-spacing: 0.18em; }
+      .h2-foot { flex-direction: column; align-items: flex-start; padding-bottom: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theater-bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="h2-nav">
+    <a class="h2-nav-mark" href="/">Artistic Sound <span class="ampersand">&amp;</span> Cinema</a>
+    <div class="h2-nav-links">
+      <a class="h2-nav-link is-current" href="/studio/">The Studio</a>
+      <a class="h2-nav-link" href="/work/">Selected Work</a>
+      <a class="h2-nav-link" href="/book/">By Appointment</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="sub-hero">
+      <span class="eyebrow">The studio</span>
+      <h1>Jeff <em>&amp;</em> Frank.</h1>
+    </section>
+
+    <div class="bio">
+      <p>Jeff Siegel founded Artistic Sound &amp; Cinema in <em>2008</em>, in a single industrial unit on West 13th Street in Upland.</p>
+      <p>Seventeen years later: same studio, same address, same phone number, and the same two people on every job.</p>
+      <p>Jeff calibrates. Frank installs. <em>No franchise. No rotating subcontractors. No offshore call center.</em> If you&rsquo;ve worked with Jeff once, you&rsquo;ve worked with Jeff. If you call five years later because the projector needs a new bulb, Jeff picks up.</p>
+    </div>
+
+    <div class="bio-pull">
+      <p>The studio is <em>two people</em> on purpose.</p>
+    </div>
+
+    <section class="cert-detail-wrap">
+      <div class="cert-detail-head">
+        <span class="eyebrow">On the discipline</span>
+        <h2>Four certifications. <em>Each one a separate body of work.</em></h2>
+        <p>Hundreds of integrators in California. Less than a handful hold all four.</p>
+      </div>
+      <div class="cert-detail">
+        <div class="mono-mark">CEDIA</div>
+        <div>
+          <span class="name">Custom Electronic Design + Installation Association</span>
+          <p class="desc">The trade body for the entire AV-integration industry. Standards, ethics, continuing education. The professional baseline &mdash; the rest is what you do <em>after.</em></p>
+        </div>
+      </div>
+      <div class="cert-detail">
+        <div class="mono-mark">THX</div>
+        <div>
+          <span class="name">THX Cinema Standard</span>
+          <p class="desc">The cinema acoustic standard founded at Lucasfilm in 1983. <em>The certification on the lobby card.</em> It governs how a room reproduces theatrical sound &mdash; channel placement, calibration tolerances, dynamic range.</p>
+        </div>
+      </div>
+      <div class="cert-detail">
+        <div class="mono-mark">HAA</div>
+        <div>
+          <span class="name">Home Acoustics Alliance</span>
+          <p class="desc">Room acoustics and tuning. The discipline that makes the same speakers sound different in different rooms. <em>Bass traps, broadband absorbers, diffusers, decay times.</em> Most installers never sit this exam.</p>
+        </div>
+      </div>
+      <div class="cert-detail">
+        <div class="mono-mark">ISF</div>
+        <div>
+          <span class="name">Imaging Science Foundation</span>
+          <p class="desc">Display calibration. Grayscale, primaries, gamma, color volume. <em>The same body of work Hollywood uses to color-grade theatrical masters.</em> An ISF-calibrated screen reproduces what the director saw on the reference monitor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules">
+      <span class="eyebrow">House rules</span>
+      <ol>
+        <li>Design before the drywall.</li>
+        <li>Measure the room first.</li>
+        <li>Calibrate by hand.</li>
+        <li>Same team. Every visit.</li>
+        <li>Pick up the phone, year five.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="h2-foot">
+    <span>&copy; Artistic Sound <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:var(--bone-warm)">&amp;</span> Cinema, Inc. &middot; CSLB&nbsp;#923658</span>
+    <span class="drumbeat">Calibrated, not configured.</span>
+    <span><a href="/">Home</a> &middot; <a href="/work/">Work</a> &middot; <a href="/book/">By Appointment</a></span>
+  </footer>
+
+  <div class="mdock visible" id="mdock" aria-label="Quick actions">
+    <div class="mdock-status"><span>JEFF + FRANK &middot; UPLAND CA &middot; MON–FRI &middot; 8A–6P PT</span></div>
+    <a href="tel:+19094762910" data-vib="1">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l2.5-1 2 3-1.5 1.5a8 8 0 0 0 3.5 3.5L11 8.5l3 2-1 2.5a2 2 0 0 1-2.2 1.4C5.7 13.7 2.3 10.3 1.6 5.2A2 2 0 0 1 3 3z" stroke="currentColor" stroke-width="1.2"/></svg>
+      Call Jeff
+    </a>
+    <a href="mailto:info@artisticsoundandcinema.com" data-vib="1">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12v10H2z M2 3l6 5 6-5" stroke="currentColor" stroke-width="1.2"/></svg>
+      Email
+    </a>
+    <a href="/book/" data-vib="2">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg>
+      By Appointment
+    </a>
+  </div>
+</body>
+</html>

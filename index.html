@@ -3,1861 +3,500 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Artistic Sound &amp; Cinema — Reference-grade home cinema, calibrated by hand. Upland, CA.</title>
-  <meta name="description" content="Custom home cinemas, whole-house audio, outdoor AV, lighting and shade automation. CEDIA · THX · HAA · ISF certified. Upland, CA. Serving the Inland Empire and beyond since 2008." />
-  <meta name="theme-color" content="#050505" />
-
-  <!-- Open Graph -->
+  <title>Artistic Sound &amp; Cinema — Calibrated, not configured.</title>
+  <meta name="description" content="Custom home cinema, whole-house audio, lighting and shade automation. CEDIA · THX · HAA · ISF. Upland, California — by appointment, since 2008." />
+  <meta name="theme-color" content="#050402" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Artistic Sound &amp; Cinema — Calibrated, not configured." />
-  <meta property="og:description" content="Reference-grade home cinema, whole-house audio, and lighting/shade automation. CEDIA · THX · HAA · ISF certified. Upland, CA." />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:description" content="Reference-grade home cinema, by appointment. Upland, California." />
+  <meta property="og:image" content="https://artistic-sound-cinema.vercel.app/hero-poster.jpg" />
 
-  <!-- Google Fonts: Bodoni Moda (display didone) + Hanken Grotesk (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
 
   <style>
-    /* ===== GHL OVERRIDE (kept for future GHL paste) ===== */
-    html, body { background-color: #050402 !important; color: #E8E2D5 !important; }
+    /* ====================================================================
+       HOME v2 — Path B, minimal six-section editorial.
+       Reuses theater-bg, calibration overlay, mobile dock, mono/cormorant
+       type tokens from site.css. Adds page-specific overrides + new
+       minimal sections (manifesto-quiet, certs-row, work-list, contact-quiet).
+       ==================================================================== */
 
-    /* ===== RESET ===== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    img, svg { display: block; max-width: 100%; }
-    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ===== TOKENS ===== */
-    :root {
-      --black: #050402;
-      --black-2: #0A0805;
-      --walnut: #1F1813;
-      --walnut-2: #2A1F18;
-      --bone: #E8E2D5;
-      --bone-warm: #F0E5D0;
-      --bone-dim: #BFB8A6;
-      --amber: #E8A547;
-      --amber-dim: #A77432;
-      --ruby: #8B1A2B;
-      --ruby-deep: #5C0F1A;
-      --ruby-bright: #A02538;
-      --cyan: #4FB8E8;
-      --beam: rgba(255, 198, 122, 0.12);
-      --line: rgba(232, 226, 213, 0.12);
-      --line-strong: rgba(232, 226, 213, 0.32);
-
-      --display: 'Boldonse', 'Bodoni 72', 'Didot', serif;
-      --body: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
-      --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-
-      --container: 1440px;
-      --pad: clamp(20px, 4vw, 64px);
-      --letterbox: 0vh;
-    }
-
-    /* ===== THEATER ROOM BACKDROP — single composite gradient, GPU-cheap ===== */
-    .theater-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 70vw 50vh at 30% 0%, rgba(255, 196, 120, 0.08) 0%, transparent 55%),
-        radial-gradient(ellipse 80vw 60vh at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 95%),
-        linear-gradient(180deg, #0A0703 0%, #050402 60%, #020100 100%);
-    }
-    .theater-vignette { display: none; }
-    .theater-beam { display: none; }
-
-    /* hide screening-room backdrop where we want pure void */
-    body.no-theater .theater-bg,
-    body.no-theater .theater-vignette,
-    body.no-theater .theater-beam { display: none; }
-
-    /* ensure all real content sits above the theater */
-    main, footer, .nav, .calibration, .feature-card, .mdock, .grain { position: relative; z-index: 5; }
-    .calibration { z-index: 9500; }
-    .feature-card { z-index: 8600; }
-    .nav { z-index: 7000; }
-    .mdock { z-index: 8700; }
-    .grain { z-index: 9000; }
-    .letterbox { z-index: 8500; }
-    .cursor-light { z-index: 100; }
-
-    /* ===== BASE TYPOGRAPHY ===== */
-    body {
-      background: var(--black);
-      color: var(--bone);
-      font-family: var(--body);
-      font-weight: 400;
-      font-size: 19px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    .display { font-family: var(--display); font-weight: 400; line-height: 1.02; letter-spacing: 0.005em; font-style: normal; }
-    .mono { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-dim); }
-    .mono-amber { color: var(--bone); }
-    .mono-cyan { color: var(--cyan); }
-
-    h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.02; letter-spacing: 0.005em; }
-    .chapter {
-      display: block;
-      font-family: var(--body);
-      font-weight: 500;
-      font-size: 12px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-      margin-bottom: 32px;
-    }
-    .chapter::before {
-      content: '';
-      display: inline-block;
-      width: 28px;
-      height: 1px;
-      background: var(--bone-dim);
-      vertical-align: middle;
-      margin-right: 16px;
-      transform: translateY(-2px);
-    }
-
-    /* ===== FILM GRAIN (subtle, justified for cinema brand) ===== */
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9000;
-      opacity: 0.05;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-      background-size: 220px 220px;
-    }
-
-    /* ===== LETTERBOX OVERLAY (page-level, scroll-driven) ===== */
-    .letterbox {
-      position: fixed;
-      left: 0;
-      right: 0;
-      pointer-events: none;
-      z-index: 8500;
-      background: var(--black);
-      height: var(--letterbox);
-      transition: height 0.4s cubic-bezier(.22,.61,.36,1);
-    }
-    .letterbox--top { top: 0; border-bottom: 1px solid rgba(232,165,71,0.06); }
-    .letterbox--bot { bottom: 0; border-top: 1px solid rgba(232,165,71,0.06); }
-
-    .feature-card {
-      position: fixed;
-      inset: 0;
-      z-index: 8600;
-      display: grid;
-      place-items: center;
-      background: rgba(5,5,5,0.94);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    .feature-card.visible { opacity: 1; }
-    .feature-card-inner {
-      text-align: center;
-      color: var(--bone);
-    }
-    .feature-card-inner .mono { font-size: 12px; color: var(--bone-dim); margin-bottom: 14px; }
-    .feature-card-inner h2 {
-      font-size: clamp(48px, 8vw, 120px);
-      letter-spacing: 0.02em;
-    }
-
-    .cursor-light { display: none; }
-
-    /* ===== NAV ===== */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 7000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 22px var(--pad);
-      transition: background 0.3s ease, border-color 0.3s ease;
-      border-bottom: 1px solid transparent;
-    }
-    .nav.scrolled {
-      background: rgba(5,5,5,0.78);
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
-      border-bottom-color: var(--line);
-    }
-    .nav-mark {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: 18px;
-      letter-spacing: -0.01em;
-      color: var(--bone);
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-    .nav-mark .ampersand { font-style: italic; font-weight: 500; color: var(--bone-warm); }
-    .nav-mark .mono-id { font-family: var(--mono); font-size: 9px; color: var(--bone-dim); letter-spacing: 0.18em; }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-    .nav-link {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-      transition: color 0.2s ease;
+    /* ---------- HOME HERO: full-bleed video, no panels, no spec strip ---------- */
+    .h2-hero {
       position: relative;
-    }
-    .nav-link:hover { color: var(--bone-warm); }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      bottom: -6px;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 0.3s cubic-bezier(.22,.61,.36,1);
-    }
-    .nav-link:hover::after { transform: scaleX(1); }
-
-    .nav-cta {
-      font-family: var(--body);
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--bone);
-      background: var(--ruby);
-      padding: 12px 20px;
-      transition: background 0.25s ease;
-    }
-    .nav-cta:hover { background: var(--ruby-bright); }
-
-    /* ===== CALIBRATION OVERLAY (load sequence) ===== */
-    .calibration {
-      position: fixed;
-      inset: 0;
-      z-index: 9500;
-      background: var(--black);
-      display: grid;
-      place-items: center;
-      transition: opacity 0.6s ease 0.4s, visibility 0s linear 1.2s;
-    }
-    .calibration.done {
-      opacity: 0;
-      visibility: hidden;
-    }
-    .cal-inner {
-      width: min(92vw, 540px);
-      padding: 0 4vw;
-    }
-    .cal-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--bone);
-      margin: 0 auto 32px;
-      animation: dotPulse 0.9s ease-in-out infinite;
-    }
-    @keyframes dotPulse {
-      0%, 100% { transform: scale(1); opacity: 0.4; box-shadow: 0 0 0 0 rgba(232,226,213,0); }
-      50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 24px 4px rgba(232,165,71,0.4); }
-    }
-    .cal-readout {
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height: 1.85;
-      color: var(--bone-dim);
-      white-space: pre;
-      min-height: 200px;
-    }
-    .cal-readout .ok { color: var(--cyan); }
-    .cal-readout .ready { color: var(--bone-warm); }
-    .cal-cursor {
-      display: inline-block;
-      width: 7px;
-      height: 14px;
-      background: var(--bone-warm);
-      vertical-align: -2px;
-      margin-left: 2px;
-      animation: blink 0.8s steps(2, start) infinite;
-    }
-    @keyframes blink { to { visibility: hidden; } }
-
-    /* ===== MAIN ENTRANCE ===== */
-    main {
-      opacity: 0;
-      transition: opacity 1.2s ease 1.0s;
-    }
-    main.revealed { opacity: 1; }
-
-    /* ===== SECTION SHELL ===== */
-    section {
-      padding: clamp(80px, 12vh, 160px) var(--pad);
-      max-width: var(--container);
-      margin: 0 auto;
-      position: relative;
-    }
-    /* per-section ambient warmth — soft tungsten wash from upper-left */
-    section::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: -15%;
-      width: 70%;
-      height: 60%;
-      background: radial-gradient(ellipse at 30% 30%, rgba(255, 196, 120, 0.045) 0%, rgba(255, 196, 120, 0.018) 30%, transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(20px);
-    }
-    section > * { position: relative; z-index: 1; }
-    /* hide ambient on full-bleed sections */
-    .area::before, .hero::before { display: none; }
-    .section-mark { display: none; }
-    .section-watermark { display: none; }
-
-    /* ===== HERO ===== */
-    .hero {
-      min-height: 100vh;
-      max-width: none;
-      padding-top: 140px;
-      padding-bottom: 80px;
-      display: grid;
-      grid-template-columns: 1fr;
-      align-items: end;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-image-wrap {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 62%;
-      height: 70%;
-      overflow: hidden;
-    }
-    .hero-image-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, var(--black) 0%, rgba(5,5,5,0.55) 30%, rgba(5,5,5,0.15) 70%, rgba(5,5,5,0.45) 100%),
-                  linear-gradient(180deg, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0) 30%, rgba(5,5,5,0.6) 100%);
-      pointer-events: none;
-    }
-    .hero-image {
       width: 100%;
-      height: 100%;
+      height: 100vh;
+      min-height: 720px;
+      max-width: none;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .h2-hero video,
+    .h2-hero img.h2-hero-poster {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
-      transform: scale(1.04);
-      filter: contrast(1.1) saturate(0.92) brightness(0.95);
+      filter: contrast(1.06) saturate(0.92) brightness(0.92);
+      z-index: -2;
     }
-    /* projector beam — single linear gradient, no blur (perf) */
-    .hero-beam {
+    .h2-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5,4,2,0.55) 0%, rgba(5,4,2,0.05) 18%, rgba(5,4,2,0) 38%, rgba(5,4,2,0.0) 62%, rgba(5,4,2,0.55) 88%, rgba(5,4,2,0.85) 100%),
+        linear-gradient(90deg, rgba(5,4,2,0.4) 0%, rgba(5,4,2,0) 25%, rgba(5,4,2,0) 75%, rgba(5,4,2,0.4) 100%);
+      z-index: -1;
+    }
+    .h2-wordmark {
       position: absolute;
-      top: -10%;
-      right: -8%;
-      width: 80%;
-      height: 130%;
-      background: linear-gradient(195deg, rgba(255, 200, 130, 0.10) 0%, rgba(255, 200, 130, 0.04) 28%, transparent 60%);
-      transform: skewX(-14deg);
-      pointer-events: none;
-      mix-blend-mode: screen;
-      opacity: 0.85;
+      top: clamp(28px, 4.5vh, 48px);
+      left: clamp(28px, 4vw, 64px);
+      font-family: var(--display);
+      font-size: clamp(15px, 1.05vw, 17px);
+      letter-spacing: 0.06em;
+      color: var(--bone);
+      z-index: 4;
+      line-height: 1.2;
     }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1440px;
-      margin: 0 auto;
-      width: 100%;
+    .h2-wordmark .ampersand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--bone-warm);
+      margin: 0 2px;
+    }
+    .h2-wordmark .est {
+      display: block;
+      margin-top: 4px;
+      font-family: var(--body);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .h2-cornerphone {
+      position: absolute;
+      top: clamp(28px, 4.5vh, 48px);
+      right: clamp(28px, 4vw, 64px);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--bone);
+      text-transform: uppercase;
+      z-index: 4;
+      transition: color 0.25s ease;
+    }
+    .h2-cornerphone:hover { color: var(--bone-warm); }
+    .h2-statement {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: clamp(110px, 18vh, 200px);
+      text-align: center;
       padding: 0 var(--pad);
+      z-index: 3;
     }
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-    .hero-eyebrow .mono { font-size: 11px; }
-    .hero-eyebrow .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--ruby-bright);
-      box-shadow: 0 0 10px rgba(160, 37, 56, 0.6);
-      animation: dotPulse 1.6s ease-in-out infinite;
-    }
-    .hero h1 {
-      font-size: clamp(64px, 13vw, 196px);
-      max-width: 16ch;
-      margin-bottom: 32px;
+    .h2-statement h1 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(56px, 9.5vw, 168px);
       line-height: 0.96;
       letter-spacing: -0.015em;
+      color: var(--bone);
+      max-width: 18ch;
+      margin: 0 auto;
     }
-    .hero h1 .em {
+    .h2-statement h1 em {
+      display: block;
       color: var(--bone-warm);
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       font-weight: 500;
       font-size: 1.06em;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 48px rgba(232, 226, 213, 0.28);
+      letter-spacing: -0.025em;
+      text-shadow: 0 0 56px rgba(232, 226, 213, 0.32);
+      margin-top: 6px;
     }
-    .hero-sub {
-      max-width: 50ch;
-      font-size: clamp(19px, 1.55vw, 23px);
-      line-height: 1.55;
-      color: var(--bone);
-      font-weight: 400;
-      margin-bottom: 40px;
-    }
-    .hero-cta-row {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      padding: 20px 30px;
-      background: var(--ruby);
-      color: var(--bone);
-      font-family: var(--body);
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
-    .btn-primary:hover { background: var(--ruby-bright); transform: translateX(2px); }
-    .btn-primary svg { transition: transform 0.25s ease; }
-    .btn-primary:hover svg { transform: translateX(4px); }
-
-    /* hero brand-stat strip — the 4 numbers visitors need to see in viewport 1 */
-    .brand-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      max-width: 1440px;
-      margin: 56px auto 0;
-      padding: 28px var(--pad);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      position: relative;
-      z-index: 5;
-    }
-    .brand-stat { display: flex; flex-direction: column; gap: 4px; padding: 0 18px; border-right: 1px solid var(--line); }
-    .brand-stat:last-child { border-right: 0; }
-    .brand-stat:first-child { padding-left: 0; }
-    .brand-stat-num {
-      font-family: var(--display);
-      font-size: clamp(28px, 2.6vw, 38px);
-      font-weight: 400;
-      line-height: 1;
-      color: var(--bone);
-      letter-spacing: 0.01em;
-    }
-    .brand-stat-label {
-      font-family: var(--body);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-      margin-top: 2px;
-    }
-    .brand-stat-num em { color: var(--bone-warm); font-style: italic; font-family: var(--body); }
-
-    .hero-spec-grid {
+    .h2-quietcta {
       position: absolute;
-      bottom: 32px;
-      left: var(--pad);
-      right: var(--pad);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-      max-width: 1440px;
-      margin: 0 auto;
-      pointer-events: none;
-    }
-    .hero-spec {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .hero-spec-label {
+      left: 0; right: 0;
+      bottom: clamp(36px, 5vh, 56px);
+      text-align: center;
+      z-index: 3;
       font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--bone-dim);
     }
-    .hero-spec-value {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 22px;
+    .h2-quietcta a {
       color: var(--bone);
+      transition: color 0.25s ease;
+      border-bottom: 1px solid rgba(232,226,213,0.3);
+      padding-bottom: 3px;
+    }
+    .h2-quietcta a:hover { color: var(--bone-warm); border-bottom-color: var(--bone-warm); }
+
+    /* ---------- MANIFESTO QUIET: one sentence at scale ---------- */
+    .h2-manifesto {
+      max-width: none;
+      padding: clamp(180px, 28vh, 320px) var(--pad);
+      text-align: center;
+      position: relative;
+    }
+    .h2-manifesto-eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-bottom: 56px;
+    }
+    .h2-manifesto-eyebrow::before { content: '— '; color: var(--bone-warm); }
+    .h2-manifesto p {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(38px, 5.6vw, 92px);
+      line-height: 1.18;
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      max-width: 22ch;
+      margin: 0 auto;
+    }
+    .h2-manifesto p em {
+      color: var(--bone-warm);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.05em;
+      letter-spacing: -0.015em;
+      text-shadow: 0 0 40px rgba(232, 226, 213, 0.22);
+    }
+    .h2-manifesto-attr {
+      display: block;
+      margin-top: 64px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--bone-dim);
     }
 
-    /* ===== MANIFESTO ===== */
-    .manifesto {
-      padding-top: clamp(120px, 18vh, 200px);
-      padding-bottom: clamp(120px, 18vh, 200px);
-      position: relative;
+    /* ---------- CERTIFICATIONS ROW: just monograms ---------- */
+    .h2-certs {
       max-width: none;
-      overflow: hidden;
+      padding: clamp(140px, 22vh, 240px) var(--pad);
+      text-align: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    .manifesto-photo {
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/dark-sliver.jpg');
-      background-size: cover;
-      background-position: center right;
-      opacity: 0.45;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .manifesto-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, var(--black) 0%, rgba(5,4,2,0.55) 50%, rgba(5,4,2,0.2) 100%);
-    }
-    .manifesto > .manifesto-inner {
-      position: relative;
-      z-index: 1;
+    .h2-certs-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(16px, 4vw, 56px);
       max-width: var(--container);
       margin: 0 auto;
-      padding: 0 var(--pad);
+      align-items: center;
     }
+    .h2-cert-mark {
+      font-family: var(--display);
+      font-size: clamp(32px, 5.5vw, 92px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--bone);
+      transition: color 0.3s ease;
+    }
+    .h2-cert-mark:hover { color: var(--bone-warm); }
+    .h2-certs-foot {
+      margin-top: clamp(64px, 10vh, 112px);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(18px, 1.5vw, 22px);
+      color: var(--bone-dim);
+      max-width: 38ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+    .h2-certs-foot em { color: var(--bone-warm); font-style: italic; }
+    .h2-certs-link {
+      display: inline-block;
+      margin-top: 32px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bone);
+      border-bottom: 1px solid rgba(232,226,213,0.3);
+      padding-bottom: 3px;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .h2-certs-link:hover { color: var(--bone-warm); border-bottom-color: var(--bone-warm); }
 
-    /* ===== CINEMA DIVIDER (full-bleed projector-beam moment) ===== */
-    .cinema-divider {
-      position: relative;
-      width: 100%;
-      height: clamp(60vh, 80vh, 800px);
+    /* ---------- SELECTED WORK: typographic plate, no table ---------- */
+    .h2-work {
       max-width: none;
       padding: 0;
       margin: 0;
+    }
+    .h2-work-divider {
+      position: relative;
+      width: 100%;
+      height: clamp(56vh, 70vh, 720px);
       overflow: hidden;
+      isolation: isolate;
       display: grid;
       place-items: center;
-      isolation: isolate;
     }
-    .cinema-divider::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/projector-beam.jpg');
-      background-size: cover;
-      background-position: center;
+    .h2-work-divider img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
       z-index: -2;
       transform: scale(1.04);
-    }
-    .cinema-divider::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(5,4,2,0.6) 0%, rgba(5,4,2,0.1) 35%, rgba(5,4,2,0.1) 65%, rgba(5,4,2,0.7) 100%);
-      z-index: -1;
-    }
-    .cinema-divider-quote {
-      text-align: center;
-      max-width: 24ch;
-      padding: 0 var(--pad);
-    }
-    .cinema-divider-quote .display {
-      font-size: clamp(36px, 5.5vw, 76px);
-      line-height: 1.05;
-      color: var(--bone);
-      text-shadow: 0 0 60px rgba(0,0,0,0.6);
-    }
-    .cinema-divider-quote .display em {
-      color: var(--bone-warm);
-      font-family: var(--body);
-      font-style: italic;
-      font-weight: 500;
-      text-shadow: 0 0 40px rgba(232, 226, 213, 0.18);
-    }
-    .cinema-divider-attr {
-      margin-top: 28px;
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-    }
-
-    /* ===== LEDGER LEAD IMAGE ===== */
-    .ledger-lead {
-      width: 100%;
-      max-width: var(--container);
-      margin: 0 auto 40px;
-      padding: 0 var(--pad);
-    }
-    .ledger-lead-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 21 / 9;
-      overflow: hidden;
-      border: 1px solid var(--line);
-    }
-    .ledger-lead-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       filter: contrast(1.05) saturate(0.95) brightness(0.95);
     }
-    .ledger-lead-frame::after {
+    .h2-work-divider::after {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(5,4,2,0.0) 0%, rgba(5,4,2,0.0) 60%, rgba(5,4,2,0.6) 100%);
-      pointer-events: none;
-    }
-    .ledger-lead-tag {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 14px;
-      letter-spacing: 0.04em;
-      color: var(--bone-warm);
-      z-index: 2;
-    }
-
-    /* ===== BOOKING BACKGROUND PHOTO ===== */
-    .booking {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-    }
-    .booking-photo {
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/cinema-angle.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.32;
-      z-index: -2;
-    }
-    .booking-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(5,4,2,0.85) 0%, rgba(5,4,2,0.55) 40%, rgba(5,4,2,0.85) 100%);
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(5,4,2,0.55) 0%, rgba(5,4,2,0.1) 30%, rgba(5,4,2,0.1) 70%, rgba(5,4,2,0.7) 100%);
       z-index: -1;
     }
-    .manifesto h2 {
-      font-size: clamp(54px, 11vw, 168px);
-      max-width: 14ch;
-      margin: 0 0 64px auto;
-      text-align: right;
-    }
-    .manifesto h2 .strike {
-      color: var(--bone-dim);
-      text-decoration: line-through;
-      text-decoration-thickness: 4px;
-      text-decoration-color: var(--ruby);
-    }
-    .manifesto-body {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      gap: clamp(40px, 6vw, 96px);
-      align-items: start;
-    }
-    .manifesto-left .mono { display: block; font-size: 11px; }
-    .manifesto-right p {
-      font-size: clamp(20px, 1.7vw, 24px);
-      line-height: 1.55;
-      color: var(--bone);
-      font-weight: 400;
-    }
-    .manifesto-right p + p { margin-top: 1.2em; }
-    .manifesto-right em {
-      font-family: var(--body);
-      font-style: italic;
-      font-weight: 600;
+    .h2-work-divider-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
       color: var(--bone-warm);
+      text-align: center;
     }
-
-    /* ===== REFERENCE ROOM (sticky scroll) ===== */
-    .ref-room {
-      max-width: none;
-      padding-left: 0;
-      padding-right: 0;
-      padding-top: 80px;
-      padding-bottom: 0;
-    }
-    .ref-room-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 0;
+    .h2-work-list {
       max-width: var(--container);
       margin: 0 auto;
-      padding: 0 var(--pad);
-    }
-    .ref-room-canvas {
-      position: sticky;
-      top: 12vh;
-      height: 76vh;
-      display: grid;
-      place-items: center;
-      align-self: start;
-    }
-    .ref-room-canvas svg {
-      width: 100%;
-      height: 100%;
-      max-height: 76vh;
-    }
-    .ref-room-steps {
-      padding: 80px 0 80px clamp(20px, 4vw, 64px);
-      display: flex;
-      flex-direction: column;
-      gap: 30vh;
-    }
-    .ref-step {
-      opacity: 0.18;
-      transition: opacity 0.4s ease;
-      max-width: 36ch;
-    }
-    .ref-step.active { opacity: 1; }
-    .ref-step .stage-label {
-      display: block;
-      font-family: var(--body);
-      font-style: italic;
-      font-weight: 500;
-      font-size: 16px;
-      letter-spacing: 0.02em;
-      color: var(--bone-warm);
-      margin-bottom: 14px;
-    }
-    .ref-step .stage-label::before { content: '— '; color: var(--bone-dim); }
-    .ref-step h3 {
-      font-size: clamp(36px, 4.6vw, 60px);
-      margin-bottom: 18px;
-    }
-    .ref-step p {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--bone-dim);
-      font-weight: 400;
-    }
-    .ref-step .spec {
-      margin-top: 22px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--cyan);
-      letter-spacing: 0.08em;
-      line-height: 1.8;
-    }
-    .ref-step .spec span { color: var(--bone-dim); }
-
-    /* SVG layer visibility */
-    .svg-layer { opacity: 0; transition: opacity 0.6s ease; }
-    .svg-layer.on { opacity: 1; }
-
-    /* ===== CAPABILITIES (aspect ratio reveal cards) ===== */
-    .capabilities {
-      padding-top: clamp(100px, 14vh, 180px);
-      padding-bottom: clamp(100px, 14vh, 180px);
-    }
-    .cap-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-      margin-top: 64px;
-    }
-    /* capabilities removed in 9.0 cleanup — services live in the project ledger */
-    .cap--lg {
-      grid-column: span 8;
-      aspect-ratio: 21 / 9;
-    }
-    .cap--sm {
-      grid-column: span 4;
-      aspect-ratio: 4 / 3;
-    }
-    .cap--tall {
-      grid-column: span 4;
-      aspect-ratio: 3 / 4;
-    }
-    .cap-num {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--bone-dim);
-    }
-    .cap-title {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(28px, 3vw, 48px);
-      line-height: 0.95;
-      color: var(--bone);
-      letter-spacing: -0.01em;
-    }
-    .cap-title em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .cap-desc {
-      font-size: 14px;
-      color: var(--bone-dim);
-      max-width: 28ch;
-      font-weight: 400;
-    }
-    .cap-meta {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--cyan);
-      letter-spacing: 0.16em;
-    }
-    .cap-meta span { color: var(--bone-dim); }
-
-    /* ===== CALIBRATION TIER (4 certs) ===== */
-    .cert-tier {
-      padding-top: clamp(100px, 14vh, 180px);
-      padding-bottom: clamp(100px, 14vh, 180px);
-      max-width: none;
-    }
-    .cert-inner {
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 0 var(--pad);
-    }
-    .cert-head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 36px;
-      margin-bottom: 80px;
-    }
-    .cert-head h2 {
-      font-size: clamp(54px, 9vw, 140px);
-      max-width: 18ch;
-      color: var(--bone);
-    }
-    .cert-head h2 em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .cert-head p {
-      font-size: clamp(16px, 1.25vw, 19px);
-      color: var(--bone);
-      max-width: 56ch;
-      font-weight: 400;
-      line-height: 1.6;
-      opacity: 0.85;
-    }
-    .cert-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-    .cert {
-      padding: 56px 32px;
-      border-right: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      transition: background 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease, background 0.3s ease;
-    }
-    .cert.in { opacity: 1; transform: translateY(0); }
-    .cert:last-child { border-right: 0; }
-    .cert:hover { background: rgba(232,165,71,0.04); }
-    .cert-monogram {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(60px, 7vw, 96px);
-      line-height: 0.92;
-      color: var(--bone);
-      letter-spacing: -0.04em;
-    }
-    .cert-monogram em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .cert-name {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      color: var(--bone-dim);
-      text-transform: uppercase;
-    }
-    .cert-desc {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--bone);
-      font-weight: 400;
-      opacity: 0.85;
-    }
-    .cert-foot {
-      margin-top: 48px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--bone-dim);
-      letter-spacing: 0.12em;
-      text-align: center;
-    }
-    .cert-foot strong { color: var(--bone-warm); font-weight: 500; letter-spacing: 0.18em; }
-
-    /* ===== JEFF & FRANK ===== */
-    .people {
-      padding-top: clamp(100px, 14vh, 180px);
-      padding-bottom: clamp(100px, 14vh, 180px);
-      position: relative;
-    }
-    .people-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: clamp(40px, 6vw, 96px);
-      align-items: start;
-    }
-    .people h2 {
-      font-size: clamp(54px, 11vw, 168px);
-      margin: 0 0 40px auto;
-      max-width: 12ch;
-      text-align: right;
-    }
-    .people h2 .ampersand {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--bone-warm);
-    }
-    .people-bio {
-      font-size: clamp(19px, 1.5vw, 22px);
-      line-height: 1.6;
-      color: var(--bone);
-      font-weight: 400;
-      max-width: 48ch;
-    }
-    .people-bio + .people-bio { margin-top: 1.2em; }
-    .people-bio em { font-family: var(--body); font-style: italic; font-weight: 600; color: var(--bone-warm); }
-
-    .pull-quote {
-      border-left: 1px solid rgba(232, 226, 213, 0.4);
-      padding: 8px 0 8px 28px;
-      margin-top: 56px;
-      font-family: var(--body);
-      font-style: italic;
-      font-weight: 500;
-      font-size: clamp(21px, 1.9vw, 26px);
-      line-height: 1.5;
-      color: var(--bone);
-      max-width: 40ch;
-    }
-    .pull-quote-attr {
-      display: block;
-      margin-top: 16px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: var(--bone-dim);
-      font-style: normal;
-      text-transform: uppercase;
-    }
-
-    .notebook {
-      font-family: var(--mono);
-      font-size: 10px;
-      line-height: 1.85;
-      color: var(--bone-dim);
-      letter-spacing: 0.04em;
-      padding: 32px 28px;
-      border: 1px solid var(--line);
-      background: rgba(31,24,19,0.4);
-      position: relative;
-    }
-    .notebook::before {
-      content: 'JEFF\'S NOTEBOOK';
-      position: absolute;
-      top: -8px;
-      left: 16px;
-      background: var(--black);
-      padding: 0 10px;
-      font-size: 9px;
-      color: var(--bone-dim);
-      letter-spacing: 0.24em;
-    }
-    .notebook .nb-line { display: block; }
-    .notebook .nb-spec { color: var(--cyan); }
-    .notebook .nb-strike { text-decoration: line-through; color: rgba(232,226,213,0.3); }
-    .notebook hr { border: 0; border-top: 1px dashed var(--line); margin: 14px 0; }
-
-    /* ===== REVIEWS (credit roll) ===== */
-    .reviews {
-      padding-top: clamp(100px, 14vh, 180px);
-      padding-bottom: clamp(100px, 14vh, 180px);
-      max-width: none;
-    }
-    .reviews-inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad); }
-    .reviews h2 {
-      font-size: clamp(40px, 6vw, 88px);
-      max-width: 16ch;
-      margin-bottom: 16px;
-    }
-    .reviews-stars {
-      font-family: var(--body);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      color: var(--bone);
-      margin-bottom: 64px;
-      text-transform: uppercase;
-    }
-    .review-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid var(--line);
-    }
-    .review {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--line);
-      display: grid;
-      grid-template-columns: 60px 1fr auto;
-      gap: clamp(16px, 3vw, 48px);
-      align-items: start;
-    }
-    .review-num {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--bone-dim);
-      letter-spacing: 0.18em;
-      padding-top: 6px;
-    }
-    .review-body {
-      font-family: var(--body);
-      font-style: italic;
-      font-weight: 500;
-      font-size: clamp(21px, 2vw, 28px);
-      line-height: 1.5;
-      color: var(--bone);
-      max-width: 56ch;
-    }
-    .review-attr {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: var(--bone-dim);
-      text-align: right;
-      padding-top: 14px;
-      text-transform: uppercase;
-    }
-    .review-attr strong { color: var(--bone-warm); font-weight: 500; letter-spacing: 0.18em; }
-
-    /* ===== PROJECT LEDGER ===== */
-    .ledger {
-      padding-top: clamp(100px, 14vh, 180px);
-      padding-bottom: clamp(100px, 14vh, 180px);
-      max-width: none;
-      background: rgba(10, 8, 5, 0.7);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-    .ledger-inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad); }
-    .ledger-head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 28px;
-      margin-bottom: 64px;
-    }
-    .ledger-head h2 {
-      font-size: clamp(48px, 8.5vw, 132px);
-      max-width: 14ch;
-    }
-    .ledger-head p {
-      font-size: clamp(15px, 1.2vw, 18px);
-      color: var(--bone-dim);
-      max-width: 42ch;
-      font-weight: 400;
-      line-height: 1.55;
-    }
-    .ledger-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--bone);
-    }
-    .ledger-table thead th {
-      text-align: left;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--line-strong);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      color: var(--bone-dim);
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .ledger-table tbody tr {
-      border-bottom: 1px solid var(--line);
-      transition: background 0.2s ease;
-    }
-    .ledger-table tbody tr:hover {
-      background: rgba(232,165,71,0.04);
-    }
-    .ledger-table td {
-      padding: 14px 0;
-      letter-spacing: 0.08em;
-    }
-    .ledger-table .col-id { color: var(--bone-dim); width: 70px; }
-    .ledger-table .col-yr { color: var(--cyan); width: 70px; }
-    .ledger-table .col-loc { color: var(--bone); }
-    .ledger-table .col-spec { color: var(--bone-dim); }
-    .ledger-table .col-tag { text-align: right; color: var(--bone-warm); width: 110px; font-size: 10px; letter-spacing: 0.18em; }
-    .ledger-foot {
-      margin-top: 32px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--bone-dim);
-      letter-spacing: 0.14em;
-      text-align: right;
-    }
-
-    /* ===== SERVICE AREA MARQUEE ===== */
-    .area {
-      padding: clamp(100px, 16vh, 200px) 0;
-      max-width: none;
-      overflow: hidden;
-    }
-    .area-head {
-      max-width: var(--container);
-      margin: 0 auto 64px;
-      padding: 0 var(--pad);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: end;
-    }
-    .area-head h2 {
-      font-size: clamp(40px, 6vw, 88px);
-      max-width: 14ch;
-    }
-    .area-head p {
-      color: var(--bone-dim);
-      max-width: 42ch;
-      font-size: clamp(15px, 1.2vw, 18px);
-      font-weight: 400;
-      line-height: 1.55;
-    }
-    .marquee {
-      display: flex;
-      width: max-content;
-      animation: marquee 60s linear infinite;
-      will-change: transform;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .marquee { animation: none; }
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .marquee-row {
-      display: flex;
-      gap: 64px;
-      align-items: center;
-      padding: 0 32px;
-    }
-    .marquee-row + .marquee-row {
-      margin-top: 0;
-    }
-    .marquee-city {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(80px, 14vw, 200px);
-      line-height: 0.92;
-      color: var(--bone);
-      letter-spacing: -0.03em;
-      white-space: nowrap;
-    }
-    .marquee-city.dim { color: rgba(232,226,213,0.18); -webkit-text-stroke: 1px var(--bone-dim); -webkit-text-fill-color: transparent; }
-    .marquee-bullet {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--bone-dim);
-      flex-shrink: 0;
-    }
-
-    /* ===== PHONE-AS-HEADLINE ===== */
-    .phone-block {
-      padding: clamp(120px, 18vh, 220px) var(--pad);
-      max-width: var(--container);
-      margin: 0 auto;
-      text-align: center;
-    }
-    .phone-block .mono { margin-bottom: 32px; }
-    .phone-number {
-      font-family: var(--display);
-      font-weight: 400;
-      font-style: normal;
-      font-size: clamp(60px, 12vw, 184px);
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      color: var(--bone);
-      display: block;
-      transition: color 0.4s ease;
-    }
-    .phone-number:hover { color: var(--bone-warm); }
-    .phone-sub {
-      margin-top: 32px;
-      font-family: var(--display);
-      font-style: italic;
-      font-size: clamp(20px, 1.8vw, 28px);
-      color: var(--bone-dim);
-      font-weight: 400;
-    }
-    .phone-sub em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .tone-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 40px;
-      padding: 12px 20px;
-      border: 1px solid var(--line-strong);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      color: var(--bone-dim);
-      text-transform: uppercase;
-      transition: all 0.25s ease;
-    }
-    .tone-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-    .tone-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan);
-      opacity: 0.6;
-    }
-    .tone-btn:hover .tone-dot { opacity: 1; box-shadow: 0 0 12px var(--cyan); }
-
-    /* ===== PHONE LINE inside booking section ===== */
-    .phone-line {
-      display: block;
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(48px, 6vw, 88px);
-      line-height: 0.95;
-      letter-spacing: 0.005em;
-      color: var(--bone);
-      margin: 32px 0 8px;
-      transition: color 0.25s ease;
-    }
-    .phone-line:hover { color: var(--bone-warm); }
-    .phone-areacode {
-      display: block;
-      font-size: 0.32em;
-      color: var(--bone-dim);
-      letter-spacing: 0.18em;
-      font-weight: 500;
-      font-family: var(--body);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .phone-line-sub {
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 18px;
-      color: var(--bone-dim);
-      margin-bottom: 32px;
-    }
-    .phone-line-sub em { color: var(--bone-warm); }
-
-    /* ===== BOOKING CTA ===== */
-    .booking {
-      padding-top: clamp(80px, 12vh, 160px);
-      padding-bottom: clamp(120px, 18vh, 220px);
-    }
-    .booking-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-      gap: clamp(48px, 7vw, 120px);
-      align-items: start;
-    }
-    .booking h2 {
-      font-size: clamp(48px, 8vw, 132px);
-      max-width: 12ch;
-      margin-bottom: 32px;
-    }
-    .booking h2 em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .booking-intro {
-      font-size: clamp(19px, 1.5vw, 22px);
-      line-height: 1.55;
-      color: var(--bone);
-      font-weight: 400;
-      max-width: 44ch;
-      margin-bottom: 32px;
-    }
-    .booking-drumbeat {
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 18px;
-      letter-spacing: 0.01em;
-      color: var(--bone-warm);
-      line-height: 1.5;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-      max-width: 36ch;
-    }
-    .form {
-      background: linear-gradient(165deg, rgba(31, 24, 19, 0.85) 0%, rgba(11, 8, 5, 0.7) 100%);
-      padding: 40px;
-      border: 1px solid var(--line);
-      display: grid;
-      gap: 22px;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-    .form-field { display: flex; flex-direction: column; gap: 8px; }
-    .form-field label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      color: var(--bone-dim);
-      text-transform: uppercase;
-    }
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      background: transparent;
-      border: 0;
-      border-bottom: 1px solid var(--line-strong);
-      padding: 10px 0;
-      color: var(--bone);
-      font-family: var(--body);
-      font-size: 15px;
-      font-weight: 400;
-      transition: border-color 0.2s ease;
-    }
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus {
-      outline: 0;
-      border-bottom-color: var(--bone-warm);
-    }
-    .form-field select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23E8A547' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 6px center;
-    }
-    .form-field option { background: var(--walnut); color: var(--bone); }
-    .form-cta {
-      margin-top: 14px;
-      width: 100%;
-      padding: 20px 0;
-      background: var(--ruby);
-      color: var(--bone);
-      font-family: var(--body);
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      transition: background 0.25s ease;
-      cursor: pointer;
-    }
-    .form-cta:hover { background: var(--ruby-bright); }
-    .form-mono-note {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: var(--bone-dim);
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      padding: 64px var(--pad) 32px;
-      max-width: var(--container);
-      margin: 0 auto;
-      border-top: 1px solid var(--line);
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--bone-dim);
-      letter-spacing: 0.06em;
-    }
-    .foot-mark {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: 22px;
-      color: var(--bone);
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-    }
-    .foot-mark .ampersand { color: var(--bone-warm); font-style: italic; font-weight: 500; }
-    footer ul { list-style: none; }
-    footer li { line-height: 2.2; text-transform: uppercase; letter-spacing: 0.14em; }
-    footer h5 { font-size: 10px; letter-spacing: 0.2em; color: var(--bone-dim); text-transform: uppercase; margin-bottom: 14px; font-weight: 600; }
-    .foot-drumbeat {
-      grid-column: 1 / -1;
-      margin-top: 56px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      letter-spacing: 0.16em;
-    }
-    .foot-drumbeat .drumbeat {
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 18px;
-      color: var(--bone-warm);
-      font-weight: 500;
-      letter-spacing: 0;
-    }
-
-    /* ===== TAP-TO-CALIBRATE (mobile only) ===== */
-    .cal-tap {
-      display: none;
-      margin: 32px auto 0;
-      padding: 16px 26px;
-      border: 1px solid var(--bone-warm);
-      background: transparent;
-      color: var(--bone-warm);
-      font-family: var(--body);
-      font-weight: 500;
-      font-size: 12px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-    .cal-tap:active { background: var(--bone-warm); color: var(--black); }
-    .cal-prompt {
-      display: none;
-      text-align: center;
-      font-family: var(--body);
-      font-style: italic;
-      font-size: 13px;
-      letter-spacing: 0.02em;
-      color: var(--bone-dim);
-      margin-top: 16px;
-    }
-    .cal-prompt em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
-    body.touch .cal-tap, body.touch .cal-prompt { display: block; }
-    body.touch .cal-readout { min-height: 0; }
-
-    /* ===== MOBILE BOTTOM DOCK ===== */
-    .mdock {
-      display: none;
-      position: fixed;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
-      z-index: 8700;
-      background: rgba(11, 11, 11, 0.92);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
-      border: 1px solid var(--line-strong);
-      border-radius: 4px;
-      grid-template-columns: repeat(3, 1fr);
-      align-items: stretch;
-      transform: translateY(140%);
-      transition: transform 0.5s cubic-bezier(.22,.61,.36,1);
-    }
-    .mdock.visible { transform: translateY(0); }
-    .mdock a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 14px 8px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-      transition: color 0.2s ease, background 0.2s ease;
-      border-right: 1px solid var(--line);
-    }
-    .mdock a:last-child { border-right: 0; background: var(--ruby); color: var(--bone); }
-    .mdock a svg { width: 14px; height: 14px; }
-    .mdock a:active { background: rgba(232,226,213,0.08); color: var(--bone-warm); }
-    .mdock a:last-child:active { background: var(--bone); }
-    .mdock-status {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 8px 12px;
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.22em;
-      color: var(--bone-dim);
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--line);
-      background: var(--black);
-    }
-    .mdock-status em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
-
-    /* ===== MOBILE REF-ROOM HORIZONTAL PAGER ===== */
-    .mref {
-      display: none;
-      max-width: none;
-      padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 10vh, 100px);
-      overflow: hidden;
-    }
-    .mref-head {
-      padding: 0 var(--pad);
-      max-width: var(--container);
-      margin: 0 auto 32px;
-    }
-    .mref-head h2 {
-      font-size: clamp(40px, 9vw, 64px);
-      max-width: 14ch;
-      margin-top: 16px;
-    }
-    .mref-head h2 em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .mref-track {
-      display: flex;
-      gap: 16px;
-      padding: 0 var(--pad) 24px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .mref-track::-webkit-scrollbar { display: none; }
-    .mref-card {
-      flex: 0 0 86vw;
-      max-width: 460px;
-      background: var(--walnut);
-      border: 1px solid var(--line);
-      padding: 24px;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .mref-card-svg {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: var(--black);
-      border: 1px solid var(--line);
-      position: relative;
-      overflow: hidden;
-    }
-    .mref-card-svg svg { width: 100%; height: 100%; }
-    .mref-card .stage-num {
-      font-family: var(--body);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--bone-dim);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-    }
-    .mref-card h3 {
-      font-size: clamp(28px, 6.5vw, 38px);
-      line-height: 0.95;
-    }
-    .mref-card h3 em { color: var(--bone-warm); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.04em; letter-spacing: -0.015em; text-shadow: 0 0 36px rgba(232, 226, 213, 0.22); }
-    .mref-card p {
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--bone-dim);
-      font-weight: 400;
-    }
-    .mref-card .spec {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--cyan);
-      line-height: 1.85;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-    }
-    .mref-card .spec span { color: var(--bone-dim); }
-    .mref-pages {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 16px;
-      padding: 0 var(--pad);
-    }
-    .mref-page {
-      width: 24px;
-      height: 2px;
-      background: var(--line-strong);
-      transition: background 0.3s ease, width 0.3s ease;
-    }
-    .mref-page.active { background: var(--bone-warm); width: 40px; }
-    .mref-hint {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--bone-dim);
-      text-align: center;
-      margin-top: 14px;
-      text-transform: uppercase;
-    }
-    .mref-hint em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
-
-    /* ===== MOBILE LEDGER (card view) ===== */
-    .ledger-mobile {
-      display: none;
-      flex-direction: column;
-      gap: 0;
-    }
-    .lm-card {
-      padding: 18px 0;
+      padding: clamp(120px, 18vh, 200px) var(--pad);
+    }
+    .h2-work-list ul { list-style: none; padding: 0; margin: 0; }
+    .h2-work-list li {
+      padding: clamp(36px, 5vh, 64px) 0;
       border-bottom: 1px solid var(--line);
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 8px 16px;
       align-items: baseline;
+      gap: 32px;
+      transition: padding-left 0.4s cubic-bezier(.22,.61,.36,1);
     }
-    .lm-card:first-child { border-top: 1px solid var(--line-strong); }
-    .lm-id {
+    .h2-work-list li:hover { padding-left: 28px; }
+    .h2-work-list li:first-child { border-top: 1px solid var(--line); }
+    .h2-work-list .city {
+      font-family: var(--display);
+      font-size: clamp(40px, 6.5vw, 108px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--bone);
+    }
+    .h2-work-list .project {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(18px, 1.6vw, 24px);
+      color: var(--bone-dim);
+      letter-spacing: 0.005em;
+      text-align: right;
+      max-width: 28ch;
+    }
+    .h2-work-foot {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--pad) clamp(120px, 18vh, 200px);
+      text-align: center;
+    }
+    .h2-work-foot a {
       font-family: var(--mono);
-      font-size: 10px;
-      color: var(--bone-dim);
-      letter-spacing: 0.18em;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bone);
+      border-bottom: 1px solid rgba(232,226,213,0.3);
+      padding-bottom: 3px;
+      transition: color 0.25s ease, border-color 0.25s ease;
     }
-    .lm-tag {
-      font-family: var(--body);
-      font-size: 9.5px;
-      font-weight: 600;
+    .h2-work-foot a:hover { color: var(--bone-warm); border-bottom-color: var(--bone-warm); }
+
+    /* ---------- CONTACT QUIET: name, email, phone, by introduction ---------- */
+    .h2-contact {
+      max-width: none;
+      padding: clamp(180px, 28vh, 320px) var(--pad);
+      text-align: center;
+      position: relative;
+      border-top: 1px solid var(--line);
+    }
+    .h2-contact-eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
       color: var(--bone-dim);
+      margin-bottom: 36px;
+    }
+    .h2-contact-eyebrow::before { content: '— '; color: var(--bone-warm); }
+    .h2-contact h2 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(40px, 6.5vw, 108px);
+      letter-spacing: -0.015em;
+      color: var(--bone);
+      max-width: 18ch;
+      margin: 0 auto 56px;
+      line-height: 1.05;
+    }
+    .h2-contact h2 em {
+      color: var(--bone-warm);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.06em;
+    }
+    .h2-contact-phone {
+      display: block;
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 72px);
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      transition: color 0.25s ease;
+      margin-bottom: 18px;
+    }
+    .h2-contact-phone:hover { color: var(--bone-warm); }
+    .h2-contact-email {
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(20px, 2vw, 28px);
+      color: var(--bone-warm);
+      margin-bottom: 56px;
+    }
+    .h2-contact-meta {
+      font-family: var(--mono);
+      font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      padding: 3px 8px;
-      border: 1px solid var(--line);
-      grid-row: 1;
-      grid-column: 2;
+      color: var(--bone-dim);
+      line-height: 2.2;
     }
-    .lm-loc {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 18px;
+    .h2-contact-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
       color: var(--bone);
-      letter-spacing: -0.01em;
-      grid-column: 1 / -1;
-      line-height: 1.2;
+      border-bottom: 1px solid rgba(232,226,213,0.3);
+      padding-bottom: 3px;
+      transition: color 0.25s ease, border-color 0.25s ease;
     }
-    .lm-loc .yr { color: var(--cyan); font-family: var(--mono); font-size: 11px; font-weight: 400; margin-left: 8px; letter-spacing: 0.12em; }
-    .lm-spec {
+    .h2-contact-link:hover { color: var(--bone-warm); border-bottom-color: var(--bone-warm); }
+
+    /* ---------- FOOTER MINIMAL ---------- */
+    .h2-foot {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 56px var(--pad) 32px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
       font-family: var(--mono);
       font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--bone-dim);
-      letter-spacing: 0.06em;
-      grid-column: 1 / -1;
-      line-height: 1.55;
+    }
+    .h2-foot a { color: var(--bone-dim); transition: color 0.25s ease; }
+    .h2-foot a:hover { color: var(--bone-warm); }
+    .h2-foot .drumbeat {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--bone-warm);
+      letter-spacing: 0;
+      text-transform: none;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ---------- THIN NAV (subpage links only — wordmark stays in hero) ---------- */
+    .h2-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 7000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(20px, 3vw, 48px);
+      padding: 22px var(--pad);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+      pointer-events: none;
+    }
+    .h2-nav.scrolled {
+      background: rgba(5,4,2,0.78);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom-color: var(--line);
+      pointer-events: auto;
+    }
+    .h2-nav-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      transition: color 0.2s ease;
+      pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.1s, color 0.2s ease;
+    }
+    .h2-nav.scrolled .h2-nav-link { opacity: 1; }
+    .h2-nav-link:hover { color: var(--bone-warm); }
+
+    /* ---------- RESPONSIVE TIGHTENING ---------- */
     @media (max-width: 1024px) {
-      :root { --pad: 24px; }
-
-      /* MOBILE HERO — full-bleed cinema-letterboxed composition */
-      .hero {
-        padding-top: 0;
-        padding-bottom: 0;
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: 56vh 1fr;
-        align-items: stretch;
-      }
-      .hero-image-wrap {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        top: 0; right: 0;
-        border-bottom: 1px solid rgba(232,165,71,0.2);
-      }
-      .hero-image-wrap::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 8vh;
-        background: var(--black);
-        z-index: 2;
-        border-bottom: 1px solid rgba(232,165,71,0.08);
-      }
-      .hero-image-wrap::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(180deg, rgba(5,5,5,0.65) 0%, rgba(5,5,5,0) 30%, rgba(5,5,5,0) 60%, rgba(5,5,5,0.85) 100%);
-        z-index: 1;
-      }
-      .hero-image-wrap .hero-tag {
-        position: absolute;
-        top: calc(8vh + 92px);
-        left: var(--pad);
-        z-index: 3;
-        font-family: var(--body);
-        font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 0.28em;
-        color: var(--bone-dim);
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .hero-image-wrap .hero-tag .dot { width: 6px; height: 6px; background: var(--ruby-bright); box-shadow: 0 0 10px rgba(160, 37, 56, 0.6); border-radius: 50%; animation: dotPulse 1.6s ease-in-out infinite; }
-      .hero-content {
-        position: relative;
-        padding: 28px var(--pad) 24px;
-        align-self: end;
-        z-index: 4;
-      }
-      .hero-eyebrow { margin-bottom: 18px; gap: 10px; }
-      .hero h1 { font-size: clamp(48px, 13vw, 84px); max-width: 12ch; margin-bottom: 18px; }
-      .hero-sub { font-size: 14px; max-width: 38ch; margin-bottom: 24px; line-height: 1.5; }
-      .hero-cta-row { gap: 18px; flex-direction: column; align-items: flex-start; }
-      .hero-cta-row .btn-primary { width: 100%; justify-content: center; padding: 16px 20px; font-size: 10.5px; }
-      .hero-cta-row a.mono { display: none; }
-      .hero-spec-grid {
-        position: static;
-        grid-template-columns: repeat(4, 1fr);
-        padding: 18px var(--pad);
-        margin: 0;
-        gap: 10px;
-        border-top: 1px solid var(--line);
-        background: var(--black-2);
-      }
-      .hero-spec-label { font-size: 8px; letter-spacing: 0.2em; }
-      .hero-spec-value { font-size: 13px; font-weight: 700; }
-
-      /* mobile reference room — stack the SVG above the layers */
-      .ref-room-inner { grid-template-columns: 1fr; }
-      .ref-room-canvas { position: relative; top: 0; height: 52vh; margin-bottom: 24px; align-self: center; }
-      .ref-room-steps { padding: 24px 0; gap: 14vh; }
-      .ref-step h3 { font-size: clamp(30px, 8vw, 44px); }
-      .ledger-table { display: none; }
-      .ledger-mobile { display: flex; }
-
-      .manifesto-body { grid-template-columns: 1fr; gap: 32px; }
-      .manifesto h2 { font-size: clamp(48px, 12vw, 88px); max-width: 14ch; }
-
-      .cap, .cap--lg, .cap--sm, .cap--tall { grid-column: span 12; aspect-ratio: 4 / 3; padding: 28px; }
-      .cap--lg, .cap:first-child { aspect-ratio: 5 / 4; }
-
-      .cert-row { grid-template-columns: repeat(2, 1fr); }
-      .cert { border-right: 0; border-bottom: 1px solid var(--line); padding: 32px 20px; gap: 16px; }
-      .cert-monogram { font-size: 56px; }
-      .cert:nth-child(odd) { border-right: 1px solid var(--line); }
-      .cert:nth-last-child(-n+2) { border-bottom: 0; }
-      .cert-head { grid-template-columns: 1fr; gap: 24px; }
-      .cert-head h2 { font-size: clamp(40px, 11vw, 64px); }
-
-      .ledger-head { grid-template-columns: 1fr; gap: 24px; }
-      .ledger-head h2 { font-size: clamp(36px, 10vw, 56px); }
-      .area-head { grid-template-columns: 1fr; gap: 24px; }
-      .area-head h2 { font-size: clamp(36px, 10vw, 56px); }
-
-      .people-grid { grid-template-columns: 1fr; gap: 32px; }
-      .people h2 { font-size: clamp(48px, 13vw, 84px); }
-      .pull-quote { font-size: 18px; padding-left: 20px; }
-
-      .booking-grid { grid-template-columns: 1fr; gap: 32px; }
-      .booking h2 { font-size: clamp(48px, 13vw, 80px); }
-
-      .reviews h2 { font-size: clamp(34px, 9vw, 56px); }
-      .review { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
-      .review-num { padding-top: 0; }
-      .review-body { font-size: 19px; line-height: 1.45; }
-      .review-attr { grid-column: 1 / -1; text-align: left; padding-top: 0; padding-left: 0; }
-
-      footer { grid-template-columns: 1fr 1fr; padding-bottom: 110px; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .nav { padding: 18px var(--pad); }
-      .nav-mark span:first-child { font-size: 16px; }
-      .nav-mark .mono-id { display: none; }
-
-      .phone-block { padding: clamp(80px, 14vh, 140px) var(--pad); }
-      .phone-number {
-        font-size: clamp(72px, 22vw, 132px);
-        line-height: 0.9;
-        display: block;
-      }
-      .phone-number .areacode { display: block; font-size: 0.42em; color: var(--bone-dim); letter-spacing: 0.08em; }
-      .phone-sub { margin-top: 24px; font-size: 17px; }
-
-      /* show mobile dock */
-      .mdock { display: grid; }
-
-      /* mobile letterbox stays slimmer */
-      .letterbox { max-height: 5vh; }
-
-      /* section padding tightens */
-      section { padding: clamp(72px, 11vh, 140px) var(--pad); }
-      .section-mark { font-size: 9px; letter-spacing: 0.18em; }
-      .section-watermark { display: none; }
-
-      /* reduce film grain on mobile */
-      .grain { opacity: 0.035; }
+      .h2-hero { min-height: 600px; }
+      .h2-statement h1 { font-size: clamp(48px, 11vw, 96px); }
+      .h2-cornerphone { font-size: 10px; letter-spacing: 0.16em; }
+      .h2-wordmark { font-size: 14px; }
+      .h2-wordmark .est { font-size: 9px; }
+      .h2-manifesto p { font-size: clamp(32px, 7.5vw, 56px); max-width: 16ch; }
+      .h2-certs-row { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .h2-cert-mark { font-size: clamp(22px, 6vw, 40px); }
+      .h2-work-list li { grid-template-columns: 1fr; gap: 10px; padding: clamp(28px, 4vh, 48px) 0; }
+      .h2-work-list .project { text-align: left; max-width: none; }
+      .h2-contact h2 { font-size: clamp(36px, 9vw, 64px); }
+      .h2-contact-phone { font-size: clamp(32px, 8vw, 56px); }
+      .h2-foot { flex-direction: column; align-items: flex-start; padding-bottom: 110px; }
+      .h2-statement { bottom: clamp(80px, 14vh, 140px); }
     }
 
     @media (max-width: 600px) {
-      .form { padding: 24px; }
-      .form-row { grid-template-columns: 1fr; }
-      .marquee-city { font-size: 64px; }
-      .marquee-row { gap: 32px; }
-      footer { grid-template-columns: 1fr; gap: 32px; padding-bottom: 110px; }
-      .cert-row { grid-template-columns: 1fr; }
-      .cert { border-right: 0 !important; border-bottom: 1px solid var(--line); }
-      .cert:last-child { border-bottom: 0; }
-      .hero-spec-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 18px; }
-    }
-
-    /* ===== REDUCED MOTION ===== */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-      .calibration { display: none !important; }
-      main { opacity: 1 !important; }
-      .svg-layer { opacity: 1 !important; }
-      .ref-step { opacity: 1 !important; }
-      .cert { opacity: 1 !important; transform: none !important; }
-      .grain { display: none; }
+      .h2-certs-row { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
     }
   </style>
 </head>
 <body>
   <div class="theater-bg" aria-hidden="true"></div>
-  <div class="theater-beam" aria-hidden="true"></div>
-  <div class="theater-vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="letterbox letterbox--top" aria-hidden="true"></div>
   <div class="letterbox letterbox--bot" aria-hidden="true"></div>
-  <div class="cursor-light" aria-hidden="true"></div>
 
   <div class="feature-card" id="featureCard" aria-hidden="true">
     <div class="feature-card-inner">
@@ -1866,140 +505,64 @@
     </div>
   </div>
 
-  <!-- ===== CALIBRATION OVERLAY (load) ===== -->
   <div class="calibration" id="calibration" aria-hidden="true">
     <div class="cal-inner">
       <div class="cal-dot"></div>
       <pre class="cal-readout" id="calReadout"></pre>
       <button class="cal-tap" id="calTap" type="button">▶ Tap to calibrate this room</button>
-      <div class="cal-prompt"><em>Sound on</em> recommended · Reference tone &amp; ambient cues</div>
+      <div class="cal-prompt"><em>Sound on</em> recommended &middot; Reference tone &amp; ambient cues</div>
     </div>
   </div>
 
-  <!-- ===== NAV ===== -->
-  <nav class="nav" id="nav">
-    <a href="#" class="nav-mark">
-      <span>Artistic Sound <span class="ampersand">&amp;</span> Cinema</span>
-      <span class="mono-id">// EST. 2008 / UPL · CA</span>
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="#certs">Certifications</a>
-      <a class="nav-link" href="#ref-room">Reference Room</a>
-      <a class="nav-link" href="#people">The Studio</a>
-      <a class="nav-link" href="#ledger">Project Ledger</a>
-    </div>
-    <a class="nav-cta" href="#book">Book Walkthrough</a>
+  <nav class="h2-nav" id="nav">
+    <a class="h2-nav-link" href="/studio/">The Studio</a>
+    <a class="h2-nav-link" href="/work/">Selected Work</a>
+    <a class="h2-nav-link" href="/book/">By Appointment</a>
   </nav>
 
   <main id="main">
 
     <!-- ===== 1. HERO ===== -->
-    <section class="hero" id="hero">
-      <div class="hero-image-wrap">
-        <video class="hero-image" id="heroVideo"
-               poster="hero-poster.jpg"
-               muted loop playsinline preload="none"
-               aria-label="Slow dolly through an empty private home cinema, leather recliners and walnut acoustic panels">
-          <source data-src="hero-cinema.mp4" type="video/mp4" />
-        </video>
-        <div class="hero-beam" aria-hidden="true"></div>
-        <span class="hero-tag"><span class="dot"></span>CEDIA &nbsp;·&nbsp; THX &nbsp;·&nbsp; HAA &nbsp;·&nbsp; ISF</span>
+    <section class="h2-hero" id="hero">
+      <video class="hero-image" id="heroVideo"
+             poster="hero-poster.jpg"
+             muted loop playsinline preload="none"
+             aria-label="Slow dolly through an empty private home cinema">
+        <source data-src="hero-cinema.mp4" type="video/mp4" />
+      </video>
+      <a class="h2-wordmark" href="/">
+        Artistic Sound <span class="ampersand">&amp;</span> Cinema
+        <span class="est">Upland, California &middot; Since 2008</span>
+      </a>
+      <a class="h2-cornerphone" href="tel:+19094762910">+1 · 909 · 476&middot;2910</a>
+      <div class="h2-statement">
+        <h1>Calibrated, <em>not configured.</em></h1>
       </div>
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="mono mono-amber">UPLAND, CALIFORNIA · SINCE 2008</span>
-          <span class="mono">CALIBRATED FOR THIS SCREEN <span id="heroSpecLive">·</span></span>
-        </div>
-        <h1 class="display">Calibrated, <span class="em">not configured.</span></h1>
-        <p class="hero-sub">Reference-grade home cinema, calibrated by hand. The Inland Empire&rsquo;s only four-certification integrator. Same studio. Same two people. Since 2008.</p>
-        <div class="hero-cta-row">
-          <a class="btn-primary" href="#book">
-            Book the Reference Room Walkthrough
-            <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M1 5h16M13 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg>
-          </a>
-          <a class="mono" href="tel:+19094762910" style="color:var(--bone-dim); transition:color .25s ease;" onmouseover="this.style.color='var(--bone-warm)'" onmouseout="this.style.color='var(--bone-dim)'">OR · (909) 476-2910 · JEFF ANSWERS</a>
-        </div>
-      </div>
-      <div class="hero-spec-grid" aria-hidden="true">
-        <div class="hero-spec">
-          <span class="hero-spec-label">Aspect Ratio</span>
-          <span class="hero-spec-value" id="specAspect">16:9</span>
-        </div>
-        <div class="hero-spec">
-          <span class="hero-spec-label">Color</span>
-          <span class="hero-spec-value" id="specColor">sRGB · 24-bit</span>
-        </div>
-        <div class="hero-spec">
-          <span class="hero-spec-label">Refresh</span>
-          <span class="hero-spec-value" id="specRefresh">60 Hz</span>
-        </div>
-        <div class="hero-spec">
-          <span class="hero-spec-label">Local Time</span>
-          <span class="hero-spec-value" id="specTime">--:--</span>
-        </div>
+      <div class="h2-quietcta">
+        <a href="/book/">By appointment</a>
       </div>
     </section>
 
-    <!-- ===== BRAND STAT STRIP — visible immediately after the hero ===== -->
-    <div class="brand-strip" aria-label="Studio at a glance">
-      <div class="brand-stat"><span class="brand-stat-num">17</span><span class="brand-stat-label">Years calibrating</span></div>
-      <div class="brand-stat"><span class="brand-stat-num">4 <em>of 4</em></span><span class="brand-stat-label">CEDIA · THX · HAA · ISF</span></div>
-      <div class="brand-stat"><span class="brand-stat-num">5.0 ★</span><span class="brand-stat-label">13 of 13 reviews</span></div>
-      <div class="brand-stat"><span class="brand-stat-num">CSLB <em>923658</em></span><span class="brand-stat-label">Licensed · Bonded · Insured</span></div>
-    </div>
-
-    <!-- ===== 2. CALIBRATION TIER (4 certs) — moved up for credibility-first ===== -->
-    <section class="cert-tier" id="certs">
-      <div class="cert-inner">
-        <div class="cert-head">
-          <h2 class="display">Four certifications. <em>Held by almost no integrator in California.</em></h2>
-          <p>Hundreds of integrators in this state. Less than a handful hold all four.</p>
-        </div>
-        <div class="cert-row" id="certRow">
-          <div class="cert">
-            <div class="cert-monogram display">CEDIA</div>
-            <div class="cert-name">Custom Electronic Design + Installation Assn.</div>
-            <p class="cert-desc">The trade body for the entire AV-integration industry. Standards, ethics, continuing education.</p>
-          </div>
-          <div class="cert">
-            <div class="cert-monogram display">THX</div>
-            <div class="cert-name">THX Cinema Standard</div>
-            <p class="cert-desc">The cinema acoustic standard founded at Lucasfilm. The certification on the lobby card.</p>
-          </div>
-          <div class="cert">
-            <div class="cert-monogram display">HAA</div>
-            <div class="cert-name">Home Acoustics Alliance</div>
-            <p class="cert-desc">Room acoustics. The discipline that makes the same speakers sound different in different rooms.</p>
-          </div>
-          <div class="cert">
-            <div class="cert-monogram display">ISF</div>
-            <div class="cert-name">Imaging Science Foundation</div>
-            <p class="cert-desc">Display calibration. The same body of work Hollywood uses to color-grade theatrical masters.</p>
-          </div>
-        </div>
-        <div class="cert-foot">
-          <strong>FOUR CERTS · ONE INTEGRATOR</strong> &nbsp;·&nbsp; <em>Tuned, not turned on.</em>
-        </div>
-      </div>
+    <!-- ===== 2. MANIFESTO ===== -->
+    <section class="h2-manifesto">
+      <span class="h2-manifesto-eyebrow">On the work</span>
+      <p>The product is the room. <em>The remote is incidental.</em></p>
+      <span class="h2-manifesto-attr">&mdash; Jeff Siegel, founder, since 2008</span>
     </section>
 
-    <!-- ===== 3. MANIFESTO ===== -->
-    <section class="manifesto" id="manifesto">
-      <div class="manifesto-photo" aria-hidden="true"></div>
-      <div class="manifesto-inner">
-        <h2 class="display">We don&rsquo;t mount <span class="strike">TVs.</span></h2>
-        <div class="manifesto-body">
-          <div class="manifesto-left"></div>
-          <div class="manifesto-right">
-            <p>Smart home is the layer that turns the lights down. The product is the room. <em>We build cinemas, listening rooms, and outdoor moments</em> &mdash; tuned to ISF, THX, and HAA, the same body of work Hollywood uses to color-grade its theatrical masters. The remote is incidental.</p>
-            <p>Not the soundbar tier. Not the Best Buy tier. The tier where the screen disappears, the room takes over, and you forget you&rsquo;re in your house.</p>
-          </div>
-        </div>
+    <!-- ===== 3. CERTIFICATIONS ===== -->
+    <section class="h2-certs">
+      <div class="h2-certs-row">
+        <div class="h2-cert-mark">CEDIA</div>
+        <div class="h2-cert-mark">THX</div>
+        <div class="h2-cert-mark">HAA</div>
+        <div class="h2-cert-mark">ISF</div>
       </div>
+      <p class="h2-certs-foot">Four certifications. <em>Held by almost no integrator in California.</em></p>
+      <a class="h2-certs-link" href="/studio/">On the discipline &nbsp;→</a>
     </section>
 
-    <!-- ===== 3. REFERENCE ROOM (sticky cross-section) ===== -->
+    <!-- ===== 4. REFERENCE ROOM (sticky cross-section) ===== -->
     <section class="ref-room" id="ref-room">
       <div class="ref-room-inner">
         <div class="ref-room-canvas" aria-hidden="true">
@@ -2027,135 +590,81 @@
                 <stop offset="100%" stop-color="#E8E2D5" stop-opacity="0.05"/>
               </radialGradient>
             </defs>
-
-            <!-- Floor shadow (always visible, soft depth cue) -->
             <rect x="60" y="500" width="680" height="40" fill="url(#floorShadow)" />
-
-            <!-- ===== Layer 0: room shell ===== -->
             <g class="svg-layer on" id="lyr-0">
-              <!-- north arrow / plan callout -->
               <text x="60" y="48" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6" letter-spacing="0.4">Reference Room &mdash; Cross-section</text>
               <line x1="60" y1="60" x2="740" y2="60" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="1 5" />
-              <!-- room outline: heavier on floor, lighter on walls -->
               <line x1="60" y1="60" x2="60" y2="540" stroke="#E8E2D5" stroke-width="1.2"/>
               <line x1="740" y1="60" x2="740" y2="540" stroke="#E8E2D5" stroke-width="1.2"/>
               <line x1="60" y1="540" x2="740" y2="540" stroke="#E8E2D5" stroke-width="2.2"/>
-              <!-- ceiling line dashed -->
               <line x1="60" y1="60" x2="740" y2="60" stroke="#E8E2D5" stroke-width="0.8" stroke-opacity="0.6" stroke-dasharray="6 6"/>
-
-              <!-- dimension callouts -->
               <line x1="60" y1="565" x2="740" y2="565" stroke="#BFB8A6" stroke-width="0.4" stroke-opacity="0.6"/>
               <line x1="60" y1="562" x2="60" y2="568" stroke="#BFB8A6" stroke-width="0.6"/>
               <line x1="740" y1="562" x2="740" y2="568" stroke="#BFB8A6" stroke-width="0.6"/>
-              <text x="400" y="582" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">23&prime; 0&Prime; &nbsp;&middot;&nbsp; 16&prime; 0&Prime; &nbsp;&middot;&nbsp; 9&prime; 0&Prime; &nbsp;&middot;&nbsp; 3,312 ft³</text>
+              <text x="400" y="582" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Floor &middot; ceiling &middot; volume</text>
             </g>
-
-            <!-- ===== Layer 1: acoustic treatment ===== -->
             <g class="svg-layer" id="lyr-1">
-              <!-- ceiling absorber tiles (cream stroke, walnut fill, rounded) -->
               <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
                 <rect x="120" y="68" width="60" height="18" rx="2"/><rect x="200" y="68" width="60" height="18" rx="2"/><rect x="280" y="68" width="60" height="18" rx="2"/><rect x="360" y="68" width="60" height="18" rx="2"/><rect x="440" y="68" width="60" height="18" rx="2"/><rect x="520" y="68" width="60" height="18" rx="2"/><rect x="600" y="68" width="60" height="18" rx="2"/>
               </g>
-              <!-- left side wall panels -->
               <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
                 <rect x="66" y="140" width="18" height="76" rx="2"/><rect x="66" y="240" width="18" height="76" rx="2"/><rect x="66" y="340" width="18" height="76" rx="2"/><rect x="66" y="440" width="18" height="76" rx="2"/>
               </g>
-              <!-- right side wall panels -->
               <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
                 <rect x="716" y="140" width="18" height="76" rx="2"/><rect x="716" y="240" width="18" height="76" rx="2"/><rect x="716" y="340" width="18" height="76" rx="2"/><rect x="716" y="440" width="18" height="76" rx="2"/>
               </g>
-              <!-- diffusers along back wall (varied heights for visual texture) -->
               <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.55">
                 <rect x="120" y="500" width="36" height="34" rx="1"/><rect x="160" y="496" width="36" height="38" rx="1"/><rect x="200" y="502" width="36" height="32" rx="1"/><rect x="240" y="498" width="36" height="36" rx="1"/><rect x="280" y="500" width="36" height="34" rx="1"/><rect x="320" y="496" width="36" height="38" rx="1"/><rect x="360" y="502" width="36" height="32" rx="1"/><rect x="400" y="498" width="36" height="36" rx="1"/><rect x="440" y="500" width="36" height="34" rx="1"/><rect x="480" y="496" width="36" height="38" rx="1"/><rect x="520" y="502" width="36" height="32" rx="1"/><rect x="560" y="498" width="36" height="36" rx="1"/><rect x="600" y="500" width="36" height="34" rx="1"/><rect x="640" y="496" width="36" height="38" rx="1"/><rect x="680" y="502" width="36" height="32" rx="1"/>
               </g>
-              <!-- corner bass traps suggested as triangles -->
               <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.6">
                 <path d="M 60 90 L 100 60 L 100 90 Z"/>
                 <path d="M 740 90 L 700 60 L 700 90 Z"/>
                 <path d="M 60 510 L 100 540 L 60 540 Z"/>
                 <path d="M 740 510 L 700 540 L 740 540 Z"/>
               </g>
-              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">RT60 0.34s @ 1kHz &nbsp;&middot;&nbsp; 25 panels &middot; 4 traps</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Acoustic treatment &middot; HAA</text>
             </g>
-
-            <!-- ===== Layer 2: speakers (7.2.4) ===== -->
             <g class="svg-layer" id="lyr-2">
-              <!-- L / C / R: cone-detail circles with concentric rings -->
               <g>
-                <g transform="translate(180,300)">
-                  <circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/>
-                  <circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
-                  <circle r="3" fill="#E8E2D5"/>
-                </g>
-                <g transform="translate(400,300)">
-                  <circle r="14" fill="#1F1813" stroke="#E8E2D5" stroke-width="1.1"/>
-                  <circle r="9" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
-                  <circle r="3.5" fill="#E8E2D5"/>
-                </g>
-                <g transform="translate(620,300)">
-                  <circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/>
-                  <circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
-                  <circle r="3" fill="#E8E2D5"/>
-                </g>
+                <g transform="translate(180,300)"><circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/><circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/><circle r="3" fill="#E8E2D5"/></g>
+                <g transform="translate(400,300)"><circle r="14" fill="#1F1813" stroke="#E8E2D5" stroke-width="1.1"/><circle r="9" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/><circle r="3.5" fill="#E8E2D5"/></g>
+                <g transform="translate(620,300)"><circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/><circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/><circle r="3" fill="#E8E2D5"/></g>
               </g>
-              <!-- side surrounds -->
               <g>
                 <g transform="translate(100,200)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
                 <g transform="translate(700,200)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
                 <g transform="translate(100,400)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
                 <g transform="translate(700,400)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
               </g>
-              <!-- height speakers (4 across ceiling) -->
               <g fill="#1F1813" stroke="#E8E2D5" stroke-width="0.7" stroke-opacity="0.85">
                 <rect x="160" y="100" width="14" height="14" rx="1"/>
                 <rect x="290" y="100" width="14" height="14" rx="1"/>
                 <rect x="490" y="100" width="14" height="14" rx="1"/>
                 <rect x="610" y="100" width="14" height="14" rx="1"/>
               </g>
-              <!-- subwoofers: detailed cabinet with vent -->
               <g>
-                <g transform="translate(120,500)">
-                  <rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
-                  <circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
-                  <circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/>
-                  <line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/>
-                </g>
-                <g transform="translate(648,500)">
-                  <rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
-                  <circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
-                  <circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/>
-                  <line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/>
-                </g>
+                <g transform="translate(120,500)"><rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/><circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/><circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/><line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/></g>
+                <g transform="translate(648,500)"><rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/><circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/><circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/><line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/></g>
               </g>
-              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">7.2.4 Atmos &middot; L &middot; C &middot; R &middot; LS &middot; RS &middot; SBL &middot; SBR &middot; 4 height &middot; 2 subs</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Speakers &middot; THX layout</text>
             </g>
-
-            <!-- ===== Layer 3: projector + screen ===== -->
             <g class="svg-layer" id="lyr-3">
-              <!-- projector body with detail -->
               <g transform="translate(380,76)">
                 <rect width="40" height="14" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
                 <rect x="6" y="3" width="14" height="8" fill="#E8E2D5" fill-opacity="0.85" rx="0.5"/>
                 <circle cx="30" cy="7" r="1.4" fill="#E8E2D5" fill-opacity="0.6"/>
               </g>
-              <!-- beam: tapered cone with subtle gradient stroke -->
               <path d="M 400 90 L 200 250 L 600 250 Z" fill="#E8E2D5" fill-opacity="0.04" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.45" stroke-dasharray="2 4"/>
-              <!-- screen: refined frame with inner luminance -->
               <rect x="180" y="160" width="440" height="184" fill="#0A0805" stroke="#E8E2D5" stroke-width="1.4"/>
               <rect x="180" y="160" width="440" height="184" fill="url(#screenLumen)"/>
-              <!-- thin frame double-line -->
               <rect x="184" y="164" width="432" height="176" fill="none" stroke="#E8E2D5" stroke-width="0.4" stroke-opacity="0.45"/>
-              <!-- masking brackets -->
               <line x1="186" y1="166" x2="200" y2="166" stroke="#E8E2D5" stroke-width="1"/>
               <line x1="600" y1="166" x2="614" y2="166" stroke="#E8E2D5" stroke-width="1"/>
               <line x1="186" y1="338" x2="200" y2="338" stroke="#E8E2D5" stroke-width="1"/>
               <line x1="600" y1="338" x2="614" y2="338" stroke="#E8E2D5" stroke-width="1"/>
-              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">JVC RS3100 &middot; 138&Prime; 2.39:1 &middot; 2,800 ANSI &middot; gain 1.3</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Image &middot; ISF calibrated</text>
             </g>
-
-            <!-- ===== Layer 4: lighting + shades ===== -->
             <g class="svg-layer" id="lyr-4">
-              <!-- recessed cans: outer rim + inner glow -->
               <g>
                 <g transform="translate(160,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
                 <g transform="translate(240,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
@@ -2164,37 +673,30 @@
                 <g transform="translate(560,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
                 <g transform="translate(640,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
               </g>
-              <!-- LED cove: warm soft band -->
               <line x1="100" y1="92" x2="700" y2="92" stroke="#E8E2D5" stroke-width="1.5" stroke-opacity="0.45"/>
               <line x1="100" y1="94" x2="700" y2="94" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.18"/>
-              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Lutron Ketra &middot; 12 fixtures &middot; 6 zones &middot; 5 scenes</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Light &amp; shade &middot; Lutron</text>
             </g>
-
-            <!-- ===== Layer 5: seating + finished ===== -->
             <g class="svg-layer" id="lyr-5">
-              <!-- riser line (subtle) -->
               <line x1="80" y1="440" x2="720" y2="440" stroke="#E8E2D5" stroke-width="0.4" stroke-opacity="0.4" stroke-dasharray="3 4"/>
-              <!-- row 1: detailed reclined seats (back + cushion) -->
               <g>
                 <g transform="translate(180,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(252,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(380,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(452,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
               </g>
-              <!-- row 2 (riser): -->
               <g>
                 <g transform="translate(160,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(232,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(380,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
                 <g transform="translate(452,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
               </g>
-              <!-- mix position marker -->
               <g transform="translate(400,420)">
                 <circle r="3" fill="#8B1A2B"/>
                 <circle r="6" fill="none" stroke="#8B1A2B" stroke-width="0.4" stroke-opacity="0.6"/>
               </g>
               <text x="408" y="424" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="11" fill="#BFB8A6">MLP</text>
-              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Tuned &middot; delivered &middot; signed off by hand</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Tuned &middot; signed off by hand</text>
             </g>
           </svg>
         </div>
@@ -2202,293 +704,104 @@
           <div class="ref-step active" data-layer="0">
             <span class="stage-label">Stage one. The shell.</span>
             <h3 class="display">The empty room.</h3>
-            <p>23 by 16 by 9 feet. 3,312 cubic feet of air. Before a single panel goes up, we measure the geometry, the reflections, the standing waves &mdash; and design backwards from the room that needs to exist.</p>
-            <div class="spec"><span>VOLUME</span> 3,312 ft³<br><span>BASE RT60</span> 0.92s @ 1 kHz<br><span>STATUS</span> UNTUNED</div>
+            <p>Before a single panel goes up, we measure the geometry, the reflections, the standing waves &mdash; and design backwards from the room that needs to exist.</p>
           </div>
           <div class="ref-step" data-layer="1">
             <span class="stage-label">Stage two. Acoustic treatment.</span>
-            <h3 class="display">25 panels. Tuned.</h3>
-            <p>Bass traps in the corners. Broadband absorbers at the first reflection points. Diffusers on the back wall. The room stops fighting itself. <em>HAA-certified room layout.</em></p>
-            <div class="spec"><span>RT60 TARGET</span> 0.34s @ 1 kHz<br><span>PANELS</span> 25 (16 absorb · 9 diffuse)<br><span>REFLECTIONS</span> CONTROLLED</div>
+            <h3 class="display">The room stops fighting itself.</h3>
+            <p>Bass traps in the corners. Broadband absorbers at the first reflection points. Diffusers on the back wall.</p>
           </div>
           <div class="ref-step" data-layer="2">
             <span class="stage-label">Stage three. Speakers, 7.2.4.</span>
-            <h3 class="display">A speaker for every direction.</h3>
-            <p>Left, center, right. Two side surrounds. Two rear surrounds. Four height channels for Atmos. Two subwoofers, calibrated by SPL meter, not by ear. <em>THX reference layout.</em></p>
-            <div class="spec"><span>CONFIG</span> 7.2.4 ATMOS<br><span>FREQ. RESPONSE</span> 18Hz – 20kHz ±2dB<br><span>SPL TARGET</span> 105dB @ MLP</div>
+            <h3 class="display">A speaker for <em>every direction.</em></h3>
+            <p>Left, center, right. Side surrounds. Rear. Four height channels for Atmos. Two subs, calibrated by SPL meter, not by ear.</p>
           </div>
           <div class="ref-step" data-layer="3">
             <span class="stage-label">Stage four. Image.</span>
-            <h3 class="display">A screen that vanishes.</h3>
-            <p>JVC RS3100 native 4K laser projector. 138&Prime; acoustically transparent screen at a 2.39:1 anamorphic ratio. <em>ISF-calibrated grayscale, primaries, gamma.</em> The black bars disappear. The screen disappears. The film stays.</p>
-            <div class="spec"><span>PROJECTOR</span> JVC RS3100 / 4K LASER<br><span>SCREEN</span> 138&Prime; · 2.39:1 · GAIN 1.3<br><span>OUTPUT</span> 2,800 ANSI · D65</div>
+            <h3 class="display">A screen that <em>vanishes.</em></h3>
+            <p>Native 4K laser projection. Acoustically transparent screen. ISF-calibrated grayscale, primaries, gamma. The black bars disappear. The screen disappears. The film stays.</p>
           </div>
           <div class="ref-step" data-layer="4">
             <span class="stage-label">Stage five. Light and shade.</span>
-            <h3 class="display">Five scenes. One button.</h3>
-            <p>Lutron Ketra full-spectrum tunable LEDs in the cove and recessed cans. Motorized blackout shades on every aperture. <em>Five preset scenes&mdash;Day, Reveal, Dim, Feature, House Up&mdash;</em> on a Crestron pico the size of a light switch.</p>
-            <div class="spec"><span>FIXTURES</span> 12 KETRA · 6 ZONES<br><span>SHADES</span> LUTRON SIVOIA · BLACKOUT<br><span>CONTROL</span> 1 PICO · 5 SCENES</div>
+            <h3 class="display">Five scenes. <em>One button.</em></h3>
+            <p>Lutron full-spectrum tunable LEDs in the cove and recessed cans. Motorized blackout shades. Day. Reveal. Dim. Feature. House Up.</p>
           </div>
           <div class="ref-step" data-layer="5">
             <span class="stage-label">Stage six. Tuned.</span>
-            <h3 class="display">Eight seats. One sweet spot.</h3>
-            <p>Tiered seating with a 7&Prime; riser. Front row at the calibrated mix position. Every room takes the time it takes. <em>Calibrated, not configured.</em></p>
-            <div class="spec"><span>SEATING</span> Tiered, two-row<br><span>FRONT ROW</span> at MLP<br><span>FINISHED</span> Signed by hand</div>
+            <h3 class="display">Eight seats. <em>One sweet spot.</em></h3>
+            <p>Tiered seating. Front row at the calibrated mix position. Every room takes the time it takes. <em>Calibrated, not configured.</em></p>
           </div>
         </div>
       </div>
     </section>
 
-
-    <!-- ===== CINEMA DIVIDER (full-bleed projector beam) ===== -->
-    <section class="cinema-divider" aria-label="Reference room with projector beam striking the screen">
-      <div class="cinema-divider-quote">
-        <p class="display">The screen disappears. <em>The room takes over.</em></p>
-        <div class="cinema-divider-attr">Calibrated by hand &nbsp;&middot;&nbsp; CEDIA &middot; THX &middot; HAA &middot; ISF</div>
+    <!-- ===== 5. SELECTED WORK ===== -->
+    <section class="h2-work">
+      <div class="h2-work-divider">
+        <img src="assets/projector-beam.jpg" alt="Private home cinema, projector beam striking the screen" loading="lazy" decoding="async" />
+        <span class="h2-work-divider-eyebrow">Selected work</span>
+      </div>
+      <div class="h2-work-list">
+        <ul>
+          <li>
+            <span class="city">Manhattan Beach</span>
+            <span class="project">Home media center</span>
+          </li>
+          <li>
+            <span class="city">Tustin</span>
+            <span class="project">Contemporary landscape speaker system</span>
+          </li>
+          <li>
+            <span class="city">Laguna Hills</span>
+            <span class="project">Whole-house automation</span>
+          </li>
+          <li>
+            <span class="city">Rancho Cucamonga</span>
+            <span class="project">Custom installation</span>
+          </li>
+        </ul>
+      </div>
+      <div class="h2-work-foot">
+        <a href="/work/">The full ledger &nbsp;→</a>
       </div>
     </section>
 
-    <!-- ===== 6. JEFF & FRANK ===== -->
-    <section class="people" id="people">
-      <div class="people-grid">
-        <div>
-          <h2 class="display">Jeff <span class="ampersand">&amp;</span> Frank.</h2>
-          <p class="people-bio">Jeff calibrates. Frank installs. The two of them have been doing this since <em>2008</em>&mdash;seventeen years out of one industrial unit on West 13th Street in Upland. No franchise, no rotating subcontractors, no offshore call center. <em>Same team. Same number. Same room you walked into the first time.</em></p>
-          <p class="people-bio">If you&rsquo;ve worked with Jeff once, you&rsquo;ve worked with Jeff. If you call five years later because the projector needs a new bulb, Jeff picks up.</p>
-          <div class="pull-quote">
-            &ldquo;Jeff completely redesigned our system. The entire team was friendly, accommodating and very knowledgeable.&rdquo;
-            <span class="pull-quote-attr">— NANCY THOUVENELL · GOOGLE 5★</span>
-          </div>
-        </div>
-        <div class="notebook">
-          <span class="nb-line">HOUSE RULES &middot; SINCE 2008</span>
-          <hr>
-          <span class="nb-line">01. Design before the drywall.</span>
-          <span class="nb-line">02. Measure the room first.</span>
-          <span class="nb-line">03. Calibrate by hand.</span>
-          <span class="nb-line">04. Same team. Every visit.</span>
-          <span class="nb-line">05. Pick up the phone, year five.</span>
-          <hr>
-          <span class="nb-line"><span class="nb-spec">CEDIA</span> + <span class="nb-spec">THX</span> + <span class="nb-spec">HAA</span> + <span class="nb-spec">ISF</span></span>
-          <span class="nb-line">CSLB &num;923658 &middot; LIC. BONDED. INSURED.</span>
-        </div>
+    <!-- ===== 6. CONTACT ===== -->
+    <section class="h2-contact" id="contact">
+      <span class="h2-contact-eyebrow">By introduction</span>
+      <h2>We work with people <em>who already know what we&rsquo;re for.</em></h2>
+      <a class="h2-contact-phone" href="tel:+19094762910">+1 · 909 · 476&middot;2910</a>
+      <a class="h2-contact-email" href="mailto:info@artisticsoundandcinema.com">info@artisticsoundandcinema.com</a>
+      <div class="h2-contact-meta">
+        Monday &ndash; Friday &middot; 8 AM &ndash; 6 PM PT<br>
+        1525 W 13th Street, Unit E &middot; Upland, California
       </div>
-    </section>
-
-    <!-- ===== 7. REVIEWS ===== -->
-    <section class="reviews" id="reviews">
-      <div class="reviews-inner">
-        <h2 class="display">What clients say, when they&rsquo;re asked.</h2>
-        <p class="reviews-stars">★★★★★ &nbsp; 5.0 / 5 &nbsp; · &nbsp; 13 OF 13 GOOGLE REVIEWS</p>
-        <div class="review-list">
-          <div class="review">
-            <span class="review-num">REV / 001</span>
-            <div class="review-body">&ldquo;Jeff completely redesigned our system. The entire team was friendly, accommodating and very knowledgeable.&rdquo;</div>
-            <span class="review-attr"><strong>Nancy Thouvenell</strong><br>Google &middot; 5★</span>
-          </div>
-          <div class="review">
-            <span class="review-num">REV / 002</span>
-            <div class="review-body">&ldquo;Jeff and his team were clean and explained everything perfectly. We were left with a system we actually understand how to use.&rdquo;</div>
-            <span class="review-attr"><strong>Gene Morrill</strong><br>Google &middot; 5★</span>
-          </div>
-          <div class="review">
-            <span class="review-num">REV / 003</span>
-            <div class="review-body">&ldquo;Jeff and his team are great &mdash; very responsive and the quality of his work is excellent. Jeff is excellent at responding and troubleshooting.&rdquo;</div>
-            <span class="review-attr"><strong>L. Daniels</strong><br>Google &middot; 5★</span>
-          </div>
-          <div class="review">
-            <span class="review-num">REV / 004</span>
-            <div class="review-body">&ldquo;Jeff and his team did a great job. Frank does great work and always pays attention to detail.&rdquo;</div>
-            <span class="review-attr"><strong>Dana Chemnitzer</strong><br>Google &middot; 5★</span>
-          </div>
-          <div class="review">
-            <span class="review-num">REV / 005</span>
-            <div class="review-body">&ldquo;Frank consistently demonstrates a commitment to excellence, going above and beyond what we ever expected.&rdquo;</div>
-            <span class="review-attr"><strong>Michelle Moss</strong><br>Google &middot; 5★</span>
-          </div>
-          <div class="review">
-            <span class="review-num">REV / 006</span>
-            <div class="review-body">&ldquo;Knowledgeable with unparalleled attention to detail &mdash; communication far exceeded professional levels and the system designed was, literally, superior.&rdquo;</div>
-            <span class="review-attr"><strong>Verified client</strong><br>Google &middot; 5★</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 8. PROJECT LEDGER ===== -->
-    <section class="ledger" id="ledger">
-      <div class="ledger-inner">
-        <div class="ledger-lead">
-          <div class="ledger-lead-frame">
-            <img src="assets/cinema-wide.jpg" alt="Private home cinema with leather recliners and walnut acoustic panels" loading="lazy" decoding="async" />
-            <span class="ledger-lead-tag">Featured install &middot; Inland Empire</span>
-          </div>
-        </div>
-        <div class="ledger-head">
-          <h2 class="display">Selected work.</h2>
-          <p>Most rooms stay with the families that live in them. A few are public &mdash; these have been featured on Houzz. The rest are introduced by referral.</p>
-        </div>
-        <table class="ledger-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Location</th>
-              <th>Project</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody id="ledgerBody">
-            <!-- populated by JS -->
-          </tbody>
-        </table>
-        <div class="ledger-mobile" id="ledgerMobile" aria-label="Project ledger">
-          <!-- populated by JS -->
-        </div>
-        <div class="ledger-foot">More on request &middot; <a href="mailto:info@artisticsoundandcinema.com">info@artisticsoundandcinema.com</a></div>
-      </div>
-    </section>
-
-    <!-- ===== 7. BOOKING + PHONE ===== -->
-    <section class="booking" id="book">
-      <div class="booking-photo" aria-hidden="true"></div>
-      <div class="booking-grid">
-        <div>
-          <h2 class="display">Book the <em>Reference Room</em> walkthrough.</h2>
-          <p class="booking-intro">A private consultation in our calibrated demo room. We listen first &mdash; the room you want, the rooms you have, the budget that fits. We design before the drywall.</p>
-          <a class="phone-line" href="tel:+19094762910"><span class="phone-areacode">+1&nbsp;&middot;&nbsp;909</span><span class="phone-rest">476&middot;2910</span></a>
-          <p class="phone-line-sub">Or text. <em>Jeff answers.</em></p>
-          <div class="booking-drumbeat">
-            <em>Calibrated</em>, not configured.<br>
-            <em>Engineered</em>, not assembled.<br>
-            <em>Designed</em> before the drywall.
-          </div>
-        </div>
-        <form class="form" onsubmit="event.preventDefault(); document.getElementById('formNote').textContent='// REQUEST RECEIVED · JEFF WILL CALL WITHIN ONE BUSINESS DAY'; this.querySelector('button').textContent='RECEIVED ✓'; this.querySelector('button').style.background='var(--cyan)'">
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-name">Your Name</label>
-              <input type="text" id="f-name" name="name" required />
-            </div>
-            <div class="form-field">
-              <label for="f-phone">Phone</label>
-              <input type="tel" id="f-phone" name="phone" required />
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="f-email">Email</label>
-            <input type="email" id="f-email" name="email" required />
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-room">Room Type</label>
-              <select id="f-room" name="room">
-                <option>Dedicated cinema</option>
-                <option>Whole-house audio / video</option>
-                <option>Outdoor AV</option>
-                <option>Lighting + shades</option>
-                <option>Networking / pre-wire</option>
-                <option>Not sure yet</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="f-stage">Project Stage</label>
-              <select id="f-stage" name="stage">
-                <option>New construction (pre-drywall)</option>
-                <option>Remodel / addition</option>
-                <option>Existing room, retrofit</option>
-                <option>Just exploring</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-dim">Room Dimensions (approx)</label>
-              <input type="text" id="f-dim" name="dim" placeholder="e.g. 20 × 14 × 9" />
-            </div>
-            <div class="form-field">
-              <label for="f-budget">Budget Range</label>
-              <select id="f-budget" name="budget">
-                <option>Under $25k</option>
-                <option>$25k – $75k</option>
-                <option>$75k – $150k</option>
-                <option>$150k – $400k</option>
-                <option>$400k+</option>
-                <option>Need a recommendation</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="f-notes">Anything we should know?</label>
-            <textarea id="f-notes" name="notes" rows="3"></textarea>
-          </div>
-          <button class="form-cta" type="submit">Request Walkthrough</button>
-          <div class="form-mono-note" id="formNote">// PRE-CALIBRATION COMPLETE · 0 OF 8 FIELDS · NO PHONE TREE</div>
-        </form>
-      </div>
+      <a class="h2-contact-link" href="/book/">Or book the walkthrough &nbsp;→</a>
     </section>
 
   </main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div>
-      <div class="foot-mark">Artistic Sound <span class="ampersand">&amp;</span> Cinema</div>
-      <div>1525 W 13TH ST · UNIT E<br>UPLAND · CA 91786<br>CSLB #923658 · LIC. BONDED. INSURED.<br>EST. 2008</div>
-    </div>
-    <div>
-      <h5>The Studio</h5>
-      <ul>
-        <li><a href="#certs">Certifications</a></li>
-        <li><a href="#manifesto">Our Approach</a></li>
-        <li><a href="#ref-room">Reference Room</a></li>
-        <li><a href="#people">Jeff &amp; Frank</a></li>
-        <li><a href="#ledger">Project Ledger</a></li>
-      </ul>
-    </div>
-    <div>
-      <h5>Service Area</h5>
-      <ul>
-        <li>Upland</li>
-        <li>Claremont</li>
-        <li>Rancho Cucamonga</li>
-        <li>La Verne · Glendora</li>
-        <li>Chino Hills · Pomona</li>
-        <li>Newport &middot; Manhattan Bch</li>
-        <li>Palm Springs · Tustin</li>
-      </ul>
-    </div>
-    <div>
-      <h5>Contact</h5>
-      <ul>
-        <li><a href="tel:+19094762910">(909) 476-2910</a></li>
-        <li><a href="mailto:info@artisticsoundandcinema.com">info@asc.com</a></li>
-        <li>MON–FRI · 8a–6p</li>
-        <li>BY APPT.</li>
-      </ul>
-    </div>
-    <div class="foot-drumbeat">
-      <span>// © 2026 ARTISTIC SOUND &amp; CINEMA, INC.</span>
-      <span class="drumbeat">Calibrated, not configured.</span>
-      <span>// CAL.MASTER / UPL · CA</span>
-    </div>
+  <footer class="h2-foot">
+    <span>&copy; Artistic Sound <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:var(--bone-warm)">&amp;</span> Cinema, Inc. &middot; CSLB&nbsp;#923658</span>
+    <span class="drumbeat">Calibrated, not configured.</span>
+    <span><a href="/studio/">The Studio</a> &middot; <a href="/work/">Work</a> &middot; <a href="/book/">By Appointment</a></span>
   </footer>
 
-  <!-- ===== MOBILE BOTTOM DOCK ===== -->
   <div class="mdock" id="mdock" aria-label="Quick actions">
     <div class="mdock-status">
-      <span>JEFF + FRANK · UPLAND CA · MON–FRI · 8A–6P PT</span>
+      <span>JEFF + FRANK &middot; UPLAND CA &middot; MON–FRI &middot; 8A–6P PT</span>
     </div>
     <a href="tel:+19094762910" data-vib="1">
       <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l2.5-1 2 3-1.5 1.5a8 8 0 0 0 3.5 3.5L11 8.5l3 2-1 2.5a2 2 0 0 1-2.2 1.4C5.7 13.7 2.3 10.3 1.6 5.2A2 2 0 0 1 3 3z" stroke="currentColor" stroke-width="1.2"/></svg>
       Call Jeff
     </a>
-    <a href="sms:+19094762910" data-vib="1">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12v8H6l-3 3v-3H2V3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-      Text
+    <a href="mailto:info@artisticsoundandcinema.com" data-vib="1">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12v10H2z M2 3l6 5 6-5" stroke="currentColor" stroke-width="1.2"/></svg>
+      Email
     </a>
-    <a href="#book" data-vib="2">
+    <a href="/book/" data-vib="2">
       <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg>
-      Book Walkthrough
+      By Appointment
     </a>
   </div>
 
@@ -2498,8 +811,8 @@
     "@type": "LocalBusiness",
     "name": "Artistic Sound & Cinema, Inc.",
     "image": "https://artistic-sound-cinema.vercel.app/hero-poster.jpg",
-    "@id": "https://artisticsoundandcinema.com",
-    "url": "https://artisticsoundandcinema.com",
+    "@id": "https://artistic-sound-cinema.vercel.app",
+    "url": "https://artistic-sound-cinema.vercel.app",
     "telephone": "+1-909-476-2910",
     "priceRange": "$$$$",
     "address": {
@@ -2523,356 +836,6 @@
   }
   </script>
 
-  <script>
-    // ============================================================
-    // TOUCH detect (drives Tap-to-Calibrate + dock visibility)
-    // ============================================================
-    (function () {
-      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-      if (isTouch || window.innerWidth <= 1024) document.body.classList.add('touch');
-    })();
-
-    // ============================================================
-    // CALIBRATION ENGINE — real device readout on load
-    // ============================================================
-    (function () {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      const w = window.innerWidth, h = window.innerHeight;
-      const ar = w / h;
-      let aspect = '1:1';
-      if (ar >= 2.3) aspect = '21:9';
-      else if (ar >= 1.7) aspect = '16:9';
-      else if (ar >= 1.5) aspect = '3:2';
-      else if (ar >= 1.3) aspect = '4:3';
-      else if (ar < 0.85) aspect = '9:16';
-
-      const dpi = Math.round((window.devicePixelRatio || 1) * 96);
-      const cd = (window.screen && window.screen.colorDepth) || 24;
-      const refresh = (window.screen && window.screen.refreshRate) ? Math.round(window.screen.refreshRate) : 60;
-      const t = new Date();
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'PST';
-      const tzShort = tz.split('/').pop().toUpperCase();
-      const time = t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' ' + tzShort;
-
-      const cb = (window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'sRGB · DARK' : 'sRGB';
-      const colorStr = cd + '-bit · ' + cb;
-
-      const lines = [
-        { txt: '> CALIBRATING REFERENCE ROOM',          cls: '' },
-        { txt: '> ROOM:    ' + w + ' × ' + h + ' / ' + aspect, cls: 'ok' },
-        { txt: '> COLOR:   ' + colorStr,                 cls: 'ok' },
-        { txt: '> REFRESH: ' + refresh + ' Hz',          cls: 'ok' },
-        { txt: '> AMBIENT: ' + time,                     cls: 'ok' },
-        { txt: '> DPR:     ' + (window.devicePixelRatio || 1).toFixed(2), cls: 'ok' },
-        { txt: '> READY.',                                cls: 'ready' }
-      ];
-
-      // Hero spec values
-      document.getElementById('specAspect').textContent = aspect;
-      document.getElementById('specColor').textContent = cd + '-bit · sRGB';
-      document.getElementById('specRefresh').textContent = refresh + ' Hz';
-      document.getElementById('specTime').textContent = time;
-      document.getElementById('heroSpecLive').textContent = w + '×' + h + ' / ' + refresh + 'Hz';
-
-      const out = document.getElementById('calReadout');
-      const overlay = document.getElementById('calibration');
-      const main = document.getElementById('main');
-
-      if (reduced) {
-        out.textContent = lines.map(l => l.txt).join('\n');
-        overlay.classList.add('done');
-        main.classList.add('revealed');
-        showDock();
-        return;
-      }
-
-      let li = 0, ci = 0, buffer = '';
-      const cursor = '<span class="cal-cursor"></span>';
-      function tick() {
-        if (li >= lines.length) {
-          setTimeout(() => {
-            overlay.classList.add('done');
-            main.classList.add('revealed');
-            showDock();
-          }, 320);
-          return;
-        }
-        const cur = lines[li];
-        if (ci <= cur.txt.length) {
-          const wrapStart = cur.cls ? '<span class="' + cur.cls + '">' : '';
-          const wrapEnd = cur.cls ? '</span>' : '';
-          const renderedLines = lines.slice(0, li).map(l => {
-            return l.cls ? '<span class="' + l.cls + '">' + l.txt + '</span>' : l.txt;
-          }).join('\n');
-          const partial = wrapStart + cur.txt.slice(0, ci) + wrapEnd;
-          out.innerHTML = renderedLines + (li > 0 ? '\n' : '') + partial + cursor;
-          ci++;
-          setTimeout(tick, li === 0 ? 22 : 14);
-        } else {
-          li++; ci = 0;
-          setTimeout(tick, 90);
-        }
-      }
-      function showDock() {
-        const dock = document.getElementById('mdock');
-        if (dock) setTimeout(() => dock.classList.add('visible'), 600);
-        if (document.body.classList.contains('touch') && navigator.vibrate) {
-          setTimeout(() => navigator.vibrate([12, 80, 12]), 720);
-        }
-        // hero video starts AFTER calibration sequence completes
-        if (window.__startHeroVideo) setTimeout(window.__startHeroVideo, 280);
-      }
-
-      // Touch: wait for tap-to-calibrate before running sequence
-      const tap = document.getElementById('calTap');
-      if (document.body.classList.contains('touch')) {
-        tap.addEventListener('click', () => {
-          if (navigator.vibrate) navigator.vibrate(30);
-          tap.style.display = 'none';
-          document.querySelector('.cal-prompt').style.display = 'none';
-          setTimeout(tick, 100);
-        }, { once: true });
-      } else {
-        // Desktop: auto-run after dot pulse settles
-        setTimeout(tick, 380);
-      }
-    })();
-
-    // ============================================================
-    // HERO VIDEO — starts AFTER calibration sequence; plays at 0.4× speed
-    // ============================================================
-    (function () {
-      const v = document.getElementById('heroVideo');
-      if (!v) return;
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-
-      const RATE = 0.4; // way slow — meditative dolly
-
-      window.__startHeroVideo = function () {
-        const src = v.querySelector('source[data-src]');
-        if (!src || src.src) return;
-        src.src = src.dataset.src;
-        v.load();
-        v.playbackRate = RATE;
-        const p = v.play();
-        if (p && typeof p.then === 'function') {
-          p.then(() => { v.playbackRate = RATE; }).catch(() => {});
-        }
-        // some browsers reset rate after metadata loads
-        v.addEventListener('loadeddata', () => { v.playbackRate = RATE; }, { once: true });
-        v.addEventListener('playing', () => { v.playbackRate = RATE; }, { once: true });
-      };
-    })();
-
-    // ============================================================
-    // NAV scroll state
-    // ============================================================
-    (function () {
-      const nav = document.getElementById('nav');
-      let last = 0;
-      function onScroll() {
-        const y = window.scrollY;
-        if (y > 30) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
-        last = y;
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
-    // cursor spotlight removed in 9.0 perf pass
-
-    // ============================================================
-    // REFERENCE ROOM sticky-scroll layer reveal
-    // ============================================================
-    (function () {
-      const steps = document.querySelectorAll('.ref-step');
-      const layers = document.querySelectorAll('.svg-layer');
-      if (!steps.length) return;
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const idx = parseInt(entry.target.dataset.layer, 10);
-          steps.forEach((s) => s.classList.remove('active'));
-          entry.target.classList.add('active');
-          // accumulate layers up to this one
-          layers.forEach((l, i) => {
-            if (i <= idx) l.classList.add('on'); else l.classList.remove('on');
-          });
-        });
-      }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-      steps.forEach((s) => io.observe(s));
-    })();
-
-    // ============================================================
-    // CERTIFICATIONS — production-logo cascade
-    // ============================================================
-    (function () {
-      const row = document.getElementById('certRow');
-      if (!row) return;
-      const certs = row.querySelectorAll('.cert');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            certs.forEach((c, i) => {
-              setTimeout(() => c.classList.add('in'), i * 380);
-            });
-            io.disconnect();
-          }
-        });
-      }, { threshold: 0.3 });
-      io.observe(row);
-    })();
-
-    // ============================================================
-    // FEATURED INSTALLS — only verifiable Houzz portfolio entries
-    // ============================================================
-    (function () {
-      const tbody = document.getElementById('ledgerBody');
-      if (!tbody) return;
-      // Sourced from Jeff's Houzz portfolio — the named, public ones.
-      const rooms = [
-        { loc: 'MANHATTAN BEACH, CA', spec: 'Home Media Center',                 tag: 'A/V'     },
-        { loc: 'TUSTIN, CA',          spec: 'Contemporary Landscape Speaker System', tag: 'OUTDOOR' },
-        { loc: 'LAGUNA HILLS, CA',    spec: 'Whole-house automation',             tag: 'CONTROL' },
-        { loc: 'RANCHO CUCAMONGA, CA',spec: 'Custom installation',                tag: 'A/V'     }
-      ];
-      let html = '';
-      let mhtml = '';
-      rooms.forEach((r) => {
-        html += '<tr>';
-        html += '<td class="col-yr">&mdash;</td>';
-        html += '<td class="col-loc">' + r.loc + '</td>';
-        html += '<td class="col-spec">' + r.spec + '</td>';
-        html += '<td class="col-tag">' + r.tag + '</td>';
-        html += '</tr>';
-
-        mhtml += '<div class="lm-card">';
-        mhtml += '<span class="lm-tag">' + r.tag + '</span>';
-        mhtml += '<span class="lm-loc">' + r.loc.split(',')[0] + '</span>';
-        mhtml += '<span class="lm-spec">' + r.spec + '</span>';
-        mhtml += '</div>';
-      });
-      tbody.innerHTML = html;
-      const mob = document.getElementById('ledgerMobile');
-      if (mob) mob.innerHTML = mhtml;
-    })();
-
-    // ============================================================
-    // PAGE-LEVEL LETTERBOX PROGRESSION + FEATURE PRESENTATION
-    // ============================================================
-    (function () {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      const isMobile = window.innerWidth <= 1024;
-      const peak = isMobile ? 4.5 : 9;     // mobile: thinner cinema bars
-
-      const card = document.getElementById('featureCard');
-      let cardFired = false;
-
-      function onScroll() {
-        const sh = document.documentElement.scrollHeight - window.innerHeight;
-        const p = Math.min(1, Math.max(0, window.scrollY / sh));
-        let lb = 0;
-        if (p < 0.15) lb = 0;
-        else if (p < 0.65) lb = ((p - 0.15) / 0.5) * peak;
-        else if (p < 0.78) lb = peak;
-        else if (p < 0.92) lb = peak - ((p - 0.78) / 0.14) * (peak * 0.66);
-        else lb = peak * 0.33;
-        document.documentElement.style.setProperty('--letterbox', lb.toFixed(2) + 'vh');
-
-        if (!cardFired && p > 0.60 && p < 0.66) {
-          cardFired = true;
-          card.classList.add('visible');
-          setTimeout(() => card.classList.remove('visible'), 1100);
-        }
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
-    // mobile reference-room pager removed in 9.0 cleanup (desktop ref-room responsive)
-
-    // ============================================================
-    // MOBILE BOTTOM DOCK — vibration on tap
-    // ============================================================
-    (function () {
-      const dock = document.getElementById('mdock');
-      if (!dock) return;
-      dock.addEventListener('click', (e) => {
-        const a = e.target.closest('a');
-        if (!a) return;
-        const v = parseInt(a.dataset.vib || '0', 10);
-        if (v && navigator.vibrate) navigator.vibrate(v === 2 ? [20, 40, 20] : 25);
-      });
-    })();
-
-    // ============================================================
-    // AUDIO — opt-in reference tone (A 440Hz)
-    // ============================================================
-    (function () {
-      const btn = document.getElementById('toneBtn');
-      const phone = document.getElementById('phoneNumber');
-      if (!btn) return;
-      let ctx = null;
-
-      function ensureCtx() {
-        if (!ctx) {
-          const C = window.AudioContext || window.webkitAudioContext;
-          if (!C) return null;
-          ctx = new C();
-        }
-        return ctx;
-      }
-      function tone(freq, dur, type) {
-        const a = ensureCtx(); if (!a) return;
-        if (a.state === 'suspended') a.resume();
-        const o = a.createOscillator();
-        const g = a.createGain();
-        o.type = type || 'sine';
-        o.frequency.value = freq;
-        g.gain.value = 0;
-        o.connect(g); g.connect(a.destination);
-        const now = a.currentTime;
-        g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.10, now + 0.04);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-        o.start(now);
-        o.stop(now + dur + 0.02);
-      }
-
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        tone(440, 1.6, 'sine');
-        btn.querySelector('.tone-dot').style.boxShadow = '0 0 24px var(--cyan)';
-        setTimeout(() => { btn.querySelector('.tone-dot').style.boxShadow = ''; }, 1700);
-      });
-      phone.addEventListener('mouseenter', () => { tone(523.25, 0.45, 'sine'); }); // C5
-    })();
-
-    // ============================================================
-    // FORM mono note — live field counter
-    // ============================================================
-    (function () {
-      const form = document.querySelector('.form');
-      const note = document.getElementById('formNote');
-      if (!form || !note) return;
-      const fields = form.querySelectorAll('input, select, textarea');
-      function update() {
-        let filled = 0;
-        fields.forEach(f => {
-          if (f.tagName === 'SELECT') { if (f.selectedIndex > 0) filled++; }
-          else if (f.value && f.value.trim().length > 0) filled++;
-        });
-        note.textContent = '// PRE-CALIBRATION · ' + String(filled).padStart(2,'0') + ' OF ' + String(fields.length).padStart(2,'0') + ' FIELDS · NO PHONE TREE';
-      }
-      fields.forEach(f => {
-        f.addEventListener('input', update);
-        f.addEventListener('change', update);
-      });
-    })();
-  </script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
