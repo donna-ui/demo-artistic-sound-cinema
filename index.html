@@ -16,7 +16,7 @@
   <!-- Google Fonts: Bodoni Moda (display didone) + Hanken Grotesk (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ===== GHL OVERRIDE (kept for future GHL paste) ===== */
@@ -48,7 +48,7 @@
       --line: rgba(232, 226, 213, 0.12);
       --line-strong: rgba(232, 226, 213, 0.32);
 
-      --display: 'Marcellus', 'Times New Roman', serif;
+      --display: 'Tenor Sans', 'Optima', 'Iowan Old Style', serif;
       --body: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
       --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
@@ -57,43 +57,19 @@
       --letterbox: 0vh;
     }
 
-    /* ===== THEATER ROOM BACKDROP — fixed, persistent on every section ===== */
+    /* ===== THEATER ROOM BACKDROP — single composite gradient, GPU-cheap ===== */
     .theater-bg {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
       background:
-        /* projector beam from upper-left throwing onto the screen wall */
-        radial-gradient(ellipse 90vw 70vh at 28% -8vh, rgba(255, 196, 120, 0.13) 0%, rgba(255, 196, 120, 0.06) 26%, transparent 56%),
-        /* faint screen glow at top of viewport */
-        radial-gradient(ellipse 65vw 38vh at 50% 4vh, rgba(232, 226, 213, 0.06) 0%, rgba(232, 226, 213, 0.02) 35%, transparent 65%),
-        /* ambient warm wash, upper third */
-        radial-gradient(ellipse 100vw 55vh at 55% 10vh, rgba(232, 165, 71, 0.04) 0%, transparent 60%),
-        /* deep room base — three-stop gradient that gets darker as you go down */
-        linear-gradient(180deg, #0A0703 0%, #060402 35%, #030200 70%, #020100 100%);
+        radial-gradient(ellipse 70vw 50vh at 30% 0%, rgba(255, 196, 120, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 80vw 60vh at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 95%),
+        linear-gradient(180deg, #0A0703 0%, #050402 60%, #020100 100%);
     }
-    .theater-vignette {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: radial-gradient(ellipse 120vw 100vh at 50% 50%, transparent 35%, rgba(0,0,0,0.35) 80%, rgba(0,0,0,0.65) 100%);
-    }
-    .theater-beam {
-      position: fixed;
-      top: -8vh;
-      left: 18vw;
-      width: 64vw;
-      height: 110vh;
-      z-index: 0;
-      pointer-events: none;
-      background: linear-gradient(178deg, rgba(255, 200, 130, 0.06) 0%, rgba(255, 200, 130, 0.018) 35%, transparent 65%);
-      transform: skewX(-8deg);
-      filter: blur(28px);
-      mix-blend-mode: screen;
-      opacity: 0.85;
-    }
+    .theater-vignette { display: none; }
+    .theater-beam { display: none; }
 
     /* hide screening-room backdrop where we want pure void */
     body.no-theater .theater-bg,
@@ -198,21 +174,7 @@
       letter-spacing: 0.02em;
     }
 
-    /* ===== CURSOR SPOTLIGHT ===== */
-    .cursor-light {
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(232,165,71,0.06) 0%, rgba(232,165,71,0) 60%);
-      pointer-events: none;
-      z-index: 100;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      mix-blend-mode: screen;
-    }
-    body.has-cursor .cursor-light { opacity: 1; }
+    .cursor-light { display: none; }
 
     /* ===== NAV ===== */
     .nav {
@@ -405,26 +367,18 @@
       transform: scale(1.04);
       filter: contrast(1.1) saturate(0.92) brightness(0.95);
     }
-    /* projector beam light cone striking the screen — sits over the video */
+    /* projector beam — single linear gradient, no blur (perf) */
     .hero-beam {
       position: absolute;
       top: -10%;
       right: -8%;
       width: 80%;
       height: 130%;
-      background: linear-gradient(195deg, rgba(255, 200, 130, 0.16) 0%, rgba(255, 200, 130, 0.06) 25%, transparent 55%);
+      background: linear-gradient(195deg, rgba(255, 200, 130, 0.10) 0%, rgba(255, 200, 130, 0.04) 28%, transparent 60%);
       transform: skewX(-14deg);
-      filter: blur(36px);
       pointer-events: none;
       mix-blend-mode: screen;
-      opacity: 0.9;
-      animation: beamFlicker 7s ease-in-out infinite;
-    }
-    @keyframes beamFlicker {
-      0%, 100% { opacity: 0.85; }
-      30% { opacity: 0.95; }
-      55% { opacity: 0.78; }
-      70% { opacity: 0.92; }
+      opacity: 0.85;
     }
     .hero-content {
       position: relative;
@@ -492,6 +446,41 @@
     .btn-primary:hover { background: var(--ruby-bright); transform: translateX(2px); }
     .btn-primary svg { transition: transform 0.25s ease; }
     .btn-primary:hover svg { transform: translateX(4px); }
+
+    /* hero brand-stat strip — the 4 numbers visitors need to see in viewport 1 */
+    .brand-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1440px;
+      margin: 56px auto 0;
+      padding: 28px var(--pad);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      z-index: 5;
+    }
+    .brand-stat { display: flex; flex-direction: column; gap: 4px; padding: 0 18px; border-right: 1px solid var(--line); }
+    .brand-stat:last-child { border-right: 0; }
+    .brand-stat:first-child { padding-left: 0; }
+    .brand-stat-num {
+      font-family: var(--display);
+      font-size: clamp(28px, 2.6vw, 38px);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--bone);
+      letter-spacing: 0.01em;
+    }
+    .brand-stat-label {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-top: 2px;
+    }
+    .brand-stat-num em { color: var(--bone-warm); font-style: italic; font-family: var(--body); }
 
     .hero-spec-grid {
       position: absolute;
@@ -604,11 +593,17 @@
       max-width: 36ch;
     }
     .ref-step.active { opacity: 1; }
-    .ref-step .mono-amber {
+    .ref-step .stage-label {
       display: block;
-      font-size: 11px;
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      color: var(--bone-warm);
       margin-bottom: 14px;
     }
+    .ref-step .stage-label::before { content: '— '; color: var(--bone-dim); }
     .ref-step h3 {
       font-size: clamp(36px, 4.6vw, 60px);
       margin-bottom: 18px;
@@ -644,22 +639,7 @@
       gap: 16px;
       margin-top: 64px;
     }
-    .cap {
-      grid-column: span 6;
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(155deg, rgba(31, 24, 19, 0.72) 0%, rgba(15, 11, 8, 0.55) 100%);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      padding: 36px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
-    }
-    .cap:hover { border-color: rgba(232,165,71,0.45); background: linear-gradient(155deg, rgba(42, 31, 24, 0.85) 0%, rgba(20, 14, 9, 0.65) 100%); transform: translateY(-2px); }
+    /* capabilities removed in 9.0 cleanup — services live in the project ledger */
     .cap--lg {
       grid-column: span 8;
       aspect-ratio: 21 / 9;
@@ -936,11 +916,9 @@
       padding-top: clamp(100px, 14vh, 180px);
       padding-bottom: clamp(100px, 14vh, 180px);
       max-width: none;
-      background: rgba(10, 8, 5, 0.55);
+      background: rgba(10, 8, 5, 0.7);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
     }
     .ledger-inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad); }
     .ledger-head {
@@ -1120,6 +1098,38 @@
     }
     .tone-btn:hover .tone-dot { opacity: 1; box-shadow: 0 0 12px var(--cyan); }
 
+    /* ===== PHONE LINE inside booking section ===== */
+    .phone-line {
+      display: block;
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 0.005em;
+      color: var(--bone);
+      margin: 32px 0 8px;
+      transition: color 0.25s ease;
+    }
+    .phone-line:hover { color: var(--bone-warm); }
+    .phone-areacode {
+      display: block;
+      font-size: 0.32em;
+      color: var(--bone-dim);
+      letter-spacing: 0.18em;
+      font-weight: 500;
+      font-family: var(--body);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .phone-line-sub {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--bone-dim);
+      margin-bottom: 32px;
+    }
+    .phone-line-sub em { color: var(--bone-warm); }
+
     /* ===== BOOKING CTA ===== */
     .booking {
       padding-top: clamp(80px, 12vh, 160px);
@@ -1157,9 +1167,7 @@
       max-width: 36ch;
     }
     .form {
-      background: linear-gradient(165deg, rgba(31, 24, 19, 0.78) 0%, rgba(11, 8, 5, 0.6) 100%);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: linear-gradient(165deg, rgba(31, 24, 19, 0.85) 0%, rgba(11, 8, 5, 0.7) 100%);
       padding: 40px;
       border: 1px solid var(--line);
       display: grid;
@@ -1359,17 +1367,6 @@
       text-transform: uppercase;
       border-bottom: 1px solid var(--line);
       background: var(--black);
-    }
-    .mdock-status .live {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--ruby-bright);
-      box-shadow: 0 0 10px rgba(160, 37, 56, 0.55);
-      animation: livePulse 1.6s ease-in-out infinite;
-    }
-    @keyframes livePulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.6; }
     }
     .mdock-status em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
 
@@ -1603,9 +1600,11 @@
       .hero-spec-label { font-size: 8px; letter-spacing: 0.2em; }
       .hero-spec-value { font-size: 13px; font-weight: 700; }
 
-      /* swap reference room: hide desktop sticky, show mobile pager */
-      .ref-room { display: none; }
-      .mref { display: block; }
+      /* mobile reference room — stack the SVG above the layers */
+      .ref-room-inner { grid-template-columns: 1fr; }
+      .ref-room-canvas { position: relative; top: 0; height: 52vh; margin-bottom: 24px; align-self: center; }
+      .ref-room-steps { padding: 24px 0; gap: 14vh; }
+      .ref-step h3 { font-size: clamp(30px, 8vw, 44px); }
       .ledger-table { display: none; }
       .ledger-mobile { display: flex; }
 
@@ -1729,11 +1728,10 @@
       <span class="mono-id">// EST. 2008 / UPL · CA</span>
     </a>
     <div class="nav-links">
-      <a class="nav-link" href="#manifesto">Approach</a>
+      <a class="nav-link" href="#certs">Certifications</a>
       <a class="nav-link" href="#ref-room">Reference Room</a>
-      <a class="nav-link" href="#capabilities">Capabilities</a>
-      <a class="nav-link" href="#certs">Calibration</a>
-      <a class="nav-link" href="#ledger">Projects</a>
+      <a class="nav-link" href="#people">The Studio</a>
+      <a class="nav-link" href="#ledger">Project Ledger</a>
     </div>
     <a class="nav-cta" href="#book">Book Walkthrough</a>
   </nav>
@@ -1745,21 +1743,21 @@
       <div class="hero-image-wrap">
         <video class="hero-image" id="heroVideo"
                poster="https://images.pexels.com/photos/13348768/pexels-photo-13348768.jpeg?auto=compress&cs=tinysrgb&w=1600"
-               autoplay muted loop playsinline preload="metadata"
-               aria-label="Cinematic film loop playing">
-          <source src="https://videos.pexels.com/video-files/31391872/13394660_3840_2160_24fps.mp4" type="video/mp4" />
+               muted loop playsinline preload="none"
+               aria-label="Empty cinema theater, slow tracking shot">
+          <source data-src="https://videos.pexels.com/video-files/7988638/7988638-sd_960_506_25fps.mp4" type="video/mp4" />
         </video>
         <div class="hero-beam" aria-hidden="true"></div>
-        <span class="hero-tag"><span class="dot"></span>NOW SHOWING · CAL.0014 / UPL</span>
+        <span class="hero-tag"><span class="dot"></span>CEDIA &nbsp;·&nbsp; THX &nbsp;·&nbsp; HAA &nbsp;·&nbsp; ISF</span>
       </div>
       <div class="hero-content">
         <div class="hero-eyebrow">
           <span class="dot" aria-hidden="true"></span>
-          <span class="mono mono-amber">REFERENCE ROOM 0014</span>
+          <span class="mono mono-amber">UPLAND, CALIFORNIA · SINCE 2008</span>
           <span class="mono">CALIBRATED FOR THIS SCREEN <span id="heroSpecLive">·</span></span>
         </div>
         <h1 class="display">Calibrated, <span class="em">not configured.</span></h1>
-        <p class="hero-sub">Custom home cinema, whole-house audio, lighting and shade automation, engineered to a standard most installers don&rsquo;t know exists. Upland, California — and wherever the room needs us.</p>
+        <p class="hero-sub">Reference-grade home cinema, calibrated by hand. The Inland Empire&rsquo;s only four-certification integrator. Same studio. Same two people. Since 2008.</p>
         <div class="hero-cta-row">
           <a class="btn-primary" href="#book">
             Book the Reference Room Walkthrough
@@ -1788,384 +1786,20 @@
       </div>
     </section>
 
-    <!-- ===== 2. MANIFESTO ===== -->
-    <section class="manifesto" id="manifesto">
-      <div class="section-mark">FILE 01 / THE BRIEF</div>
-      <h2 class="display">We don&rsquo;t mount <span class="strike">TVs.</span></h2>
-      <div class="manifesto-body">
-        <div class="manifesto-left">
-          <span class="mono mono-amber">// CAL.0001 — POSITION</span>
-        </div>
-        <div class="manifesto-right">
-          <p>Smart home is the layer that turns the lights down. The product is the room. <em>We build cinemas, listening rooms, and outdoor moments</em> calibrated to the same standards Hollywood uses to color-grade its films. The remote is incidental.</p>
-          <p>This is not the soundbar tier. It is not the Best Buy tier. It is the tier where the screen disappears and you forget you&rsquo;re in your house.</p>
-        </div>
-      </div>
-      <div class="section-watermark">// CAL.0001 / UPLAND, CA</div>
-    </section>
+    <!-- ===== BRAND STAT STRIP — visible immediately after the hero ===== -->
+    <div class="brand-strip" aria-label="Studio at a glance">
+      <div class="brand-stat"><span class="brand-stat-num">17</span><span class="brand-stat-label">Years calibrating</span></div>
+      <div class="brand-stat"><span class="brand-stat-num">4 <em>of 4</em></span><span class="brand-stat-label">CEDIA · THX · HAA · ISF</span></div>
+      <div class="brand-stat"><span class="brand-stat-num">5.0 ★</span><span class="brand-stat-label">13 of 13 reviews</span></div>
+      <div class="brand-stat"><span class="brand-stat-num">CSLB <em>923658</em></span><span class="brand-stat-label">Licensed · Bonded · Insured</span></div>
+    </div>
 
-    <!-- ===== 3. REFERENCE ROOM (sticky cross-section) ===== -->
-    <section class="ref-room" id="ref-room">
-      <div class="ref-room-inner">
-        <div class="ref-room-canvas" aria-hidden="true">
-          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <!-- Layer 0: empty room shell -->
-            <g class="svg-layer on" id="lyr-0">
-              <rect x="60" y="60" width="680" height="480" fill="none" stroke="#E8E2D5" stroke-width="1.4" />
-              <line x1="60" y1="540" x2="740" y2="540" stroke="#E8A547" stroke-width="1.5" />
-              <text x="60" y="568" font-family="JetBrains Mono, monospace" font-size="10" fill="#B8B0A0" letter-spacing="2">23&prime; 0&Prime;  ×  16&prime; 0&Prime;  ×  9&prime; 0&Prime;  /  3,312 ft³</text>
-              <text x="60" y="50" font-family="JetBrains Mono, monospace" font-size="10" fill="#4FB8E8" letter-spacing="2">PLAN 047 — UPLAND, CA</text>
-              <line x1="60" y1="60" x2="740" y2="60" stroke-dasharray="2 4" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.3" />
-            </g>
-            <!-- Layer 1: acoustic treatment -->
-            <g class="svg-layer" id="lyr-1">
-              <!-- ceiling absorbers -->
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="1">
-                <rect x="120" y="68" width="60" height="20" /><rect x="200" y="68" width="60" height="20" /><rect x="280" y="68" width="60" height="20" /><rect x="360" y="68" width="60" height="20" /><rect x="440" y="68" width="60" height="20" /><rect x="520" y="68" width="60" height="20" /><rect x="600" y="68" width="60" height="20" />
-              </g>
-              <!-- side wall panels left -->
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="1">
-                <rect x="68" y="140" width="20" height="80" /><rect x="68" y="240" width="20" height="80" /><rect x="68" y="340" width="20" height="80" /><rect x="68" y="440" width="20" height="80" />
-              </g>
-              <!-- side wall panels right -->
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="1">
-                <rect x="712" y="140" width="20" height="80" /><rect x="712" y="240" width="20" height="80" /><rect x="712" y="340" width="20" height="80" /><rect x="712" y="440" width="20" height="80" />
-              </g>
-              <!-- back wall diffusers -->
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="1">
-                <rect x="120" y="500" width="40" height="32" /><rect x="180" y="500" width="40" height="32" /><rect x="240" y="500" width="40" height="32" /><rect x="300" y="500" width="40" height="32" /><rect x="360" y="500" width="40" height="32" /><rect x="420" y="500" width="40" height="32" /><rect x="480" y="500" width="40" height="32" /><rect x="540" y="500" width="40" height="32" /><rect x="600" y="500" width="40" height="32" /><rect x="660" y="500" width="40" height="32" />
-              </g>
-              <text x="60" y="40" font-family="JetBrains Mono, monospace" font-size="10" fill="#4FB8E8" letter-spacing="2">RT60: 0.34s @ 1kHz · 25 PANELS</text>
-            </g>
-            <!-- Layer 2: speakers (7.2.4) -->
-            <g class="svg-layer" id="lyr-2">
-              <!-- L C R behind screen -->
-              <g fill="#E8A547">
-                <circle cx="180" cy="300" r="9" /><circle cx="400" cy="300" r="9" /><circle cx="620" cy="300" r="9" />
-              </g>
-              <!-- side surrounds -->
-              <g fill="#E8A547">
-                <circle cx="100" cy="200" r="7" /><circle cx="700" cy="200" r="7" /><circle cx="100" cy="400" r="7" /><circle cx="700" cy="400" r="7" />
-              </g>
-              <!-- height speakers (4) -->
-              <g fill="#4FB8E8">
-                <rect x="160" y="100" width="14" height="14" /><rect x="380" y="100" width="14" height="14" /><rect x="600" y="100" width="14" height="14" /><rect x="290" y="100" width="14" height="14" />
-              </g>
-              <!-- subs -->
-              <g fill="#E8A547">
-                <rect x="130" y="510" width="22" height="22" /><rect x="650" y="510" width="22" height="22" />
-              </g>
-              <text x="60" y="40" font-family="JetBrains Mono, monospace" font-size="10" fill="#4FB8E8" letter-spacing="2">7.2.4 / L · C · R · LS · RS · SB · TF · TR · 2× SUB</text>
-            </g>
-            <!-- Layer 3: projector + screen -->
-            <g class="svg-layer" id="lyr-3">
-              <!-- projector -->
-              <rect x="385" y="76" width="32" height="14" fill="#E8E2D5" stroke="#E8A547" />
-              <line x1="401" y1="90" x2="200" y2="280" stroke="#E8A547" stroke-width="0.6" stroke-opacity="0.6" stroke-dasharray="3 3" />
-              <line x1="401" y1="90" x2="600" y2="280" stroke="#E8A547" stroke-width="0.6" stroke-opacity="0.6" stroke-dasharray="3 3" />
-              <!-- screen -->
-              <rect x="180" y="160" width="440" height="184" fill="#0B0B0B" stroke="#E8A547" stroke-width="1.5" />
-              <rect x="180" y="160" width="440" height="184" fill="url(#screenGlow)" />
-              <defs>
-                <radialGradient id="screenGlow" cx="50%" cy="50%" r="60%">
-                  <stop offset="0%" stop-color="#E8A547" stop-opacity="0.18" />
-                  <stop offset="100%" stop-color="#E8A547" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-              <text x="60" y="40" font-family="JetBrains Mono, monospace" font-size="10" fill="#4FB8E8" letter-spacing="2">JVC RS3100 · 138&Prime; 2.39:1 · 2,800 ANSI</text>
-            </g>
-            <!-- Layer 4: lighting + shades -->
-            <g class="svg-layer" id="lyr-4">
-              <!-- recessed cans -->
-              <g fill="none" stroke="#E8A547" stroke-width="1">
-                <circle cx="160" cy="110" r="4" /><circle cx="240" cy="110" r="4" /><circle cx="320" cy="110" r="4" /><circle cx="480" cy="110" r="4" /><circle cx="560" cy="110" r="4" /><circle cx="640" cy="110" r="4" />
-                <circle cx="160" cy="130" r="4" /><circle cx="240" cy="130" r="4" /><circle cx="320" cy="130" r="4" /><circle cx="480" cy="130" r="4" /><circle cx="560" cy="130" r="4" /><circle cx="640" cy="130" r="4" />
-              </g>
-              <!-- LED cove glow -->
-              <line x1="100" y1="92" x2="700" y2="92" stroke="#E8A547" stroke-width="1.5" stroke-opacity="0.6" />
-              <text x="60" y="40" font-family="JetBrains Mono, monospace" font-size="10" fill="#4FB8E8" letter-spacing="2">LUTRON KETRA · 5 SCENES · DALI BACKBONE</text>
-            </g>
-            <!-- Layer 5: seating + finished -->
-            <g class="svg-layer" id="lyr-5">
-              <!-- row 1 (front) 4 seats -->
-              <g fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8">
-                <rect x="180" y="380" width="60" height="40" rx="4" /><rect x="250" y="380" width="60" height="40" rx="4" /><rect x="380" y="380" width="60" height="40" rx="4" /><rect x="450" y="380" width="60" height="40" rx="4" />
-              </g>
-              <!-- row 2 (riser) 4 seats -->
-              <g fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8">
-                <rect x="160" y="450" width="60" height="40" rx="4" /><rect x="230" y="450" width="60" height="40" rx="4" /><rect x="380" y="450" width="60" height="40" rx="4" /><rect x="450" y="450" width="60" height="40" rx="4" />
-              </g>
-              <!-- riser line -->
-              <line x1="80" y1="440" x2="720" y2="440" stroke="#E8A547" stroke-width="0.5" stroke-dasharray="2 3" />
-              <text x="60" y="40" font-family="JetBrains Mono, monospace" font-size="10" fill="#E8A547" letter-spacing="2">TUNED · DELIVERED · 087 HOURS</text>
-            </g>
-          </svg>
-        </div>
-        <div class="ref-room-steps">
-          <div class="ref-step active" data-layer="0">
-            <span class="mono mono-amber">STAGE 01 / SHELL</span>
-            <h3 class="display">The empty room.</h3>
-            <p>23 by 16 by 9 feet. 3,312 cubic feet of air. Before a single panel goes up, we measure the geometry, the reflections, the standing waves &mdash; and design backwards from the room that needs to exist.</p>
-            <div class="spec"><span>VOLUME</span> 3,312 ft³<br><span>BASE RT60</span> 0.92s @ 1 kHz<br><span>STATUS</span> UNTUNED</div>
-          </div>
-          <div class="ref-step" data-layer="1">
-            <span class="mono mono-amber">STAGE 02 / ACOUSTIC TREATMENT</span>
-            <h3 class="display">25 panels. Tuned.</h3>
-            <p>Bass traps in the corners. Broadband absorbers at the first reflection points. Diffusers on the back wall. The room stops fighting itself. <em>HAA-certified room layout.</em></p>
-            <div class="spec"><span>RT60 TARGET</span> 0.34s @ 1 kHz<br><span>PANELS</span> 25 (16 absorb · 9 diffuse)<br><span>REFLECTIONS</span> CONTROLLED</div>
-          </div>
-          <div class="ref-step" data-layer="2">
-            <span class="mono mono-amber">STAGE 03 / SPEAKERS — 7.2.4</span>
-            <h3 class="display">A speaker for every direction.</h3>
-            <p>Left, center, right. Two side surrounds. Two rear surrounds. Four height channels for Atmos. Two subwoofers, calibrated by SPL meter, not by ear. <em>THX reference layout.</em></p>
-            <div class="spec"><span>CONFIG</span> 7.2.4 ATMOS<br><span>FREQ. RESPONSE</span> 18Hz – 20kHz ±2dB<br><span>SPL TARGET</span> 105dB @ MLP</div>
-          </div>
-          <div class="ref-step" data-layer="3">
-            <span class="mono mono-amber">STAGE 04 / IMAGE</span>
-            <h3 class="display">A screen that vanishes.</h3>
-            <p>JVC RS3100 native 4K laser projector. 138&Prime; acoustically transparent screen at a 2.39:1 anamorphic ratio. <em>ISF-calibrated grayscale, primaries, gamma.</em> The black bars disappear. The screen disappears. The film stays.</p>
-            <div class="spec"><span>PROJECTOR</span> JVC RS3100 / 4K LASER<br><span>SCREEN</span> 138&Prime; · 2.39:1 · GAIN 1.3<br><span>OUTPUT</span> 2,800 ANSI · D65</div>
-          </div>
-          <div class="ref-step" data-layer="4">
-            <span class="mono mono-amber">STAGE 05 / LIGHT &amp; SHADE</span>
-            <h3 class="display">Five scenes. One button.</h3>
-            <p>Lutron Ketra full-spectrum tunable LEDs in the cove and recessed cans. Motorized blackout shades on every aperture. <em>Five preset scenes&mdash;Day, Reveal, Dim, Feature, House Up&mdash;</em> on a Crestron pico the size of a light switch.</p>
-            <div class="spec"><span>FIXTURES</span> 12 KETRA · 6 ZONES<br><span>SHADES</span> LUTRON SIVOIA · BLACKOUT<br><span>CONTROL</span> 1 PICO · 5 SCENES</div>
-          </div>
-          <div class="ref-step" data-layer="5">
-            <span class="mono mono-amber">STAGE 06 / TUNED</span>
-            <h3 class="display">Eight seats. One sweet spot.</h3>
-            <p>Tiered seating with a 7&Prime; riser. Front row at the calibrated mix position. Eighty-seven hours of design and tuning across one room. <em>Calibrated, not configured.</em></p>
-            <div class="spec"><span>SEATING</span> 8 RECLINE · 2 ROWS<br><span>RISER</span> 7&Prime;<br><span>HOURS LOGGED</span> 087</div>
-          </div>
-        </div>
-      </div>
-      <div class="section-watermark">// CAL.0047 / UPLAND, CA</div>
-    </section>
-
-    <!-- ===== 3M. MOBILE REFERENCE ROOM (horizontal swipe pager) ===== -->
-    <section class="mref" id="mref" aria-label="Reference Room">
-      <div class="mref-head">
-        <div class="section-mark">FILE 02 / REFERENCE ROOM</div>
-        <h2 class="display">Six layers. <em>One room.</em></h2>
-      </div>
-      <div class="mref-track" id="mrefTrack">
-        <article class="mref-card" data-stage="0">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#4FB8E8" letter-spacing="2">PLAN 047 · UPLAND</text>
-              <text x="20" y="236" font-family="JetBrains Mono, monospace" font-size="7" fill="#B8B0A0" letter-spacing="1.5">23' × 16' × 9' / 3,312 ft³</text>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 01 / SHELL</span>
-          <h3 class="display">The empty room.</h3>
-          <p>Before a single panel goes up — geometry, reflections, standing waves. We design backwards from the room that needs to exist.</p>
-          <div class="spec"><span>VOLUME</span> 3,312 ft³ · <span>RT60</span> 0.92s · <span>STATUS</span> UNTUNED</div>
-        </article>
-
-        <article class="mref-card" data-stage="1">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="0.8">
-                <rect x="60" y="22" width="22" height="8"/><rect x="92" y="22" width="22" height="8"/><rect x="124" y="22" width="22" height="8"/><rect x="156" y="22" width="22" height="8"/><rect x="188" y="22" width="22" height="8"/><rect x="220" y="22" width="22" height="8"/><rect x="252" y="22" width="22" height="8"/>
-                <rect x="22" y="60" width="8" height="28"/><rect x="22" y="98" width="8" height="28"/><rect x="22" y="136" width="8" height="28"/><rect x="22" y="174" width="8" height="28"/>
-                <rect x="290" y="60" width="8" height="28"/><rect x="290" y="98" width="8" height="28"/><rect x="290" y="136" width="8" height="28"/><rect x="290" y="174" width="8" height="28"/>
-              </g>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#4FB8E8" letter-spacing="2">RT60: 0.34s · 25 PANELS</text>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 02 / ACOUSTIC</span>
-          <h3 class="display">25 panels. <em>Tuned.</em></h3>
-          <p>Bass traps in the corners. Broadband absorbers at the first reflection points. Diffusers on the back wall.</p>
-          <div class="spec"><span>RT60 TARGET</span> 0.34s · <span>HAA-CERT</span> LAYOUT</div>
-        </article>
-
-        <article class="mref-card" data-stage="2">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="0.8">
-                <rect x="60" y="22" width="22" height="8"/><rect x="92" y="22" width="22" height="8"/><rect x="124" y="22" width="22" height="8"/><rect x="156" y="22" width="22" height="8"/><rect x="188" y="22" width="22" height="8"/><rect x="220" y="22" width="22" height="8"/><rect x="252" y="22" width="22" height="8"/>
-                <rect x="22" y="60" width="8" height="28"/><rect x="22" y="98" width="8" height="28"/><rect x="22" y="136" width="8" height="28"/><rect x="22" y="174" width="8" height="28"/>
-                <rect x="290" y="60" width="8" height="28"/><rect x="290" y="98" width="8" height="28"/><rect x="290" y="136" width="8" height="28"/><rect x="290" y="174" width="8" height="28"/>
-              </g>
-              <g fill="#E8A547">
-                <circle cx="80" cy="120" r="5"/><circle cx="160" cy="120" r="5"/><circle cx="240" cy="120" r="5"/>
-                <circle cx="50" cy="80" r="3.5"/><circle cx="270" cy="80" r="3.5"/><circle cx="50" cy="160" r="3.5"/><circle cx="270" cy="160" r="3.5"/>
-              </g>
-              <g fill="#4FB8E8"><rect x="78" y="44" width="6" height="6"/><rect x="158" y="44" width="6" height="6"/><rect x="238" y="44" width="6" height="6"/><rect x="118" y="44" width="6" height="6"/></g>
-              <g fill="#E8A547"><rect x="50" y="200" width="11" height="11"/><rect x="259" y="200" width="11" height="11"/></g>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#4FB8E8" letter-spacing="2">7.2.4 ATMOS</text>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 03 / SPEAKERS</span>
-          <h3 class="display">A speaker for <em>every direction.</em></h3>
-          <p>Left, center, right. Two side surrounds. Two rear. Four height channels for Atmos. Two subs.</p>
-          <div class="spec"><span>CONFIG</span> 7.2.4 · <span>SPL</span> 105 dB @ MLP · <span>FR</span> 18Hz–20kHz ±2dB</div>
-        </article>
-
-        <article class="mref-card" data-stage="3">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="0.8">
-                <rect x="60" y="22" width="22" height="8"/><rect x="92" y="22" width="22" height="8"/><rect x="124" y="22" width="22" height="8"/><rect x="156" y="22" width="22" height="8"/><rect x="188" y="22" width="22" height="8"/><rect x="220" y="22" width="22" height="8"/><rect x="252" y="22" width="22" height="8"/>
-                <rect x="22" y="60" width="8" height="28"/><rect x="22" y="98" width="8" height="28"/><rect x="22" y="136" width="8" height="28"/><rect x="22" y="174" width="8" height="28"/>
-                <rect x="290" y="60" width="8" height="28"/><rect x="290" y="98" width="8" height="28"/><rect x="290" y="136" width="8" height="28"/><rect x="290" y="174" width="8" height="28"/>
-              </g>
-              <rect x="60" y="60" width="200" height="80" fill="#0B0B0B" stroke="#E8A547" stroke-width="1.4"/>
-              <defs><radialGradient id="msg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#E8A547" stop-opacity="0.25"/><stop offset="100%" stop-color="#E8A547" stop-opacity="0"/></radialGradient></defs>
-              <rect x="60" y="60" width="200" height="80" fill="url(#msg)"/>
-              <rect x="155" y="38" width="14" height="6" fill="#E8E2D5" stroke="#E8A547"/>
-              <line x1="162" y1="44" x2="78" y2="120" stroke="#E8A547" stroke-width="0.4" stroke-dasharray="2 2"/>
-              <line x1="162" y1="44" x2="244" y2="120" stroke="#E8A547" stroke-width="0.4" stroke-dasharray="2 2"/>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#4FB8E8" letter-spacing="2">JVC RS3100 · 138" 2.39:1</text>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 04 / IMAGE</span>
-          <h3 class="display">A screen that <em>vanishes.</em></h3>
-          <p>JVC RS3100 native 4K laser. 138&Prime; acoustically transparent. ISF-calibrated grayscale, primaries, gamma. The film stays.</p>
-          <div class="spec"><span>OUTPUT</span> 2,800 ANSI · <span>D65</span> · <span>GAIN</span> 1.3</div>
-        </article>
-
-        <article class="mref-card" data-stage="4">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <g fill="#1F1813" stroke="#E8A547" stroke-width="0.8">
-                <rect x="60" y="22" width="22" height="8"/><rect x="92" y="22" width="22" height="8"/><rect x="124" y="22" width="22" height="8"/><rect x="156" y="22" width="22" height="8"/><rect x="188" y="22" width="22" height="8"/><rect x="220" y="22" width="22" height="8"/><rect x="252" y="22" width="22" height="8"/>
-              </g>
-              <rect x="60" y="60" width="200" height="80" fill="#0B0B0B" stroke="#E8A547" stroke-width="1.4"/>
-              <g fill="none" stroke="#E8A547" stroke-width="0.8"><circle cx="60" cy="44" r="2"/><circle cx="84" cy="44" r="2"/><circle cx="108" cy="44" r="2"/><circle cx="212" cy="44" r="2"/><circle cx="236" cy="44" r="2"/><circle cx="260" cy="44" r="2"/></g>
-              <line x1="35" y1="36" x2="285" y2="36" stroke="#E8A547" stroke-width="1.2" stroke-opacity="0.5"/>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#4FB8E8" letter-spacing="2">LUTRON KETRA · 5 SCENES</text>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 05 / LIGHT &amp; SHADE</span>
-          <h3 class="display">Five scenes. <em>One button.</em></h3>
-          <p>Lutron Ketra full-spectrum LEDs. Motorized blackout. Day, Reveal, Dim, Feature, House Up — on a pico the size of a switch.</p>
-          <div class="spec"><span>FIXTURES</span> 12 KETRA · <span>ZONES</span> 6 · <span>SCENES</span> 5</div>
-        </article>
-
-        <article class="mref-card" data-stage="5">
-          <div class="mref-card-svg">
-            <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="20" y="20" width="280" height="200" fill="none" stroke="#E8E2D5" stroke-width="1.4"/>
-              <rect x="60" y="60" width="200" height="80" fill="#0B0B0B" stroke="#E8A547" stroke-width="1.4"/>
-              <g fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8">
-                <rect x="70" y="158" width="28" height="18" rx="2"/><rect x="100" y="158" width="28" height="18" rx="2"/><rect x="190" y="158" width="28" height="18" rx="2"/><rect x="220" y="158" width="28" height="18" rx="2"/>
-                <rect x="62" y="186" width="28" height="18" rx="2"/><rect x="92" y="186" width="28" height="18" rx="2"/><rect x="190" y="186" width="28" height="18" rx="2"/><rect x="220" y="186" width="28" height="18" rx="2"/>
-              </g>
-              <line x1="35" y1="180" x2="285" y2="180" stroke="#E8A547" stroke-width="0.4" stroke-dasharray="2 3"/>
-              <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="8" fill="#E8A547" letter-spacing="2">TUNED · 087 HRS · DELIVERED</text>
-              <line x1="20" y1="220" x2="300" y2="220" stroke="#E8A547" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="stage-num">STAGE 06 / TUNED</span>
-          <h3 class="display">Eight seats. <em>One sweet spot.</em></h3>
-          <p>Tiered seating with a 7&Prime; riser. Front row at the calibrated mix position. <em>Calibrated, not configured.</em></p>
-          <div class="spec"><span>SEATING</span> 8 RECLINE · <span>HOURS</span> 087 · <span>SIGNED</span> J.S.</div>
-        </article>
-      </div>
-      <div class="mref-pages" id="mrefPages">
-        <span class="mref-page active"></span><span class="mref-page"></span><span class="mref-page"></span><span class="mref-page"></span><span class="mref-page"></span><span class="mref-page"></span>
-      </div>
-      <div class="mref-hint"><em>Swipe →</em> to add the next layer</div>
-    </section>
-
-    <!-- ===== 4. CAPABILITIES ===== -->
-    <section class="capabilities" id="capabilities">
-      <div class="section-mark">FILE 02 / CAPABILITIES</div>
-      <h2 class="display">Seven rooms. <em>One studio.</em></h2>
-      <div class="cap-grid">
-        <div class="cap cap--lg">
-          <div>
-            <span class="cap-num">// CAP 01</span>
-            <h3 class="cap-title display">Custom Home <em>Cinema</em></h3>
-          </div>
-          <div>
-            <p class="cap-desc">Dedicated rooms tuned to THX, HAA, and ISF reference. The cinema you actually leave home to avoid.</p>
-            <span class="cap-meta"><span>RT60</span> · 0.30–0.40s · <span>SPL</span> 105 dB</span>
-          </div>
-        </div>
-        <div class="cap">
-          <div>
-            <span class="cap-num">// CAP 02</span>
-            <h3 class="cap-title display">Whole-House <em>A/V</em></h3>
-          </div>
-          <div>
-            <p class="cap-desc">Multi-room audio, video matrix, single-pane control. The kitchen and the cinema speak the same language.</p>
-            <span class="cap-meta"><span>SOURCES</span> · UNLIMITED</span>
-          </div>
-        </div>
-        <div class="cap">
-          <div>
-            <span class="cap-num">// CAP 03</span>
-            <h3 class="cap-title display">Outdoor <em>AV</em></h3>
-          </div>
-          <div>
-            <p class="cap-desc">Patio, pool, landscape. Speakers that sound like nothing&rsquo;s there until they don&rsquo;t.</p>
-            <span class="cap-meta"><span>IP RATING</span> · IP65/66</span>
-          </div>
-        </div>
-        <div class="cap cap--sm">
-          <div>
-            <span class="cap-num">// CAP 04</span>
-            <h3 class="cap-title display">Light <span style="color:var(--bone-warm);">&amp;</span> Shade</h3>
-          </div>
-          <div>
-            <p class="cap-desc">Lutron-class. Scenes, not switches.</p>
-            <span class="cap-meta"><span>SCENES</span> · UP TO 32</span>
-          </div>
-        </div>
-        <div class="cap cap--sm">
-          <div>
-            <span class="cap-num">// CAP 05</span>
-            <h3 class="cap-title display">Network <em>+</em> Wire</h3>
-          </div>
-          <div>
-            <p class="cap-desc">The bones nobody sees. Pre-wire during framing. Mesh that doesn&rsquo;t drop.</p>
-            <span class="cap-meta"><span>LATENCY</span> · &lt; 4 ms</span>
-          </div>
-        </div>
-        <div class="cap cap--sm">
-          <div>
-            <span class="cap-num">// CAP 06</span>
-            <h3 class="cap-title display">Single-Pane <em>Control</em></h3>
-          </div>
-          <div>
-            <p class="cap-desc">Crestron. Control4. Savant. One app. One remote. One scene.</p>
-            <span class="cap-meta"><span>UI</span> · 1 GLASS</span>
-          </div>
-        </div>
-        <div class="cap cap--lg">
-          <div>
-            <span class="cap-num">// CAP 07</span>
-            <h3 class="cap-title display">Surveillance <em>+</em> Sleep-Through.</h3>
-          </div>
-          <div>
-            <p class="cap-desc">Cameras that see what you don&rsquo;t. Alerts when they should &mdash; silence when they shouldn&rsquo;t.</p>
-            <span class="cap-meta"><span>UPTIME</span> · 99.97% · <span>STORAGE</span> · LOCAL</span>
-          </div>
-        </div>
-      </div>
-      <div class="section-watermark">// CAL.0002 / UPLAND, CA</div>
-    </section>
-
-    <!-- ===== 5. CALIBRATION TIER (4 certs) ===== -->
+    <!-- ===== 2. CALIBRATION TIER (4 certs) — moved up for credibility-first ===== -->
     <section class="cert-tier" id="certs">
       <div class="cert-inner">
-        <div class="section-mark">FILE 03 / THE MOAT</div>
         <div class="cert-head">
-          <h2 class="display">Four certifications. <em>Held together by almost no one.</em></h2>
-          <p>The audio-and-video integration trade has hundreds of installers in California. Less than a handful hold all four of these. Each one represents a different discipline &mdash; install, acoustics, calibration, ethics &mdash; and Jeff has done the coursework, sat the exams, and stayed current on every one.</p>
+          <h2 class="display">Four certifications. <em>Held by almost no integrator in California.</em></h2>
+          <p>The audio-video integration trade has hundreds of installers in this state. Less than a handful hold all four of these. Each one is a separate discipline &mdash; install, acoustics, calibration, ethics &mdash; and Jeff has done the coursework, sat the exams, and stayed current on every one since 2008.</p>
         </div>
         <div class="cert-row" id="certRow">
           <div class="cert">
@@ -2181,7 +1815,7 @@
           <div class="cert">
             <div class="cert-monogram display">HAA</div>
             <div class="cert-name">Home Acoustics Alliance</div>
-            <p class="cert-desc">Room acoustics and tuning. The discipline that makes the same speakers sound different in different rooms.</p>
+            <p class="cert-desc">Room acoustics. The discipline that makes the same speakers sound different in different rooms.</p>
           </div>
           <div class="cert">
             <div class="cert-monogram display">ISF</div>
@@ -2190,15 +1824,266 @@
           </div>
         </div>
         <div class="cert-foot">
-          <strong>FOUR CERTS · ONE INTEGRATOR</strong> &nbsp;·&nbsp; ALMOST UNIQUE IN SOUTHERN CALIFORNIA
+          <strong>FOUR CERTS · ONE INTEGRATOR</strong> &nbsp;·&nbsp; <em>Tuned, not turned on.</em>
         </div>
       </div>
-      <div class="section-watermark">// CAL.0003 / UPLAND, CA</div>
     </section>
+
+    <!-- ===== 3. MANIFESTO ===== -->
+    <section class="manifesto" id="manifesto">
+      <h2 class="display">We don&rsquo;t mount <span class="strike">TVs.</span></h2>
+      <div class="manifesto-body">
+        <div class="manifesto-left"></div>
+        <div class="manifesto-right">
+          <p>Smart home is the layer that turns the lights down. The product is the room. <em>We build cinemas, listening rooms, and outdoor moments</em> &mdash; tuned to ISF, THX, and HAA, the same body of work Hollywood uses to color-grade its theatrical masters. The remote is incidental.</p>
+          <p>Not the soundbar tier. Not the Best Buy tier. The tier where the screen disappears, the room takes over, and you forget you&rsquo;re in your house.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. REFERENCE ROOM (sticky cross-section) ===== -->
+    <section class="ref-room" id="ref-room">
+      <div class="ref-room-inner">
+        <div class="ref-room-canvas" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="floorShadow" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1F1813" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#1F1813" stop-opacity="0.5"/>
+              </linearGradient>
+              <linearGradient id="panelFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2A1F18" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#1F1813" stop-opacity="0.85"/>
+              </linearGradient>
+              <linearGradient id="seatFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3A2C24"/>
+                <stop offset="100%" stop-color="#1F1813"/>
+              </linearGradient>
+              <radialGradient id="screenLumen" cx="50%" cy="48%" r="62%">
+                <stop offset="0%" stop-color="#E8E2D5" stop-opacity="0.18"/>
+                <stop offset="55%" stop-color="#E8E2D5" stop-opacity="0.04"/>
+                <stop offset="100%" stop-color="#E8E2D5" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="bulb" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#E8E2D5" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#E8E2D5" stop-opacity="0.05"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Floor shadow (always visible, soft depth cue) -->
+            <rect x="60" y="500" width="680" height="40" fill="url(#floorShadow)" />
+
+            <!-- ===== Layer 0: room shell ===== -->
+            <g class="svg-layer on" id="lyr-0">
+              <!-- north arrow / plan callout -->
+              <text x="60" y="48" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6" letter-spacing="0.4">Plan 047 &mdash; Upland, California</text>
+              <line x1="60" y1="60" x2="740" y2="60" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="1 5" />
+              <!-- room outline: heavier on floor, lighter on walls -->
+              <line x1="60" y1="60" x2="60" y2="540" stroke="#E8E2D5" stroke-width="1.2"/>
+              <line x1="740" y1="60" x2="740" y2="540" stroke="#E8E2D5" stroke-width="1.2"/>
+              <line x1="60" y1="540" x2="740" y2="540" stroke="#E8E2D5" stroke-width="2.2"/>
+              <!-- ceiling line dashed -->
+              <line x1="60" y1="60" x2="740" y2="60" stroke="#E8E2D5" stroke-width="0.8" stroke-opacity="0.6" stroke-dasharray="6 6"/>
+
+              <!-- dimension callouts -->
+              <line x1="60" y1="565" x2="740" y2="565" stroke="#BFB8A6" stroke-width="0.4" stroke-opacity="0.6"/>
+              <line x1="60" y1="562" x2="60" y2="568" stroke="#BFB8A6" stroke-width="0.6"/>
+              <line x1="740" y1="562" x2="740" y2="568" stroke="#BFB8A6" stroke-width="0.6"/>
+              <text x="400" y="582" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">23&prime; 0&Prime; &nbsp;&middot;&nbsp; 16&prime; 0&Prime; &nbsp;&middot;&nbsp; 9&prime; 0&Prime; &nbsp;&middot;&nbsp; 3,312 ft³</text>
+            </g>
+
+            <!-- ===== Layer 1: acoustic treatment ===== -->
+            <g class="svg-layer" id="lyr-1">
+              <!-- ceiling absorber tiles (cream stroke, walnut fill, rounded) -->
+              <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
+                <rect x="120" y="68" width="60" height="18" rx="2"/><rect x="200" y="68" width="60" height="18" rx="2"/><rect x="280" y="68" width="60" height="18" rx="2"/><rect x="360" y="68" width="60" height="18" rx="2"/><rect x="440" y="68" width="60" height="18" rx="2"/><rect x="520" y="68" width="60" height="18" rx="2"/><rect x="600" y="68" width="60" height="18" rx="2"/>
+              </g>
+              <!-- left side wall panels -->
+              <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
+                <rect x="66" y="140" width="18" height="76" rx="2"/><rect x="66" y="240" width="18" height="76" rx="2"/><rect x="66" y="340" width="18" height="76" rx="2"/><rect x="66" y="440" width="18" height="76" rx="2"/>
+              </g>
+              <!-- right side wall panels -->
+              <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7">
+                <rect x="716" y="140" width="18" height="76" rx="2"/><rect x="716" y="240" width="18" height="76" rx="2"/><rect x="716" y="340" width="18" height="76" rx="2"/><rect x="716" y="440" width="18" height="76" rx="2"/>
+              </g>
+              <!-- diffusers along back wall (varied heights for visual texture) -->
+              <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.55">
+                <rect x="120" y="500" width="36" height="34" rx="1"/><rect x="160" y="496" width="36" height="38" rx="1"/><rect x="200" y="502" width="36" height="32" rx="1"/><rect x="240" y="498" width="36" height="36" rx="1"/><rect x="280" y="500" width="36" height="34" rx="1"/><rect x="320" y="496" width="36" height="38" rx="1"/><rect x="360" y="502" width="36" height="32" rx="1"/><rect x="400" y="498" width="36" height="36" rx="1"/><rect x="440" y="500" width="36" height="34" rx="1"/><rect x="480" y="496" width="36" height="38" rx="1"/><rect x="520" y="502" width="36" height="32" rx="1"/><rect x="560" y="498" width="36" height="36" rx="1"/><rect x="600" y="500" width="36" height="34" rx="1"/><rect x="640" y="496" width="36" height="38" rx="1"/><rect x="680" y="502" width="36" height="32" rx="1"/>
+              </g>
+              <!-- corner bass traps suggested as triangles -->
+              <g fill="url(#panelFill)" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.6">
+                <path d="M 60 90 L 100 60 L 100 90 Z"/>
+                <path d="M 740 90 L 700 60 L 700 90 Z"/>
+                <path d="M 60 510 L 100 540 L 60 540 Z"/>
+                <path d="M 740 510 L 700 540 L 740 540 Z"/>
+              </g>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">RT60 0.34s @ 1kHz &nbsp;&middot;&nbsp; 25 panels &middot; 4 traps</text>
+            </g>
+
+            <!-- ===== Layer 2: speakers (7.2.4) ===== -->
+            <g class="svg-layer" id="lyr-2">
+              <!-- L / C / R: cone-detail circles with concentric rings -->
+              <g>
+                <g transform="translate(180,300)">
+                  <circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/>
+                  <circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
+                  <circle r="3" fill="#E8E2D5"/>
+                </g>
+                <g transform="translate(400,300)">
+                  <circle r="14" fill="#1F1813" stroke="#E8E2D5" stroke-width="1.1"/>
+                  <circle r="9" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
+                  <circle r="3.5" fill="#E8E2D5"/>
+                </g>
+                <g transform="translate(620,300)">
+                  <circle r="13" fill="#1F1813" stroke="#E8E2D5" stroke-width="1"/>
+                  <circle r="8" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
+                  <circle r="3" fill="#E8E2D5"/>
+                </g>
+              </g>
+              <!-- side surrounds -->
+              <g>
+                <g transform="translate(100,200)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
+                <g transform="translate(700,200)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
+                <g transform="translate(100,400)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
+                <g transform="translate(700,400)"><circle r="9" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="#E8E2D5"/></g>
+              </g>
+              <!-- height speakers (4 across ceiling) -->
+              <g fill="#1F1813" stroke="#E8E2D5" stroke-width="0.7" stroke-opacity="0.85">
+                <rect x="160" y="100" width="14" height="14" rx="1"/>
+                <rect x="290" y="100" width="14" height="14" rx="1"/>
+                <rect x="490" y="100" width="14" height="14" rx="1"/>
+                <rect x="610" y="100" width="14" height="14" rx="1"/>
+              </g>
+              <!-- subwoofers: detailed cabinet with vent -->
+              <g>
+                <g transform="translate(120,500)">
+                  <rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
+                  <circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
+                  <circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/>
+                  <line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/>
+                </g>
+                <g transform="translate(648,500)">
+                  <rect width="32" height="34" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
+                  <circle cx="16" cy="14" r="7" fill="none" stroke="#E8E2D5" stroke-width="0.6" stroke-opacity="0.7"/>
+                  <circle cx="16" cy="14" r="3" fill="#E8E2D5" fill-opacity="0.7"/>
+                  <line x1="6" y1="27" x2="26" y2="27" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.4"/>
+                </g>
+              </g>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">7.2.4 Atmos &middot; L &middot; C &middot; R &middot; LS &middot; RS &middot; SBL &middot; SBR &middot; 4 height &middot; 2 subs</text>
+            </g>
+
+            <!-- ===== Layer 3: projector + screen ===== -->
+            <g class="svg-layer" id="lyr-3">
+              <!-- projector body with detail -->
+              <g transform="translate(380,76)">
+                <rect width="40" height="14" fill="#1F1813" stroke="#E8E2D5" stroke-width="0.9" rx="1"/>
+                <rect x="6" y="3" width="14" height="8" fill="#E8E2D5" fill-opacity="0.85" rx="0.5"/>
+                <circle cx="30" cy="7" r="1.4" fill="#E8E2D5" fill-opacity="0.6"/>
+              </g>
+              <!-- beam: tapered cone with subtle gradient stroke -->
+              <path d="M 400 90 L 200 250 L 600 250 Z" fill="#E8E2D5" fill-opacity="0.04" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.45" stroke-dasharray="2 4"/>
+              <!-- screen: refined frame with inner luminance -->
+              <rect x="180" y="160" width="440" height="184" fill="#0A0805" stroke="#E8E2D5" stroke-width="1.4"/>
+              <rect x="180" y="160" width="440" height="184" fill="url(#screenLumen)"/>
+              <!-- thin frame double-line -->
+              <rect x="184" y="164" width="432" height="176" fill="none" stroke="#E8E2D5" stroke-width="0.4" stroke-opacity="0.45"/>
+              <!-- masking brackets -->
+              <line x1="186" y1="166" x2="200" y2="166" stroke="#E8E2D5" stroke-width="1"/>
+              <line x1="600" y1="166" x2="614" y2="166" stroke="#E8E2D5" stroke-width="1"/>
+              <line x1="186" y1="338" x2="200" y2="338" stroke="#E8E2D5" stroke-width="1"/>
+              <line x1="600" y1="338" x2="614" y2="338" stroke="#E8E2D5" stroke-width="1"/>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">JVC RS3100 &middot; 138&Prime; 2.39:1 &middot; 2,800 ANSI &middot; gain 1.3</text>
+            </g>
+
+            <!-- ===== Layer 4: lighting + shades ===== -->
+            <g class="svg-layer" id="lyr-4">
+              <!-- recessed cans: outer rim + inner glow -->
+              <g>
+                <g transform="translate(160,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+                <g transform="translate(240,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+                <g transform="translate(320,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+                <g transform="translate(480,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+                <g transform="translate(560,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+                <g transform="translate(640,110)"><circle r="5" fill="none" stroke="#E8E2D5" stroke-width="0.8"/><circle r="2.5" fill="url(#bulb)"/></g>
+              </g>
+              <!-- LED cove: warm soft band -->
+              <line x1="100" y1="92" x2="700" y2="92" stroke="#E8E2D5" stroke-width="1.5" stroke-opacity="0.45"/>
+              <line x1="100" y1="94" x2="700" y2="94" stroke="#E8E2D5" stroke-width="0.5" stroke-opacity="0.18"/>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Lutron Ketra &middot; 12 fixtures &middot; 6 zones &middot; 5 scenes</text>
+            </g>
+
+            <!-- ===== Layer 5: seating + finished ===== -->
+            <g class="svg-layer" id="lyr-5">
+              <!-- riser line (subtle) -->
+              <line x1="80" y1="440" x2="720" y2="440" stroke="#E8E2D5" stroke-width="0.4" stroke-opacity="0.4" stroke-dasharray="3 4"/>
+              <!-- row 1: detailed reclined seats (back + cushion) -->
+              <g>
+                <g transform="translate(180,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(252,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(380,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(452,378)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+              </g>
+              <!-- row 2 (riser): -->
+              <g>
+                <g transform="translate(160,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(232,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(380,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+                <g transform="translate(452,448)"><path d="M 0 4 L 0 30 Q 0 38 8 38 L 50 38 Q 58 38 58 30 L 58 24 L 50 18 L 50 4 Q 50 0 46 0 L 4 0 Q 0 0 0 4 Z" fill="url(#seatFill)" stroke="#E8E2D5" stroke-width="0.7"/></g>
+              </g>
+              <!-- mix position marker -->
+              <g transform="translate(400,420)">
+                <circle r="3" fill="#8B1A2B"/>
+                <circle r="6" fill="none" stroke="#8B1A2B" stroke-width="0.4" stroke-opacity="0.6"/>
+              </g>
+              <text x="408" y="424" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="11" fill="#BFB8A6">MLP</text>
+              <text x="60" y="38" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#BFB8A6">Tuned &middot; delivered &middot; 087 hours logged</text>
+            </g>
+          </svg>
+        </div>
+        <div class="ref-room-steps">
+          <div class="ref-step active" data-layer="0">
+            <span class="stage-label">Stage one. The shell.</span>
+            <h3 class="display">The empty room.</h3>
+            <p>23 by 16 by 9 feet. 3,312 cubic feet of air. Before a single panel goes up, we measure the geometry, the reflections, the standing waves &mdash; and design backwards from the room that needs to exist.</p>
+            <div class="spec"><span>VOLUME</span> 3,312 ft³<br><span>BASE RT60</span> 0.92s @ 1 kHz<br><span>STATUS</span> UNTUNED</div>
+          </div>
+          <div class="ref-step" data-layer="1">
+            <span class="stage-label">Stage two. Acoustic treatment.</span>
+            <h3 class="display">25 panels. Tuned.</h3>
+            <p>Bass traps in the corners. Broadband absorbers at the first reflection points. Diffusers on the back wall. The room stops fighting itself. <em>HAA-certified room layout.</em></p>
+            <div class="spec"><span>RT60 TARGET</span> 0.34s @ 1 kHz<br><span>PANELS</span> 25 (16 absorb · 9 diffuse)<br><span>REFLECTIONS</span> CONTROLLED</div>
+          </div>
+          <div class="ref-step" data-layer="2">
+            <span class="stage-label">Stage three. Speakers, 7.2.4.</span>
+            <h3 class="display">A speaker for every direction.</h3>
+            <p>Left, center, right. Two side surrounds. Two rear surrounds. Four height channels for Atmos. Two subwoofers, calibrated by SPL meter, not by ear. <em>THX reference layout.</em></p>
+            <div class="spec"><span>CONFIG</span> 7.2.4 ATMOS<br><span>FREQ. RESPONSE</span> 18Hz – 20kHz ±2dB<br><span>SPL TARGET</span> 105dB @ MLP</div>
+          </div>
+          <div class="ref-step" data-layer="3">
+            <span class="stage-label">Stage four. Image.</span>
+            <h3 class="display">A screen that vanishes.</h3>
+            <p>JVC RS3100 native 4K laser projector. 138&Prime; acoustically transparent screen at a 2.39:1 anamorphic ratio. <em>ISF-calibrated grayscale, primaries, gamma.</em> The black bars disappear. The screen disappears. The film stays.</p>
+            <div class="spec"><span>PROJECTOR</span> JVC RS3100 / 4K LASER<br><span>SCREEN</span> 138&Prime; · 2.39:1 · GAIN 1.3<br><span>OUTPUT</span> 2,800 ANSI · D65</div>
+          </div>
+          <div class="ref-step" data-layer="4">
+            <span class="stage-label">Stage five. Light and shade.</span>
+            <h3 class="display">Five scenes. One button.</h3>
+            <p>Lutron Ketra full-spectrum tunable LEDs in the cove and recessed cans. Motorized blackout shades on every aperture. <em>Five preset scenes&mdash;Day, Reveal, Dim, Feature, House Up&mdash;</em> on a Crestron pico the size of a light switch.</p>
+            <div class="spec"><span>FIXTURES</span> 12 KETRA · 6 ZONES<br><span>SHADES</span> LUTRON SIVOIA · BLACKOUT<br><span>CONTROL</span> 1 PICO · 5 SCENES</div>
+          </div>
+          <div class="ref-step" data-layer="5">
+            <span class="stage-label">Stage six. Tuned.</span>
+            <h3 class="display">Eight seats. One sweet spot.</h3>
+            <p>Tiered seating with a 7&Prime; riser. Front row at the calibrated mix position. Eighty-seven hours of design and tuning across one room. <em>Calibrated, not configured.</em></p>
+            <div class="spec"><span>SEATING</span> 8 RECLINE · 2 ROWS<br><span>RISER</span> 7&Prime;<br><span>HOURS LOGGED</span> 087</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <!-- ===== 6. JEFF & FRANK ===== -->
     <section class="people" id="people">
-      <div class="section-mark">FILE 04 / THE STUDIO</div>
       <div class="people-grid">
         <div>
           <h2 class="display">Jeff <span class="ampersand">&amp;</span> Frank.</h2>
@@ -2227,13 +2112,11 @@
           <span class="nb-line">SIGNED OFF · 087.5 HRS · J.S.</span>
         </div>
       </div>
-      <div class="section-watermark">// CAL.0004 / UPLAND, CA</div>
     </section>
 
     <!-- ===== 7. REVIEWS ===== -->
     <section class="reviews" id="reviews">
       <div class="reviews-inner">
-        <div class="section-mark">FILE 05 / IN THEIR WORDS</div>
         <h2 class="display">What clients say, when they&rsquo;re asked.</h2>
         <p class="reviews-stars">★★★★★ &nbsp; 5.0 / 5 &nbsp; · &nbsp; 13 OF 13 GOOGLE REVIEWS</p>
         <div class="review-list">
@@ -2269,13 +2152,11 @@
           </div>
         </div>
       </div>
-      <div class="section-watermark">// CAL.0005 / UPLAND, CA</div>
     </section>
 
     <!-- ===== 8. PROJECT LEDGER ===== -->
     <section class="ledger" id="ledger">
       <div class="ledger-inner">
-        <div class="section-mark">FILE 06 / THE LEDGER</div>
         <div class="ledger-head">
           <h2 class="display">Every install gets a number.</h2>
           <p>Since 2008. Cinema rooms, listening rooms, outdoor decks, whole-house pre-wires. Locations and specs only &mdash; the rooms themselves stay private to the families that live in them.</p>
@@ -2299,91 +2180,20 @@
         </div>
         <div class="ledger-foot">// 045 LOGGED · 6,400+ HRS · STILL CALIBRATING</div>
       </div>
-      <div class="section-watermark">// CAL.0006 / UPLAND, CA</div>
     </section>
 
-    <!-- ===== 9. SERVICE AREA — TYPOGRAPHIC MARQUEE ===== -->
-    <section class="area" id="area">
-      <div class="area-head">
-        <div>
-          <div class="section-mark">FILE 07 / WHERE</div>
-          <h2 class="display">Where the rooms are.</h2>
-        </div>
-        <p>Headquartered in Upland. Most projects across the Inland Empire. Reach extends to Orange County, the South Bay, and the desert when the room is worth the drive.</p>
-      </div>
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-row">
-          <span class="marquee-city">UPLAND</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">CLAREMONT</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">RANCHO</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">CHINO HILLS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">LA VERNE</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">GLENDORA</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">MANHATTAN BEACH</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">NEWPORT</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">PALM SPRINGS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">LAGUNA HILLS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">TUSTIN</span>
-          <span class="marquee-bullet"></span>
-          <!-- duplicate for seamless loop -->
-          <span class="marquee-city">UPLAND</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">CLAREMONT</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">RANCHO</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">CHINO HILLS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">LA VERNE</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">GLENDORA</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">MANHATTAN BEACH</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">NEWPORT</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">PALM SPRINGS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city dim">LAGUNA HILLS</span>
-          <span class="marquee-bullet"></span>
-          <span class="marquee-city">TUSTIN</span>
-          <span class="marquee-bullet"></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 10. PHONE-AS-HEADLINE ===== -->
-    <section class="phone-block" id="phone">
-      <div class="mono mono-amber">// DIRECT LINE / NO RECEPTIONIST</div>
-      <a class="phone-number display" href="tel:+19094762910" id="phoneNumber"><span class="areacode">+1 · 909</span>476&middot;2910</a>
-      <div class="phone-sub">Or text. <em>Jeff answers.</em></div>
-      <button class="tone-btn" id="toneBtn" type="button">
-        <span class="tone-dot"></span>
-        Reference Tone · A 440 Hz
-      </button>
-    </section>
-
-    <!-- ===== 11. BOOKING CTA ===== -->
+    <!-- ===== 7. BOOKING + PHONE ===== -->
     <section class="booking" id="book">
-      <div class="section-mark">FILE 08 / BOOK</div>
       <div class="booking-grid">
         <div>
           <h2 class="display">Book the <em>Reference Room</em> walkthrough.</h2>
           <p class="booking-intro">A private consultation in our calibrated demo room. We listen first &mdash; the room you want, the rooms you have, the budget that fits. We design before the drywall.</p>
+          <a class="phone-line" href="tel:+19094762910"><span class="phone-areacode">+1&nbsp;&middot;&nbsp;909</span><span class="phone-rest">476&middot;2910</span></a>
+          <p class="phone-line-sub">Or text. <em>Jeff answers.</em></p>
           <div class="booking-drumbeat">
-            CALIBRATED, NOT CONFIGURED.<br>
-            ENGINEERED, NOT ASSEMBLED.<br>
-            DESIGNED BEFORE THE DRYWALL.
+            <em>Calibrated</em>, not configured.<br>
+            <em>Engineered</em>, not assembled.<br>
+            <em>Designed</em> before the drywall.
           </div>
         </div>
         <form class="form" onsubmit="event.preventDefault(); document.getElementById('formNote').textContent='// REQUEST RECEIVED · JEFF WILL CALL WITHIN ONE BUSINESS DAY'; this.querySelector('button').textContent='RECEIVED ✓'; this.querySelector('button').style.background='var(--cyan)'">
@@ -2448,7 +2258,6 @@
           <div class="form-mono-note" id="formNote">// PRE-CALIBRATION COMPLETE · 0 OF 8 FIELDS · NO PHONE TREE</div>
         </form>
       </div>
-      <div class="section-watermark">// CAL.0008 / UPLAND, CA</div>
     </section>
 
   </main>
@@ -2460,22 +2269,25 @@
       <div>1525 W 13TH ST · UNIT E<br>UPLAND · CA 91786<br>CSLB #923658 · LIC. BONDED. INSURED.<br>EST. 2008</div>
     </div>
     <div>
-      <h5>Studio</h5>
+      <h5>The Studio</h5>
       <ul>
-        <li><a href="#manifesto">Approach</a></li>
+        <li><a href="#certs">Certifications</a></li>
+        <li><a href="#manifesto">Our Approach</a></li>
         <li><a href="#ref-room">Reference Room</a></li>
-        <li><a href="#capabilities">Capabilities</a></li>
-        <li><a href="#certs">Certification</a></li>
+        <li><a href="#people">Jeff &amp; Frank</a></li>
+        <li><a href="#ledger">Project Ledger</a></li>
       </ul>
     </div>
     <div>
-      <h5>Service</h5>
+      <h5>Service Area</h5>
       <ul>
-        <li>Cinema Design</li>
-        <li>Whole-House A/V</li>
-        <li>Outdoor AV</li>
-        <li>Light + Shade</li>
-        <li>Network · Pre-wire</li>
+        <li>Upland</li>
+        <li>Claremont</li>
+        <li>Rancho Cucamonga</li>
+        <li>La Verne · Glendora</li>
+        <li>Chino Hills · Pomona</li>
+        <li>Newport &middot; Manhattan Bch</li>
+        <li>Palm Springs · Tustin</li>
       </ul>
     </div>
     <div>
@@ -2497,8 +2309,7 @@
   <!-- ===== MOBILE BOTTOM DOCK ===== -->
   <div class="mdock" id="mdock" aria-label="Quick actions">
     <div class="mdock-status">
-      <span class="live"></span>
-      <span>Jeff <em>online</em> · MON–FRI · 8a–6p PT</span>
+      <span>JEFF + FRANK · UPLAND CA · MON–FRI · 8A–6P PT</span>
     </div>
     <a href="tel:+19094762910" data-vib="1">
       <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l2.5-1 2 3-1.5 1.5a8 8 0 0 0 3.5 3.5L11 8.5l3 2-1 2.5a2 2 0 0 1-2.2 1.4C5.7 13.7 2.3 10.3 1.6 5.2A2 2 0 0 1 3 3z" stroke="currentColor" stroke-width="1.2"/></svg>
@@ -2660,6 +2471,29 @@
     })();
 
     // ============================================================
+    // HERO VIDEO — lazy-load after page paint to keep LCP fast
+    // ============================================================
+    (function () {
+      const v = document.getElementById('heroVideo');
+      if (!v) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+
+      function start() {
+        const src = v.querySelector('source[data-src]');
+        if (!src) return;
+        src.src = src.dataset.src;
+        v.load();
+        v.play().catch(() => {});
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(start, { timeout: 1800 });
+      } else {
+        setTimeout(start, 1200);
+      }
+    })();
+
+    // ============================================================
     // NAV scroll state
     // ============================================================
     (function () {
@@ -2674,30 +2508,7 @@
       onScroll();
     })();
 
-    // ============================================================
-    // CURSOR SPOTLIGHT (desktop only)
-    // ============================================================
-    (function () {
-      if (window.matchMedia('(hover: none)').matches) return;
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      const light = document.querySelector('.cursor-light');
-      let x = window.innerWidth / 2, y = window.innerHeight / 2, tx = x, ty = y;
-      document.addEventListener('mousemove', (e) => {
-        tx = e.clientX; ty = e.clientY;
-        document.body.classList.add('has-cursor');
-      });
-      document.addEventListener('mouseleave', () => {
-        document.body.classList.remove('has-cursor');
-      });
-      function loop() {
-        x += (tx - x) * 0.18;
-        y += (ty - y) * 0.18;
-        light.style.transform = 'translate(' + x + 'px, ' + y + 'px) translate(-50%, -50%)';
-        requestAnimationFrame(loop);
-      }
-      loop();
-    })();
+    // cursor spotlight removed in 9.0 perf pass
 
     // ============================================================
     // REFERENCE ROOM sticky-scroll layer reveal
@@ -2854,26 +2665,7 @@
       onScroll();
     })();
 
-    // ============================================================
-    // MOBILE REFERENCE-ROOM — swipe pager dot indicator + vibration
-    // ============================================================
-    (function () {
-      const track = document.getElementById('mrefTrack');
-      const pages = document.getElementById('mrefPages');
-      if (!track || !pages) return;
-      const dots = pages.querySelectorAll('.mref-page');
-      const cards = track.querySelectorAll('.mref-card');
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const idx = parseInt(entry.target.dataset.stage, 10);
-          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-          if (entry.intersectionRatio > 0.7 && navigator.vibrate) navigator.vibrate(8);
-        });
-      }, { root: track, threshold: [0.5, 0.7, 0.9] });
-      cards.forEach((c) => io.observe(c));
-    })();
+    // mobile reference-room pager removed in 9.0 cleanup (desktop ref-room responsive)
 
     // ============================================================
     // MOBILE BOTTOM DOCK — vibration on tap
