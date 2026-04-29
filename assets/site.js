@@ -262,16 +262,13 @@
     })();
 
     // ============================================================
-    // PAGE-LEVEL LETTERBOX PROGRESSION + FEATURE PRESENTATION
+    // PAGE-LEVEL LETTERBOX PROGRESSION (feature-card retired)
     // ============================================================
     (function () {
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
       const isMobile = window.innerWidth <= 1024;
       const peak = isMobile ? 4.5 : 9;     // mobile: thinner cinema bars
-
-      const card = document.getElementById('featureCard');
-      let cardFired = false;
 
       function onScroll() {
         const sh = document.documentElement.scrollHeight - window.innerHeight;
@@ -283,12 +280,6 @@
         else if (p < 0.92) lb = peak - ((p - 0.78) / 0.14) * (peak * 0.66);
         else lb = peak * 0.33;
         document.documentElement.style.setProperty('--letterbox', lb.toFixed(2) + 'vh');
-
-        if (!cardFired && p > 0.60 && p < 0.66) {
-          cardFired = true;
-          card.classList.add('visible');
-          setTimeout(() => card.classList.remove('visible'), 1100);
-        }
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();

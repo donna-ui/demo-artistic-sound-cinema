@@ -1767,10 +1767,18 @@
       .hero-spec-label { font-size: 8px; letter-spacing: 0.2em; }
       .hero-spec-value { font-size: 13px; font-weight: 700; }
 
-      /* mobile reference room — stack the SVG above the layers */
+      /* mobile reference room — SVG sticky at the top, text scrolls behind it */
       .ref-room-inner { grid-template-columns: 1fr; }
-      .ref-room-canvas { position: relative; top: 0; height: 52vh; margin-bottom: 24px; align-self: center; }
-      .ref-room-steps { padding: 24px 0; gap: 14vh; }
+      .ref-room-canvas {
+        position: sticky;
+        top: 0;
+        height: 48vh;
+        z-index: 5;
+        background: linear-gradient(180deg, var(--black) 0%, var(--black) 88%, rgba(5,4,2,0) 100%);
+        padding-bottom: 12px;
+      }
+      .ref-room-canvas svg { max-height: 44vh; }
+      .ref-room-steps { padding: 24px 0; gap: 18vh; }
       .ref-step h3 { font-size: clamp(30px, 8vw, 44px); }
       .ledger-table { display: none; }
       .ledger-mobile { display: flex; }
