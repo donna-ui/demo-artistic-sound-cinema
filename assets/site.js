@@ -98,19 +98,31 @@
         if (window.__startHeroVideo) setTimeout(window.__startHeroVideo, 280);
       }
 
-      // Touch: wait for tap-to-calibrate before running sequence
+      // Hide tap button + prompt — calibration auto-runs with countdown
       const tap = document.getElementById('calTap');
-      if (document.body.classList.contains('touch')) {
-        tap.addEventListener('click', () => {
-          if (navigator.vibrate) navigator.vibrate(30);
-          tap.style.display = 'none';
-          document.querySelector('.cal-prompt').style.display = 'none';
-          setTimeout(tick, 100);
-        }, { once: true });
-      } else {
-        // Desktop: auto-run after dot pulse settles
-        setTimeout(tick, 380);
+      const prompt = document.querySelector('.cal-prompt');
+      if (tap) tap.style.display = 'none';
+      if (prompt) prompt.style.display = 'none';
+
+      // Film-leader countdown: 3, 2, 1 — then run the typed sequence
+      const countNode = document.createElement('div');
+      countNode.className = 'cal-count';
+      out.parentNode.insertBefore(countNode, out);
+
+      function step(n) {
+        if (n === 0) {
+          countNode.style.opacity = '0';
+          setTimeout(() => { countNode.remove(); tick(); }, 220);
+          return;
+        }
+        countNode.textContent = String(n);
+        countNode.style.animation = 'none';
+        // restart the per-tick animation
+        void countNode.offsetWidth;
+        countNode.style.animation = 'calCount 0.7s ease-out forwards';
+        setTimeout(() => step(n - 1), 700);
       }
+      setTimeout(() => step(3), 380);
     })();
 
     // ============================================================
