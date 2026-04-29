@@ -42,12 +42,16 @@
         { txt: '> READY.',                                cls: 'ready' }
       ];
 
-      // Hero spec values
-      document.getElementById('specAspect').textContent = aspect;
-      document.getElementById('specColor').textContent = cd + '-bit · sRGB';
-      document.getElementById('specRefresh').textContent = refresh + ' Hz';
-      document.getElementById('specTime').textContent = time;
-      document.getElementById('heroSpecLive').textContent = w + '×' + h + ' / ' + refresh + 'Hz';
+      // Hero spec values — only set if the legacy spec band exists on the page
+      const setSpec = function (id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      setSpec('specAspect', aspect);
+      setSpec('specColor', cd + '-bit · sRGB');
+      setSpec('specRefresh', refresh + ' Hz');
+      setSpec('specTime', time);
+      setSpec('heroSpecLive', w + '×' + h + ' / ' + refresh + 'Hz');
 
       const out = document.getElementById('calReadout');
       const overlay = document.getElementById('calibration');
