@@ -777,8 +777,20 @@
     .ref-step .spec span { color: var(--bone-dim); }
 
     /* SVG layer visibility */
-    /* All layers visible from the start — text steps still cycle on scroll */
-    .svg-layer { opacity: 1; }
+    /* Reference room layers — additive reveal as user scrolls steps */
+    .svg-layer { opacity: 0; transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), filter 0.7s ease; }
+    .svg-layer.on { opacity: 1; }
+    /* Layer 0 (shell) always visible — the room exists before anything's added */
+    #lyr-0 { opacity: 1 !important; }
+    /* The MOMENT a layer activates: a brief warm flash so it reads as "lit up" */
+    .svg-layer.flash {
+      animation: layerFlash 1.1s ease-out;
+    }
+    @keyframes layerFlash {
+      0%   { opacity: 0; filter: brightness(1) drop-shadow(0 0 0 rgba(232, 226, 213, 0)); }
+      30%  { opacity: 1; filter: brightness(1.6) drop-shadow(0 0 16px rgba(232, 226, 213, 0.5)); }
+      100% { opacity: 1; filter: brightness(1) drop-shadow(0 0 0 rgba(232, 226, 213, 0)); }
+    }
 
     /* ===== CAPABILITIES (aspect ratio reveal cards) ===== */
     .capabilities {

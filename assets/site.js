@@ -187,9 +187,20 @@
           const idx = parseInt(entry.target.dataset.layer, 10);
           steps.forEach((s) => s.classList.remove('active'));
           entry.target.classList.add('active');
-          // accumulate layers up to this one
+          // Accumulate layers up to this index. Newly-activating layers get
+          // a brief "flash" class so the reveal reads as a deliberate light-up.
           layers.forEach((l, i) => {
-            if (i <= idx) l.classList.add('on'); else l.classList.remove('on');
+            const wasOn = l.classList.contains('on');
+            if (i <= idx) {
+              l.classList.add('on');
+              if (!wasOn && i > 0) {
+                l.classList.remove('flash');
+                void l.offsetWidth;
+                l.classList.add('flash');
+              }
+            } else {
+              l.classList.remove('on', 'flash');
+            }
           });
         });
       }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
