@@ -9,9 +9,9 @@
 - Team: Jeff + Frank (lead tech, mentioned in multiple reviews)
 - Founded: August 14, 2008 — **17+ years**
 - License: California C-7 Low-Voltage Contractor #923658
-- Status: queued → in-progress (2026-04-28)
-- Vercel URL: artistic-sound-cinema.vercel.app *(to be deployed)*
-- GitHub repo: github.com/donna-ui/demo-artistic-sound-cinema *(to be created)*
+- Status: ready-to-send (2026-04-28)
+- Vercel URL: https://artistic-sound-cinema.vercel.app
+- GitHub repo: https://github.com/donna-ui/demo-artistic-sound-cinema
 
 ## What he actually does
 
@@ -110,4 +110,7 @@ Extended: Tustin, Laguna Hills, Manhattan Beach, Newport Beach, Palm Springs (pe
 - Two phone numbers floating around (909-476-2910 on his site, 909-321-5688 on Houzz). Using the website-primary.
 
 ## Status log
-- 2026-04-28: Phase 1 research complete, Phase 2 direction approved, Phase 3 self-critique (8.7 → 9.7 with five 10/10 layers added), brief written, build starting.
+- 2026-04-28: Phase 1 research complete, Phase 2 direction approved, Phase 3 self-critique (8.7 → 9.7 with five 10/10 layers added), brief written.
+- 2026-04-28: Phase 4 build complete. 12 sections, real-device calibration sequence, sticky reference-room cross-section, project ledger (45 entries), letterbox progression with FEATURE PRESENTATION, opt-in A 440Hz reference tone, cursor spotlight.
+- 2026-04-28: Mobile signature pass — Tap-to-Calibrate, sticky bottom dock with live "Jeff online" pulse, reference-room horizontal swipe pager with progressive SVGs, project ledger card stack, vibration haptics, full-bleed cinema hero, film-slate phone formatting.
+- 2026-04-28: Deployed → https://artistic-sound-cinema.vercel.app · status `ready-to-send`.
