@@ -16,7 +16,7 @@
   <!-- Google Fonts: Bodoni Moda (display didone) + Hanken Grotesk (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700;6..96,900&family=Hanken+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ===== GHL OVERRIDE (kept for future GHL paste) ===== */
@@ -45,8 +45,8 @@
       --line: rgba(232, 226, 213, 0.12);
       --line-strong: rgba(232, 226, 213, 0.32);
 
-      --display: 'Bodoni Moda', 'Times New Roman', serif;
-      --body: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+      --display: 'Marcellus', 'Times New Roman', serif;
+      --body: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
       --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
       --container: 1440px;
@@ -113,18 +113,39 @@
       color: var(--bone);
       font-family: var(--body);
       font-weight: 400;
-      line-height: 1.5;
+      font-size: 19px;
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    .display { font-family: var(--display); font-weight: 900; line-height: 0.92; letter-spacing: -0.02em; font-style: normal; }
+    .display { font-family: var(--display); font-weight: 400; line-height: 1.02; letter-spacing: 0.005em; font-style: normal; }
     .mono { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-dim); }
-    .mono-amber { color: var(--amber); }
+    .mono-amber { color: var(--bone); }
     .mono-cyan { color: var(--cyan); }
 
-    h1, h2, h3 { font-family: var(--display); font-weight: 900; line-height: 0.92; letter-spacing: -0.02em; }
+    h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.02; letter-spacing: 0.005em; }
+    .chapter {
+      display: block;
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-bottom: 32px;
+    }
+    .chapter::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--bone-dim);
+      vertical-align: middle;
+      margin-right: 16px;
+      transform: translateY(-2px);
+    }
 
     /* ===== FILM GRAIN (subtle, justified for cinema brand) ===== */
     .grain {
@@ -168,7 +189,7 @@
       text-align: center;
       color: var(--bone);
     }
-    .feature-card-inner .mono { font-size: 12px; color: var(--amber); margin-bottom: 14px; }
+    .feature-card-inner .mono { font-size: 12px; color: var(--bone-dim); margin-bottom: 14px; }
     .feature-card-inner h2 {
       font-size: clamp(48px, 8vw, 120px);
       letter-spacing: 0.02em;
@@ -210,7 +231,7 @@
     }
     .nav-mark {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-size: 18px;
       letter-spacing: -0.01em;
       color: var(--bone);
@@ -234,7 +255,7 @@
       transition: color 0.2s ease;
       position: relative;
     }
-    .nav-link:hover { color: var(--amber); }
+    .nav-link:hover { color: var(--bone-warm); }
     .nav-link::after {
       content: '';
       position: absolute;
@@ -304,7 +325,7 @@
       display: inline-block;
       width: 7px;
       height: 14px;
-      background: var(--amber);
+      background: var(--bone-warm);
       vertical-align: -2px;
       margin-left: 2px;
       animation: blink 0.8s steps(2, start) infinite;
@@ -341,34 +362,8 @@
     section > * { position: relative; z-index: 1; }
     /* hide ambient on full-bleed sections */
     .area::before, .hero::before { display: none; }
-    .section-mark {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .section-mark::before {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--amber);
-    }
-    .section-watermark {
-      position: absolute;
-      bottom: 24px;
-      right: var(--pad);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: rgba(232,226,213,0.22);
-      text-transform: uppercase;
-      pointer-events: none;
-    }
+    .section-mark { display: none; }
+    .section-watermark { display: none; }
 
     /* ===== HERO ===== */
     .hero {
@@ -446,7 +441,7 @@
     .hero-eyebrow .dot {
       width: 4px; height: 4px;
       border-radius: 50%;
-      background: var(--amber);
+      background: var(--bone-warm);
       animation: dotPulse 1.6s ease-in-out infinite;
     }
     .hero h1 {
@@ -456,13 +451,14 @@
     }
     .hero h1 .em {
       color: var(--bone-warm);
+      font-family: var(--body);
       font-style: italic;
-      font-weight: 400;
-      text-shadow: 0 0 40px rgba(232, 226, 213, 0.3);
+      font-weight: 500;
+      text-shadow: 0 0 40px rgba(232, 226, 213, 0.22);
     }
     .hero-sub {
-      max-width: 52ch;
-      font-size: clamp(16px, 1.4vw, 19px);
+      max-width: 50ch;
+      font-size: clamp(19px, 1.55vw, 23px);
       line-height: 1.55;
       color: var(--bone);
       font-weight: 400;
@@ -548,17 +544,17 @@
     }
     .manifesto-left .mono { display: block; font-size: 11px; }
     .manifesto-right p {
-      font-size: clamp(18px, 1.6vw, 22px);
+      font-size: clamp(20px, 1.7vw, 24px);
       line-height: 1.55;
       color: var(--bone);
       font-weight: 400;
     }
     .manifesto-right p + p { margin-top: 1.2em; }
     .manifesto-right em {
-      font-family: var(--display);
+      font-family: var(--body);
       font-style: italic;
-      font-weight: 500;
-      color: var(--amber);
+      font-weight: 600;
+      color: var(--bone-warm);
     }
 
     /* ===== REFERENCE ROOM (sticky scroll) ===== */
@@ -678,13 +674,13 @@
     }
     .cap-title {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-size: clamp(28px, 3vw, 48px);
       line-height: 0.95;
       color: var(--bone);
       letter-spacing: -0.01em;
     }
-    .cap-title em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .cap-title em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .cap-desc {
       font-size: 14px;
       color: var(--bone-dim);
@@ -722,7 +718,7 @@
       max-width: 14ch;
       color: var(--bone);
     }
-    .cert-head h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .cert-head h2 em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .cert-head p {
       font-size: clamp(16px, 1.25vw, 19px);
       color: var(--bone);
@@ -754,13 +750,13 @@
     .cert:hover { background: rgba(232,165,71,0.04); }
     .cert-monogram {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-size: clamp(60px, 7vw, 96px);
       line-height: 0.92;
       color: var(--bone);
       letter-spacing: -0.04em;
     }
-    .cert-monogram em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .cert-monogram em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .cert-name {
       font-family: var(--mono);
       font-size: 11px;
@@ -783,7 +779,7 @@
       letter-spacing: 0.12em;
       text-align: center;
     }
-    .cert-foot strong { color: var(--amber); font-weight: 500; }
+    .cert-foot strong { color: var(--bone-warm); font-weight: 500; letter-spacing: 0.18em; }
 
     /* ===== JEFF & FRANK ===== */
     .people {
@@ -804,29 +800,30 @@
     }
     .people h2 .ampersand {
       font-style: italic;
-      font-weight: 500;
-      color: var(--amber);
+      font-weight: 400;
+      color: var(--bone-warm);
     }
     .people-bio {
-      font-size: clamp(16px, 1.3vw, 19px);
+      font-size: clamp(19px, 1.5vw, 22px);
       line-height: 1.6;
       color: var(--bone);
       font-weight: 400;
       max-width: 48ch;
     }
     .people-bio + .people-bio { margin-top: 1.2em; }
-    .people-bio em { font-family: var(--display); font-style: italic; color: var(--bone-warm); text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .people-bio em { font-family: var(--body); font-style: italic; font-weight: 600; color: var(--bone-warm); }
 
     .pull-quote {
-      border-left: 1px solid var(--amber);
+      border-left: 1px solid rgba(232, 226, 213, 0.4);
       padding: 8px 0 8px 28px;
       margin-top: 56px;
-      font-family: var(--display);
+      font-family: var(--body);
       font-style: italic;
-      font-size: clamp(20px, 1.8vw, 26px);
-      line-height: 1.4;
+      font-weight: 500;
+      font-size: clamp(21px, 1.9vw, 26px);
+      line-height: 1.5;
       color: var(--bone);
-      max-width: 38ch;
+      max-width: 40ch;
     }
     .pull-quote-attr {
       display: block;
@@ -851,15 +848,15 @@
       position: relative;
     }
     .notebook::before {
-      content: 'JEFF\'S NOTEBOOK / 047';
+      content: 'JEFF\'S NOTEBOOK · 047';
       position: absolute;
       top: -8px;
       left: 16px;
       background: var(--black);
       padding: 0 10px;
       font-size: 9px;
-      color: var(--amber);
-      letter-spacing: 0.2em;
+      color: var(--bone-dim);
+      letter-spacing: 0.24em;
     }
     .notebook .nb-line { display: block; }
     .notebook .nb-spec { color: var(--cyan); }
@@ -879,11 +876,13 @@
       margin-bottom: 16px;
     }
     .reviews-stars {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      color: var(--amber);
+      font-family: var(--body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--bone);
       margin-bottom: 64px;
+      text-transform: uppercase;
     }
     .review-list {
       display: flex;
@@ -907,11 +906,11 @@
       padding-top: 6px;
     }
     .review-body {
-      font-family: var(--display);
+      font-family: var(--body);
       font-style: italic;
-      font-weight: 400;
-      font-size: clamp(20px, 2vw, 28px);
-      line-height: 1.4;
+      font-weight: 500;
+      font-size: clamp(21px, 2vw, 28px);
+      line-height: 1.5;
       color: var(--bone);
       max-width: 56ch;
     }
@@ -968,9 +967,9 @@
       padding: 12px 0;
       border-bottom: 1px solid var(--line-strong);
       font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--amber);
-      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--bone-dim);
+      font-weight: 600;
       text-transform: uppercase;
     }
     .ledger-table tbody tr {
@@ -988,7 +987,7 @@
     .ledger-table .col-yr { color: var(--cyan); width: 70px; }
     .ledger-table .col-loc { color: var(--bone); }
     .ledger-table .col-spec { color: var(--bone-dim); }
-    .ledger-table .col-tag { text-align: right; color: var(--amber); width: 110px; font-size: 10px; }
+    .ledger-table .col-tag { text-align: right; color: var(--bone-warm); width: 110px; font-size: 10px; letter-spacing: 0.18em; }
     .ledger-foot {
       margin-top: 32px;
       font-family: var(--mono);
@@ -1048,7 +1047,7 @@
     }
     .marquee-city {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-size: clamp(80px, 14vw, 200px);
       line-height: 0.92;
       color: var(--bone);
@@ -1057,10 +1056,10 @@
     }
     .marquee-city.dim { color: rgba(232,226,213,0.18); -webkit-text-stroke: 1px var(--bone-dim); -webkit-text-fill-color: transparent; }
     .marquee-bullet {
-      width: 14px;
-      height: 14px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: var(--amber);
+      background: var(--bone-dim);
       flex-shrink: 0;
     }
 
@@ -1074,7 +1073,7 @@
     .phone-block .mono { margin-bottom: 32px; }
     .phone-number {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-style: normal;
       font-size: clamp(60px, 12vw, 184px);
       line-height: 0.92;
@@ -1083,7 +1082,7 @@
       display: block;
       transition: color 0.4s ease;
     }
-    .phone-number:hover { color: var(--amber); }
+    .phone-number:hover { color: var(--bone-warm); }
     .phone-sub {
       margin-top: 32px;
       font-family: var(--display);
@@ -1092,7 +1091,7 @@
       color: var(--bone-dim);
       font-weight: 400;
     }
-    .phone-sub em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .phone-sub em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .tone-btn {
       display: inline-flex;
       align-items: center;
@@ -1131,9 +1130,9 @@
       max-width: 12ch;
       margin-bottom: 32px;
     }
-    .booking h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .booking h2 em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .booking-intro {
-      font-size: clamp(16px, 1.3vw, 19px);
+      font-size: clamp(19px, 1.5vw, 22px);
       line-height: 1.55;
       color: var(--bone);
       font-weight: 400;
@@ -1141,11 +1140,12 @@
       margin-bottom: 32px;
     }
     .booking-drumbeat {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: var(--amber);
-      text-transform: uppercase;
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+      color: var(--bone-warm);
+      line-height: 1.5;
       padding-top: 32px;
       border-top: 1px solid var(--line);
       max-width: 36ch;
@@ -1189,7 +1189,7 @@
     .form-field select:focus,
     .form-field textarea:focus {
       outline: 0;
-      border-bottom-color: var(--amber);
+      border-bottom-color: var(--bone-warm);
     }
     .form-field select {
       appearance: none;
@@ -1237,7 +1237,7 @@
     }
     .foot-mark {
       font-family: var(--display);
-      font-weight: 900;
+      font-weight: 400;
       font-size: 22px;
       color: var(--bone);
       letter-spacing: -0.01em;
@@ -1246,7 +1246,7 @@
     .foot-mark .ampersand { color: var(--bone-warm); font-style: italic; font-weight: 500; }
     footer ul { list-style: none; }
     footer li { line-height: 2.2; text-transform: uppercase; letter-spacing: 0.14em; }
-    footer h5 { font-size: 10px; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; margin-bottom: 14px; font-weight: 500; }
+    footer h5 { font-size: 10px; letter-spacing: 0.2em; color: var(--bone-dim); text-transform: uppercase; margin-bottom: 14px; font-weight: 600; }
     .foot-drumbeat {
       grid-column: 1 / -1;
       margin-top: 56px;
@@ -1260,10 +1260,10 @@
       letter-spacing: 0.16em;
     }
     .foot-drumbeat .drumbeat {
-      font-family: var(--display);
+      font-family: var(--body);
       font-style: italic;
       font-size: 18px;
-      color: var(--amber);
+      color: var(--bone-warm);
       font-weight: 500;
       letter-spacing: 0;
     }
@@ -1272,29 +1272,31 @@
     .cal-tap {
       display: none;
       margin: 32px auto 0;
-      padding: 16px 24px;
-      border: 1px solid var(--amber);
+      padding: 16px 26px;
+      border: 1px solid var(--bone-warm);
       background: transparent;
-      color: var(--amber);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
+      color: var(--bone-warm);
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       text-align: center;
       cursor: pointer;
       transition: background 0.2s ease, color 0.2s ease;
     }
-    .cal-tap:active { background: var(--amber); color: var(--black); }
+    .cal-tap:active { background: var(--bone-warm); color: var(--black); }
     .cal-prompt {
       display: none;
       text-align: center;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.02em;
       color: var(--bone-dim);
-      margin-top: 12px;
+      margin-top: 16px;
     }
-    .cal-prompt em { color: var(--amber); font-style: normal; }
+    .cal-prompt em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
     body.touch .cal-tap, body.touch .cal-prompt { display: block; }
     body.touch .cal-readout { min-height: 0; }
 
@@ -1334,7 +1336,7 @@
     }
     .mdock a:last-child { border-right: 0; background: var(--amber); color: var(--black); }
     .mdock a svg { width: 14px; height: 14px; }
-    .mdock a:active { background: rgba(232,165,71,0.12); color: var(--amber); }
+    .mdock a:active { background: rgba(232,226,213,0.08); color: var(--bone-warm); }
     .mdock a:last-child:active { background: var(--bone); }
     .mdock-status {
       grid-column: 1 / -1;
@@ -1362,7 +1364,7 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.4); opacity: 0.6; }
     }
-    .mdock-status em { color: var(--amber); font-style: normal; }
+    .mdock-status em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
 
     /* ===== MOBILE REF-ROOM HORIZONTAL PAGER ===== */
     .mref {
@@ -1381,7 +1383,7 @@
       max-width: 14ch;
       margin-top: 16px;
     }
-    .mref-head h2 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .mref-head h2 em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .mref-track {
       display: flex;
       gap: 16px;
@@ -1413,16 +1415,18 @@
     }
     .mref-card-svg svg { width: 100%; height: 100%; }
     .mref-card .stage-num {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--amber);
-      letter-spacing: 0.2em;
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bone-dim);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
     }
     .mref-card h3 {
       font-size: clamp(28px, 6.5vw, 38px);
       line-height: 0.95;
     }
-    .mref-card h3 em { color: var(--bone-warm); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.25); }
+    .mref-card h3 em { color: var(--bone-warm); font-family: var(--body); font-style: italic; font-weight: 500; text-shadow: 0 0 32px rgba(232, 226, 213, 0.18); letter-spacing: 0.005em; }
     .mref-card p {
       font-size: 14px;
       line-height: 1.55;
@@ -1451,7 +1455,7 @@
       background: var(--line-strong);
       transition: background 0.3s ease, width 0.3s ease;
     }
-    .mref-page.active { background: var(--amber); width: 40px; }
+    .mref-page.active { background: var(--bone-warm); width: 40px; }
     .mref-hint {
       font-family: var(--mono);
       font-size: 10px;
@@ -1461,7 +1465,7 @@
       margin-top: 14px;
       text-transform: uppercase;
     }
-    .mref-hint em { color: var(--amber); font-style: normal; }
+    .mref-hint em { color: var(--bone-warm); font-style: italic; font-weight: 500; }
 
     /* ===== MOBILE LEDGER (card view) ===== */
     .ledger-mobile {
@@ -1485,12 +1489,14 @@
       letter-spacing: 0.18em;
     }
     .lm-tag {
-      font-family: var(--mono);
-      font-size: 9px;
-      color: var(--amber);
-      letter-spacing: 0.2em;
+      font-family: var(--body);
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--bone-dim);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
       padding: 3px 8px;
-      border: 1px solid rgba(232,165,71,0.3);
+      border: 1px solid var(--line);
       grid-row: 1;
       grid-column: 2;
     }
@@ -1555,16 +1561,17 @@
         top: calc(8vh + 92px);
         left: var(--pad);
         z-index: 3;
-        font-family: var(--mono);
-        font-size: 9px;
-        letter-spacing: 0.22em;
-        color: var(--amber);
+        font-family: var(--body);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        color: var(--bone-dim);
         text-transform: uppercase;
         display: flex;
         align-items: center;
         gap: 8px;
       }
-      .hero-image-wrap .hero-tag .dot { width: 4px; height: 4px; background: var(--amber); border-radius: 50%; animation: dotPulse 1.6s ease-in-out infinite; }
+      .hero-image-wrap .hero-tag .dot { width: 5px; height: 5px; background: var(--bone-warm); border-radius: 50%; animation: dotPulse 1.6s ease-in-out infinite; }
       .hero-content {
         position: relative;
         padding: 28px var(--pad) 24px;
@@ -1751,7 +1758,7 @@
             Book the Reference Room Walkthrough
             <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M1 5h16M13 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg>
           </a>
-          <a class="mono" href="tel:+19094762910" style="color:var(--bone-dim); transition:color .25s ease;" onmouseover="this.style.color='var(--amber)'" onmouseout="this.style.color='var(--bone-dim)'">OR · (909) 476-2910 · JEFF ANSWERS</a>
+          <a class="mono" href="tel:+19094762910" style="color:var(--bone-dim); transition:color .25s ease;" onmouseover="this.style.color='var(--bone-warm)'" onmouseout="this.style.color='var(--bone-dim)'">OR · (909) 476-2910 · JEFF ANSWERS</a>
         </div>
       </div>
       <div class="hero-spec-grid" aria-hidden="true">
@@ -2069,7 +2076,7 @@
     <!-- ===== 4. CAPABILITIES ===== -->
     <section class="capabilities" id="capabilities">
       <div class="section-mark">FILE 02 / CAPABILITIES</div>
-      <h2 class="display">Seven rooms. <em style="color:var(--amber);font-style:italic;font-weight:500;">One studio.</em></h2>
+      <h2 class="display">Seven rooms. <em>One studio.</em></h2>
       <div class="cap-grid">
         <div class="cap cap--lg">
           <div>
@@ -2104,7 +2111,7 @@
         <div class="cap cap--sm">
           <div>
             <span class="cap-num">// CAP 04</span>
-            <h3 class="cap-title display">Light <span style="color:var(--amber);">+</span> Shade</h3>
+            <h3 class="cap-title display">Light <span style="color:var(--bone-warm);">&amp;</span> Shade</h3>
           </div>
           <div>
             <p class="cap-desc">Lutron-class. Scenes, not switches.</p>
