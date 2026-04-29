@@ -111,6 +111,31 @@ Extended: Tustin, Laguna Hills, Manhattan Beach, Newport Beach, Palm Springs (pe
 
 ## Status log
 - 2026-04-28: Phase 1 research complete, Phase 2 direction approved, Phase 3 self-critique (8.7 → 9.7 with five 10/10 layers added), brief written.
-- 2026-04-28: Phase 4 build complete. 12 sections, real-device calibration sequence, sticky reference-room cross-section, project ledger (45 entries), letterbox progression with FEATURE PRESENTATION, opt-in A 440Hz reference tone, cursor spotlight.
-- 2026-04-28: Mobile signature pass — Tap-to-Calibrate, sticky bottom dock with live "Jeff online" pulse, reference-room horizontal swipe pager with progressive SVGs, project ledger card stack, vibration haptics, full-bleed cinema hero, film-slate phone formatting.
-- 2026-04-28: Deployed → https://artistic-sound-cinema.vercel.app · status `ready-to-send`.
+- 2026-04-28: Phase 4 build complete. 12 sections, real-device calibration sequence, sticky reference-room cross-section, project ledger, letterbox progression with FEATURE PRESENTATION, opt-in A 440Hz reference tone, cursor spotlight.
+- 2026-04-28: Mobile signature pass — Tap-to-Calibrate, sticky bottom dock, reference-room horizontal swipe pager, project ledger card stack, full-bleed cinema hero.
+- 2026-04-28: Deployed → https://artistic-sound-cinema.vercel.app
+- 2026-04-29: 9.0 push — Tenor Sans display, certs moved to viewport 1, 12 → 8 sections, isometric SVG re-art, perf pass, copy tightening, theater backdrop simplified.
+- 2026-04-29: Real photography landed — Donna's Veo cinema dolly hero (0.4× playback, starts after calibration) + 5 Whisk stills wired into manifesto, cinema-divider, ledger lead, booking bg.
+- 2026-04-29: **Credibility scrub.** Removed all fabricated specifics — fake 45-entry ledger, "// 045 logged · 6,400+ HRS" counter, "Project 047" specifics in notebook + image caption + SVG, made-up city tags on review attributions, fabricated 87-hour count on Reference Room Stage 06. Replaced with: Houzz-verified 4 featured installs only (Manhattan Beach / Tustin / Laguna Hills / Rancho Cucamonga), notebook = "House Rules since 2008" approach principles, reviewers attributed to Google 5★ source.
+
+## What is real on the site (sourced)
+- Owner: Jeffrey Michael Siegel (CA filing)
+- Founded August 14, 2008 / 17 years (CA filing)
+- Phone (909) 476-2910 (his current site)
+- Address 1525 W 13th St Unit E Upland CA (his site)
+- CSLB #923658 (his site)
+- CEDIA · THX · HAA · ISF (his site)
+- 5.0★ × 13 Google reviews — quotes verbatim from Birdeye
+- Frank — referenced by name in real reviews
+- Featured installs (Houzz portfolio): Manhattan Beach Home Media Center, Tustin Contemporary Landscape Speaker System, Laguna Hills Automation, Rancho Cucamonga
+- Service area: Upland, Chino Hills, Claremont, Glendora, La Verne, Rancho Cucamonga (his site) + Manhattan Beach, Newport, Palm Springs, Tustin, Laguna Hills (Houzz)
+
+## What is illustrative (clearly framed as such)
+- Reference Room cross-section: typical THX/HAA-tuned cinema build, not Jeff's specific room. Frame as "this is the discipline."
+- The SVG-rendered specs (RT60 0.34s, JVC RS3100, 138" 2.39:1) are illustrative of a typical reference build at this tier — accurate as discipline reference, not claimed as Jeff's exact install.
+
+## What still needs Jeff (when signed)
+- Real install photography (current site uses AI-generated Whisk + Veo)
+- Confirmation of his actual control brand preferences (Crestron / Control4 / Savant?)
+- Updated featured installs list with permission to share
+- Real project count if he wants to publish it
