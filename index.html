@@ -519,6 +519,153 @@
     .manifesto {
       padding-top: clamp(120px, 18vh, 200px);
       padding-bottom: clamp(120px, 18vh, 200px);
+      position: relative;
+      max-width: none;
+      overflow: hidden;
+    }
+    .manifesto-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/dark-sliver.jpg');
+      background-size: cover;
+      background-position: center right;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .manifesto-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--black) 0%, rgba(5,4,2,0.55) 50%, rgba(5,4,2,0.2) 100%);
+    }
+    .manifesto > .manifesto-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* ===== CINEMA DIVIDER (full-bleed projector-beam moment) ===== */
+    .cinema-divider {
+      position: relative;
+      width: 100%;
+      height: clamp(60vh, 80vh, 800px);
+      max-width: none;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+    .cinema-divider::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/projector-beam.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transform: scale(1.04);
+    }
+    .cinema-divider::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5,4,2,0.6) 0%, rgba(5,4,2,0.1) 35%, rgba(5,4,2,0.1) 65%, rgba(5,4,2,0.7) 100%);
+      z-index: -1;
+    }
+    .cinema-divider-quote {
+      text-align: center;
+      max-width: 24ch;
+      padding: 0 var(--pad);
+    }
+    .cinema-divider-quote .display {
+      font-size: clamp(36px, 5.5vw, 76px);
+      line-height: 1.05;
+      color: var(--bone);
+      text-shadow: 0 0 60px rgba(0,0,0,0.6);
+    }
+    .cinema-divider-quote .display em {
+      color: var(--bone-warm);
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: 500;
+      text-shadow: 0 0 40px rgba(232, 226, 213, 0.18);
+    }
+    .cinema-divider-attr {
+      margin-top: 28px;
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+    }
+
+    /* ===== LEDGER LEAD IMAGE ===== */
+    .ledger-lead {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto 40px;
+      padding: 0 var(--pad);
+    }
+    .ledger-lead-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .ledger-lead-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.05) saturate(0.95) brightness(0.95);
+    }
+    .ledger-lead-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(5,4,2,0.0) 0%, rgba(5,4,2,0.0) 60%, rgba(5,4,2,0.6) 100%);
+      pointer-events: none;
+    }
+    .ledger-lead-tag {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      color: var(--bone-warm);
+      z-index: 2;
+    }
+
+    /* ===== BOOKING BACKGROUND PHOTO ===== */
+    .booking {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .booking-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/cinema-angle.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.32;
+      z-index: -2;
+    }
+    .booking-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(5,4,2,0.85) 0%, rgba(5,4,2,0.55) 40%, rgba(5,4,2,0.85) 100%);
+      z-index: -1;
     }
     .manifesto h2 {
       font-size: clamp(54px, 10vw, 152px);
@@ -1831,12 +1978,15 @@
 
     <!-- ===== 3. MANIFESTO ===== -->
     <section class="manifesto" id="manifesto">
-      <h2 class="display">We don&rsquo;t mount <span class="strike">TVs.</span></h2>
-      <div class="manifesto-body">
-        <div class="manifesto-left"></div>
-        <div class="manifesto-right">
-          <p>Smart home is the layer that turns the lights down. The product is the room. <em>We build cinemas, listening rooms, and outdoor moments</em> &mdash; tuned to ISF, THX, and HAA, the same body of work Hollywood uses to color-grade its theatrical masters. The remote is incidental.</p>
-          <p>Not the soundbar tier. Not the Best Buy tier. The tier where the screen disappears, the room takes over, and you forget you&rsquo;re in your house.</p>
+      <div class="manifesto-photo" aria-hidden="true"></div>
+      <div class="manifesto-inner">
+        <h2 class="display">We don&rsquo;t mount <span class="strike">TVs.</span></h2>
+        <div class="manifesto-body">
+          <div class="manifesto-left"></div>
+          <div class="manifesto-right">
+            <p>Smart home is the layer that turns the lights down. The product is the room. <em>We build cinemas, listening rooms, and outdoor moments</em> &mdash; tuned to ISF, THX, and HAA, the same body of work Hollywood uses to color-grade its theatrical masters. The remote is incidental.</p>
+            <p>Not the soundbar tier. Not the Best Buy tier. The tier where the screen disappears, the room takes over, and you forget you&rsquo;re in your house.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -2082,6 +2232,14 @@
     </section>
 
 
+    <!-- ===== CINEMA DIVIDER (full-bleed projector beam) ===== -->
+    <section class="cinema-divider" aria-label="Reference room with projector beam striking the screen">
+      <div class="cinema-divider-quote">
+        <p class="display">The screen disappears. <em>The room takes over.</em></p>
+        <div class="cinema-divider-attr">Reference room 047 &nbsp;&middot;&nbsp; Calibrated by hand</div>
+      </div>
+    </section>
+
     <!-- ===== 6. JEFF & FRANK ===== -->
     <section class="people" id="people">
       <div class="people-grid">
@@ -2157,6 +2315,12 @@
     <!-- ===== 8. PROJECT LEDGER ===== -->
     <section class="ledger" id="ledger">
       <div class="ledger-inner">
+        <div class="ledger-lead">
+          <div class="ledger-lead-frame">
+            <img src="assets/cinema-wide.jpg" alt="Reference room 047 — wide angle, leather recliners, walnut acoustic panels" loading="lazy" decoding="async" />
+            <span class="ledger-lead-tag">Reference Room 047 &middot; Rancho Cucamonga, CA &middot; 7.2.4 Atmos</span>
+          </div>
+        </div>
         <div class="ledger-head">
           <h2 class="display">Every install gets a number.</h2>
           <p>Since 2008. Cinema rooms, listening rooms, outdoor decks, whole-house pre-wires. Locations and specs only &mdash; the rooms themselves stay private to the families that live in them.</p>
@@ -2184,6 +2348,7 @@
 
     <!-- ===== 7. BOOKING + PHONE ===== -->
     <section class="booking" id="book">
+      <div class="booking-photo" aria-hidden="true"></div>
       <div class="booking-grid">
         <div>
           <h2 class="display">Book the <em>Reference Room</em> walkthrough.</h2>
